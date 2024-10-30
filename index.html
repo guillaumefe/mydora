@@ -721,6 +721,107 @@ function addNewArticle() {
     autoSave();
     resetArticleForm();
         }
+
+function parseRequirementsFromText(text) {
+    const lines = text.split(/\r?\n/);
+    const requirements = [];
+    let parentChain = [];
+
+    lines.forEach((line, index) => {
+        const content = line.trim();
+        if (!content) return;
+
+        const indentation = line.search(/\S|$/);
+        const level = Math.floor(indentation / 2);
+
+        parentChain = parentChain.slice(0, level);
+        parentChain[level] = content;
+
+        const nextLine = lines[index + 1];
+        const nextIndentation = nextLine ? nextLine.search(/\S|$/) : -1;
+        const nextLevel = Math.floor(nextIndentation / 2);
+        const isLeaf = index === lines.length - 1 || nextLevel <= level;
+
+        if (isLeaf) {
+            const fullPath = parentChain.slice(0, level + 1).join('.');
+            const requirement = {
+                id: fullPath,
+                originalText: content,
+                level: level,
+                parentChain: parentChain.slice(0, level)
+            };
+            requirements.push(requirement);
+        }
+    });
+
+    return requirements;
+}
+
+function addNewArticle() {
+    const category = document.getElementById('articleCategory').value;
+    const reference = document.getElementById('articleReference').value;
+    const text = document.getElementById('articleText').value;
+    const parsedRequirements = parseRequirementsFromText(text);
+
+    parsedRequirements.forEach(req => {
+        const articleId = `${reference}-${req.id}`;
+        const article = {
+            id: articleId,
+            category: category,
+            text: req.originalText,
+            fullPath: req.id,
+            parentChain: req.parentChain,
+            rtsLinks: [],
+            itsLinks: [],
+            level1Link: '',
+            actions: [],
+            completed: false
+        };
+
+        if (category === 'Level 1') {
+            article.rtsLinks = document.getElementById('rtsLink').value.split(',').map(s => s.trim()).filter(Boolean);
+            article.itsLinks = document.getElementById('itsLink').value.split(',').map(s => s.trim()).filter(Boolean);
+        } else if (category === 'RTS' || category === 'ITS') {
+            article.level1Link = document.getElementById('level1Link').value.trim();
+        }
+
+        const existingIndex = regulations.findIndex(reg => reg.id === articleId);
+        if (existingIndex !== -1) {
+            regulations[existingIndex] = article;
+        } else {
+            regulations.push(article);
+        }
+    });
+
+    renderRegulations();
+    autoSave();
+    resetArticleForm();
+}
+
+function resetArticleForm() {
+    document.getElementById('articleCategory').value = '';
+    document.getElementById('articleReference').value = '';
+    document.getElementById('articleText').value = '';
+    document.getElementById('rtsLink').value = '';
+    document.getElementById('itsLink').value = '';
+    document.getElementById('level1Link').value = '';
+    toggleConditionalFields();
+}
+
+function toggleConditionalFields() {
+    const category = document.getElementById('articleCategory').value;
+    const level1Fields = document.getElementById('level1Fields');
+    const rtsItsFields = document.getElementById('rtsItsFields');
+    level1Fields.classList.remove('visible');
+    rtsItsFields.classList.remove('visible');
+
+    if (category === 'Level 1') {
+        level1Fields.classList.add('visible');
+    } else if (category === 'RTS' || category === 'ITS') {
+        rtsItsFields.classList.add('visible');
+    }
+}
+
     
 document.addEventListener('DOMContentLoaded', () => {
     autoLoad();
