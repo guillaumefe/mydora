@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -437,10 +439,11 @@ function renderRegulations() {
     regulationsList.innerHTML = filteredRegs.map(reg => `
         <div class="regulation-item">
             <div class="regulation-header">
-                <input type="checkbox" class="checkbox" ${reg.completed ? 'checked' : ''} onchange="toggleCompletion('${reg.id}')"> Compliant
+                <input type="checkbox" class="checkbox" ${reg.completed ? 'checked' : ''} onchange="toggleCompletion('${reg.id}')"> <strong>Compliant</strong>
             </div>
             <div class="regulation-content">
                 <div class="regulation-text">${reg.text}</div>
+                <code><i class="regulation-text">${reg.id}</i></code>
                 ${renderLinks(reg)}
                 <div class="actions-container">
                     <h4>Actions associées:</h4>
@@ -461,7 +464,7 @@ function filterRegulations() {
     const currentFilter = activeFilter || 'all';
     return regulations.filter(reg => {
         if (!reg) return false;
-        const textMatch = reg.text && reg.text.toLowerCase().includes(searchTerm);
+        const textMatch = reg.id && reg.id.toLowerCase().includes(searchTerm);
         const categoryMatch = currentFilter === 'all' || reg.category === currentFilter;
         return textMatch && categoryMatch;
     });
@@ -822,7 +825,7 @@ function toggleConditionalFields() {
     }
 }
 
-    
+   
 document.addEventListener('DOMContentLoaded', () => {
     autoLoad();
     document.getElementById('searchInput').addEventListener('input', handleSearchInput);
