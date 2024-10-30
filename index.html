@@ -681,6 +681,47 @@ function resetAll() {
     }
 }
 
+function addNewArticle() {
+    const category = document.getElementById('articleCategory').value;
+    const reference = document.getElementById('articleReference').value;
+    const text = document.getElementById('articleText').value;
+    const parsedRequirements = parseRequirementsFromText(text);
+
+    parsedRequirements.forEach(req => {
+        const articleId = `${reference}-${req.id}`;
+        const article = {
+            id: articleId,
+            category: category,
+            text: req.originalText,
+            fullPath: req.id,
+            parentChain: req.parentChain,
+            rtsLinks: [],
+            itsLinks: [],
+            level1Link: '',
+            actions: [],
+            completed: false
+        };
+
+        if (category === 'Level 1') {
+            article.rtsLinks = document.getElementById('rtsLink').value.split(',').map(s => s.trim()).filter(Boolean);
+            article.itsLinks = document.getElementById('itsLink').value.split(',').map(s => s.trim()).filter(Boolean);
+        } else if (category === 'RTS' || category === 'ITS') {
+            article.level1Link = document.getElementById('level1Link').value.trim();
+        }
+
+        const existingIndex = regulations.findIndex(reg => reg.id === articleId);
+        if (existingIndex !== -1) {
+            regulations[existingIndex] = article;
+        } else {
+            regulations.push(article);
+        }
+    });
+
+    renderRegulations();
+    autoSave();
+    resetArticleForm();
+        }
+    
 document.addEventListener('DOMContentLoaded', () => {
     autoLoad();
     document.getElementById('searchInput').addEventListener('input', handleSearchInput);
