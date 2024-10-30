@@ -14,11 +14,6 @@
     --warning-color: #f59e0b;
     --danger-color: #ef4444;
 }
-
-li {
-    margin-left:24px;
-}
-
 * {
     box-sizing: border-box;
     margin: 0;
@@ -258,7 +253,8 @@ body {
     align-items: center;
     width: 100%;
 }
-.action-edit-form input[type="text"] {
+.action-edit-form input[type="text"],
+.action-edit-form input[type="date"] {
     flex: 1;
     padding: 0.375rem 0.5rem;
     border: 1px solid var(--border-color);
@@ -413,6 +409,7 @@ body {
             <button class="button secondary" onclick="document.getElementById('importInput').click()">Importer</button>
             <input type="file" id="importInput" style="display: none" onchange="importData(event)">
             <button class="button secondary" onclick="resetAll()">Reset All</button>
+            <button class="button secondary" onclick="exportProject()">Export Projet</button>
         </div>
         <div class="search-container">
             <input type="text" class="input" id="searchInput" placeholder="Rechercher un article...">
@@ -426,16 +423,12 @@ body {
             <div class="tab" data-status="Documentation" onclick="handleStatusTabClick(event)">Documentation</div>
             <div class="tab" data-status="Actions with Risks" onclick="handleStatusTabClick(event)">Actions avec Risques</div>
         </div>
-       
-        <hr style="margin-bottom:14px"/>
-       
         <div class="filters" id="categoryFilters">
             <span class="category-filter active" data-category="all">Tous</span>
             <span class="category-filter" data-category="Level 1">Level 1</span>
             <span class="category-filter" data-category="RTS">RTS</span>
             <span class="category-filter" data-category="ITS">ITS</span>
         </div>
-       
         <div class="toggle-visibility" id="toggleVisibility" style="display: none;">
             <label><input type="checkbox" id="showCompliant" checked onchange="renderRegulations()"> Compliant</label>
             <label><input type="checkbox" id="showNonApplicable" checked onchange="renderRegulations()"> Non Applicable</label>
@@ -445,6 +438,8 @@ body {
     </div>
     <div id="regulationsList"></div>
 </div>
+<script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/shim.min.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 <script>
 let regulations = [];
 let activeFilter = 'all';
@@ -498,6 +493,11 @@ function renderActions(reg) {
                 <div class="action-edit-form">
                     <input type="text" class="action-edit-input" value="${action.text}" id="edit-text-${action.id}">
                     <input type="number" class="action-edit-percentage" value="${action.percentage || 0}" min="0" max="100" id="edit-percentage-${action.id}">
+                    <input type="text" class="action-edit-input" value="${action.assignedTo || ''}" id="edit-assignedTo-${action.id}" placeholder="Assigné à">
+                    <input type="text" class="action-edit-input" value="${action.responsible || ''}" id="edit-responsible-${action.id}" placeholder="Responsable">
+                    <input type="date" class="action-edit-input" value="${action.startDate || ''}" id="edit-startDate-${action.id}">
+                    <input type="date" class="action-edit-input" value="${action.endDate || ''}" id="edit-endDate-${action.id}">
+                    <input type="date" class="action-edit-input" value="${action.newDeadline || ''}" id="edit-newDeadline-${action.id}" placeholder="Nouvelle Deadline">
                     <button class="button" onclick="saveActionEdit('${reg.id}', ${action.id})">Sauvegarder</button>
                     <button class="button secondary" onclick="cancelActionEdit('${reg.id}', ${action.id})">Annuler</button>
                 </div>
@@ -508,6 +508,13 @@ function renderActions(reg) {
                         <div class="progress-fill" style="width: ${action.percentage || 0}%; background-color: ${getProgressColor(action)};"></div>
                     </div>
                     <span class="progress-value">${action.percentage || 0}%</span>
+                </div>
+                <div class="action-details">
+                    <div>Assigné à: ${action.assignedTo || 'N/A'}</div>
+                    <div>Responsable: ${action.responsible || 'N/A'}</div>
+                    <div>Date de début: ${action.startDate || 'N/A'}</div>
+                    <div>Date de fin: ${action.endDate || 'N/A'}</div>
+                    <div>Nouvelle Deadline: ${action.newDeadline || 'N/A'}</div>
                 </div>
                 <div class="action-buttons">
                     ${(reg.status === 'all' || reg.status === 'A faire' || reg.status === 'En cours') ? `
@@ -566,7 +573,12 @@ function renderProofLinks(reg) {
         <div class="proof-links">
             <strong>Liens de matérialité:</strong>
             <ul>
-                ${reg.proofLinks.map(link => `<li><a href="${link}" target="_blank">${link}</a></li>`).join('')}
+                ${reg.proofLinks.map((link, index) => `
+                    <li>
+                        <a href="${link}" target="_blank">${link}</a>
+                        <button class="button secondary" onclick="deleteProofLink('${reg.id}', ${index})">Supprimer</button>
+                    </li>
+                `).join('')}
             </ul>
         </div>
     `;
@@ -587,10 +599,11 @@ function renderJustificationList(reg) {
     if (!reg.justifications || reg.justifications.length === 0) return '';
     return `
         <div class="justification-list">
-            ${reg.justifications.map(justification => `
+            ${reg.justifications.map((justification, index) => `
                 <div class="justification-item">
                     <span>${justification.text}</span>
                     <span>${new Date(justification.timestamp).toLocaleString()}</span>
+                    <button class="button secondary" onclick="deleteJustification('${reg.id}', ${index})">Supprimer</button>
                 </div>
             `).join('')}
         </div>
@@ -632,6 +645,13 @@ function renderRegulations() {
                                     <div class="progress-fill" style="width: ${action.percentage || 0}%; background-color: ${getProgressColor(action)};"></div>
                                 </div>
                                 <span class="progress-value">${action.percentage || 0}%</span>
+                            </div>
+                            <div class="action-details">
+                                <div>Assigné à: ${action.assignedTo || 'N/A'}</div>
+                                <div>Responsable: ${action.responsible || 'N/A'}</div>
+                                <div>Date de début: ${action.startDate || 'N/A'}</div>
+                                <div>Date de fin: ${action.endDate || 'N/A'}</div>
+                                <div>Nouvelle Deadline: ${action.newDeadline || 'N/A'}</div>
                             </div>
                             <div class="action-buttons">
                                 <button class="button secondary" onclick="editAction('${reg.id}', ${action.id})">Éditer</button>
@@ -736,22 +756,35 @@ function renderRegulations() {
 
 function filterRegulation(reg) {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-    if (searchTerm && !reg.text.toLowerCase().includes(searchTerm) && !reg.id.toLowerCase().includes(searchTerm)) {
-        return false;
+
+    if (searchTerm) {
+        const inRegText = reg.text.toLowerCase().includes(searchTerm);
+        const inRegId = reg.id.toLowerCase().includes(searchTerm);
+       
+        // Recherche dans les actions pour le texte, "Assigné à", "Responsable", et "Description des risques"
+        const inActions = reg.actions.some(action => {
+            const inActionText = action.text.toLowerCase().includes(searchTerm);
+            const inAssignedTo = action.assignedTo && action.assignedTo.toLowerCase().includes(searchTerm);
+            const inResponsible = action.responsible && action.responsible.toLowerCase().includes(searchTerm);
+            const inRiskDescription = action.risks && action.risks.some(risk => risk.description && risk.description.toLowerCase().includes(searchTerm));
+            return inActionText || inAssignedTo || inResponsible || inRiskDescription;
+        });
+       
+        if (!inRegText && !inRegId && !inActions) {
+            return false;
+        }
     }
+
+    // Filtrage par catégorie
     if (activeFilter !== 'all' && reg.category !== activeFilter) {
         return false;
     }
+
+    // Filtrage par statut
     if (activeStatus === 'A faire') {
-        if (reg.status !== 'all' && reg.status !== 'A faire') {
-            return false;
-        }
         const totalProgress = reg.actions.reduce((sum, action) => sum + (action.percentage || 0), 0);
         if (totalProgress > 0) return false;
     } else if (activeStatus === 'En cours') {
-        if (reg.status !== 'all' && reg.status !== 'En cours') {
-            return false;
-        }
         const totalProgress = reg.actions.reduce((sum, action) => sum + (action.percentage || 0), 0);
         if (totalProgress === 0) return false;
     } else if (activeStatus === 'all') {
@@ -766,6 +799,7 @@ function filterRegulation(reg) {
     } else if (activeStatus !== 'all' && reg.status !== activeStatus) {
         return false;
     }
+
     return true;
 }
 
@@ -817,6 +851,32 @@ function addJustification(regulationId) {
         return reg;
     });
     input.value = '';
+    renderRegulations();
+    autoSave();
+}
+
+function deleteJustification(regulationId, index) {
+    regulations = regulations.map(reg => {
+        if (reg.id === regulationId) {
+            const newJustifications = [...reg.justifications];
+            newJustifications.splice(index, 1);
+            return { ...reg, justifications: newJustifications };
+        }
+        return reg;
+    });
+    renderRegulations();
+    autoSave();
+}
+
+function deleteProofLink(regulationId, index) {
+    regulations = regulations.map(reg => {
+        if (reg.id === regulationId) {
+            const newProofLinks = [...reg.proofLinks];
+            newProofLinks.splice(index, 1);
+            return { ...reg, proofLinks: newProofLinks };
+        }
+        return reg;
+    });
     renderRegulations();
     autoSave();
 }
@@ -884,7 +944,12 @@ function addAction(regulationId, actionText) {
                     text: actionText.trim(),
                     percentage: 0,
                     isEditing: false,
-                    risks: []
+                    risks: [],
+                    assignedTo: '',
+                    responsible: '',
+                    startDate: '',
+                    endDate: '',
+                    newDeadline: ''
                 }]
             };
         }
@@ -915,6 +980,11 @@ function editAction(regulationId, actionId) {
 function saveActionEdit(regulationId, actionId) {
     const newText = document.getElementById(`edit-text-${actionId}`).value;
     const newPercentage = parseInt(document.getElementById(`edit-percentage-${actionId}`).value);
+    const assignedTo = document.getElementById(`edit-assignedTo-${actionId}`).value.trim();
+    const responsible = document.getElementById(`edit-responsible-${actionId}`).value.trim();
+    const startDate = document.getElementById(`edit-startDate-${actionId}`).value;
+    const endDate = document.getElementById(`edit-endDate-${actionId}`).value;
+    const newDeadline = document.getElementById(`edit-newDeadline-${actionId}`).value;
     if (newText.trim() === '' || isNaN(newPercentage)) return;
     regulations = regulations.map(reg => {
         if (reg.id === regulationId) {
@@ -926,7 +996,12 @@ function saveActionEdit(regulationId, actionId) {
                             ...action,
                             text: newText.trim(),
                             percentage: newPercentage,
-                            isEditing: false
+                            isEditing: false,
+                            assignedTo,
+                            responsible,
+                            startDate,
+                            endDate,
+                            newDeadline
                           }
                         : action
                 )
@@ -1142,6 +1217,30 @@ function exportData() {
     linkElement.setAttribute('href', dataUri);
     linkElement.setAttribute('download', exportFileDefaultName);
     linkElement.click();
+}
+
+function exportProject() {
+    const wb = XLSX.utils.book_new();
+    const wsData = [];
+    wsData.push(['Action', 'Assigné à', 'Responsable', 'Date de début', 'Date de fin', 'Nouvelle Deadline', 'Progression']);
+    regulations.forEach(reg => {
+        reg.actions.forEach(action => {
+            if (reg.status === 'all' || reg.status === 'A faire' || reg.status === 'En cours') {
+                wsData.push([
+                    action.text,
+                    action.assignedTo || '',
+                    action.responsible || '',
+                    action.startDate || '',
+                    action.endDate || '',
+                    action.newDeadline || '',
+                    action.percentage || 0
+                ]);
+            }
+        });
+    });
+    const ws = XLSX.utils.aoa_to_sheet(wsData);
+    XLSX.utils.book_append_sheet(wb, ws, 'Projet');
+    XLSX.writeFile(wb, 'projet.xlsx');
 }
 
 function importData(event) {
