@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,8 +11,14 @@
     --text-color: #1f2937;
     --border-color: #e5e7eb;
     --success-color: #10b981;
+    --warning-color: #f59e0b;
     --danger-color: #ef4444;
 }
+
+li {
+    margin-left:24px;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -26,15 +31,14 @@ body {
     color: var(--text-color);
 }
 .container {
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
     padding: 1rem;
 }
 .card {
     background-color: var(--card-background);
     border-radius: 0.5rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    padding: 1.5rem;
+    padding: 1rem;
     margin-bottom: 1rem;
 }
 .header {
@@ -53,13 +57,13 @@ body {
 }
 .import-export-bar {
     display: flex;
-    gap: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
     background-color: var(--card-background);
     padding: 0.75rem;
     border-radius: 0.5rem;
     margin-bottom: 1rem;
     align-items: center;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 .search-container {
     margin-bottom: 1rem;
@@ -79,22 +83,16 @@ body {
     border-radius: 0.25rem;
     cursor: pointer;
     font-size: 1rem;
-    margin-right: 0.5rem;
-}
-.button:hover {
-    background-color: var(--secondary-color);
 }
 .button.secondary {
     background-color: transparent;
     border: 1px solid var(--primary-color);
     color: var(--primary-color);
 }
-.button.secondary:hover {
-    background-color: var(--background-color);
-}
 .filters {
     display: flex;
-    gap: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
     margin-bottom: 1rem;
 }
 .category-filter {
@@ -107,10 +105,25 @@ body {
     background-color: var(--primary-color);
     color: white;
 }
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+.tab {
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    background-color: var(--background-color);
+}
+.tab.active {
+    background-color: var(--primary-color);
+    color: white;
+}
 .add-article-container {
     background-color: var(--card-background);
     border-radius: 0.5rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     margin-bottom: 1rem;
     overflow: hidden;
 }
@@ -123,11 +136,8 @@ body {
     justify-content: space-between;
     align-items: center;
 }
-.form-header:hover {
-    background-color: var(--secondary-color);
-}
 .form-content {
-    padding: 1.5rem;
+    padding: 1rem;
     display: none;
 }
 .form-content.visible {
@@ -182,20 +192,10 @@ body {
 }
 .regulation-header {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 1rem;
+    gap: 0.5rem;
     margin-bottom: 1rem;
-}
-.regulation-header .checkbox {
-    flex-shrink: 0;
-    margin: 0;
-}
-.regulation-header .regulation-id {
-    font-weight: bold;
-}
-.regulation-header .regulation-category {
-    color: var(--primary-color);
-    font-size: 0.875rem;
 }
 .regulation-content {
     margin-left: 0;
@@ -213,22 +213,22 @@ body {
 }
 .action-item {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     padding: 0.75rem;
     background-color: var(--background-color);
     border-radius: 0.25rem;
     margin-bottom: 0.5rem;
-    gap: 1rem;
+    gap: 0.5rem;
 }
 .action-text {
     flex: 1;
 }
 .progress-container {
-    width: 200px;
+    width: 100%;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    margin-left: auto;
 }
 .progress-bar {
     flex: 1;
@@ -240,7 +240,7 @@ body {
 .progress-fill {
     height: 100%;
     background-color: var(--success-color);
-    transition: width 0.3s ease;
+    transition: width 0.3s ease, background-color 0.3s ease;
 }
 .progress-value {
     min-width: 3.5rem;
@@ -253,6 +253,7 @@ body {
 }
 .action-edit-form {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.5rem;
     align-items: center;
     width: 100%;
@@ -269,8 +270,9 @@ body {
     border: 1px solid var(--border-color);
     border-radius: 0.25rem;
 }
-.action-input-container {
+.action-input-container, .proof-input-container, .justification-input-container {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.5rem;
     margin-top: 0.5rem;
 }
@@ -283,6 +285,78 @@ body {
 }
 .save-status.visible {
     opacity: 1;
+}
+.justification-input, .proof-links {
+    margin-top: 0.5rem;
+}
+.justification-input input, .proof-links input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.25rem;
+    font-size: 1rem;
+}
+.risk-container {
+    margin-top: 0.5rem;
+}
+.risk-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    background-color: var(--card-background);
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+}
+.risk-item input[type="number"] {
+    width: 4rem;
+}
+.toggle-visibility {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    align-items: center;
+}
+.toggle-visibility label {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+.edit-regulation-form {
+    margin-bottom: 1rem;
+}
+.edit-regulation-form textarea {
+    width: 100%;
+    min-height: 150px;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.25rem;
+    font-size: 1rem;
+}
+.hidden {
+    display: none;
+}
+.justification-list {
+    margin-top: 0.5rem;
+}
+.justification-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: var(--background-color);
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
+}
+.justification-item span {
+    font-size: 0.875rem;
+}
+@media (min-width: 600px) {
+    .progress-container {
+        width: auto;
+    }
 }
 </style>
 </head>
@@ -311,8 +385,7 @@ body {
                 <label for="articleText">Texte de l'article</label>
                 <textarea id="articleText" class="input" placeholder="Entrez le texte de l'article"></textarea>
             </div>
-           
-<div class="conditional-fields" id="level1Fields">
+            <div class="conditional-fields" id="level1Fields">
                 <div class="form-group">
                     <label for="rtsLink">RTS associée(s)</label>
                     <input type="text" id="rtsLink" class="input" placeholder="ex: RTS-1, RTS-2">
@@ -334,7 +407,7 @@ body {
     </div>
     <div class="card header">
         <h1 class="title">Suivi de Conformité DORA</h1>
-        <div class="compliance-rate"></div>
+        <div class="compliance-rate">Taux de conformité: 0.0%</div>
         <div class="import-export-bar">
             <button class="button secondary" onclick="exportData()">Exporter</button>
             <button class="button secondary" onclick="document.getElementById('importInput').click()">Importer</button>
@@ -344,11 +417,29 @@ body {
         <div class="search-container">
             <input type="text" class="input" id="searchInput" placeholder="Rechercher un article...">
         </div>
+        <div class="tabs" id="statusTabs">
+            <div class="tab active" data-status="all" onclick="handleStatusTabClick(event)">Tous</div>
+            <div class="tab" data-status="A faire" onclick="handleStatusTabClick(event)">A faire</div>
+            <div class="tab" data-status="En cours" onclick="handleStatusTabClick(event)">En cours</div>
+            <div class="tab" data-status="Compliant" onclick="handleStatusTabClick(event)">Compliant</div>
+            <div class="tab" data-status="Non Applicable" onclick="handleStatusTabClick(event)">Non Applicable</div>
+            <div class="tab" data-status="Documentation" onclick="handleStatusTabClick(event)">Documentation</div>
+            <div class="tab" data-status="Actions with Risks" onclick="handleStatusTabClick(event)">Actions avec Risques</div>
+        </div>
+       
+        <hr style="margin-bottom:14px"/>
+       
         <div class="filters" id="categoryFilters">
             <span class="category-filter active" data-category="all">Tous</span>
             <span class="category-filter" data-category="Level 1">Level 1</span>
             <span class="category-filter" data-category="RTS">RTS</span>
             <span class="category-filter" data-category="ITS">ITS</span>
+        </div>
+       
+        <div class="toggle-visibility" id="toggleVisibility" style="display: none;">
+            <label><input type="checkbox" id="showCompliant" checked onchange="renderRegulations()"> Compliant</label>
+            <label><input type="checkbox" id="showNonApplicable" checked onchange="renderRegulations()"> Non Applicable</label>
+            <label><input type="checkbox" id="showDocumentation" checked onchange="renderRegulations()"> Documentation</label>
         </div>
         <span class="save-status" id="saveStatus">Modifications sauvegardées</span>
     </div>
@@ -357,10 +448,10 @@ body {
 <script>
 let regulations = [];
 let activeFilter = 'all';
+let activeStatus = 'all';
 
 function initializeRegulations() {
-    const initialRegulations = [];
-    return initialRegulations;
+    return [];
 }
 
 function toggleForm() {
@@ -388,7 +479,7 @@ function renderLinks(article) {
     let linksHtml = '';
     if (article.category === 'Level 1') {
         if (Array.isArray(article.rtsLinks) && article.rtsLinks.length > 0) {
-            linksHtml += `<div class="regulation-links"><div>RTS associées: ${article.rtsLinks.join(', ')}</div></div>`;
+            linksHtml += `<div class="regulation-links"><div>RTS associée(s): ${article.rtsLinks.join(', ')}</div></div>`;
         }
         if (Array.isArray(article.itsLinks) && article.itsLinks.length > 0) {
             linksHtml += `<div class="regulation-links"><div>ITS associée(s): ${article.itsLinks.join(', ')}</div></div>`;
@@ -399,104 +490,311 @@ function renderLinks(article) {
     return linksHtml;
 }
 
-function renderActions(article) {
-    if (!article || !Array.isArray(article.actions)) return '';
-    return article.actions.map(action => `
+function renderActions(reg) {
+    if (!reg || !Array.isArray(reg.actions)) return '';
+    return reg.actions.map(action => `
         <div class="action-item" id="action-${action.id}">
             ${action.isEditing ? `
                 <div class="action-edit-form">
                     <input type="text" class="action-edit-input" value="${action.text}" id="edit-text-${action.id}">
                     <input type="number" class="action-edit-percentage" value="${action.percentage || 0}" min="0" max="100" id="edit-percentage-${action.id}">
-                    <button class="button" onclick="saveActionEdit('${article.id}', ${action.id})">Sauvegarder</button>
-                    <button class="button secondary" onclick="cancelActionEdit('${article.id}', ${action.id})">Annuler</button>
+                    <button class="button" onclick="saveActionEdit('${reg.id}', ${action.id})">Sauvegarder</button>
+                    <button class="button secondary" onclick="cancelActionEdit('${reg.id}', ${action.id})">Annuler</button>
                 </div>
             ` : `
                 <span class="action-text">${action.text}</span>
                 <div class="progress-container">
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${action.percentage || 0}%"></div>
+                        <div class="progress-fill" style="width: ${action.percentage || 0}%; background-color: ${getProgressColor(action)};"></div>
                     </div>
                     <span class="progress-value">${action.percentage || 0}%</span>
                 </div>
                 <div class="action-buttons">
-                    <button class="button secondary" onclick="editAction('${article.id}', ${action.id})">Éditer</button>
-                    <button class="button secondary" onclick="removeAction('${article.id}', ${action.id})">Supprimer</button>
+                    ${(reg.status === 'all' || reg.status === 'A faire' || reg.status === 'En cours') ? `
+                        <button class="button secondary" onclick="editAction('${reg.id}', ${action.id})">Éditer</button>
+                        <button class="button secondary" onclick="removeAction('${reg.id}', ${action.id})">Supprimer</button>
+                        <button class="button secondary" onclick="addRisk('${reg.id}', ${action.id})">Ajouter Risque</button>
+                    ` : ''}
                 </div>
+                ${action.risks && action.risks.length > 0 ? `
+                    <div class="risk-container">
+                        <strong>Risques:</strong>
+                        ${action.risks.map(risk => `
+                            <div class="risk-item" id="risk-${risk.id}">
+                                ${risk.isEditing ? `
+                                    <div class="risk-edit-form">
+                                        <input type="number" min="1" max="5" value="${risk.severity}" id="edit-severity-${risk.id}">
+                                        <input type="number" min="1" max="5" value="${risk.likelihood}" id="edit-likelihood-${risk.id}">
+                                        <textarea id="edit-description-${risk.id}" class="input">${risk.description}</textarea>
+                                        <button class="button" onclick="saveRiskEdit('${reg.id}', ${action.id}, ${risk.id})">Sauvegarder</button>
+                                        <button class="button secondary" onclick="cancelRiskEdit('${reg.id}', ${action.id}, ${risk.id})">Annuler</button>
+                                    </div>
+                                ` : `
+                                    <div>
+                                        <span>Gravité: ${risk.severity}</span>
+                                        <span>Vraisemblance: ${risk.likelihood}</span>
+                                        <span>Niveau de Risque: ${risk.level}</span>
+                                    </div>
+                                    <div>Description: ${risk.description}</div>
+                                    <div class="action-buttons">
+                                        <button class="button secondary" onclick="editRisk('${reg.id}', ${action.id}, ${risk.id})">Éditer</button>
+                                        <button class="button secondary" onclick="deleteRisk('${reg.id}', ${action.id}, ${risk.id})">Supprimer</button>
+                                    </div>
+                                `}
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
             `}
         </div>
     `).join('');
 }
 
+function getProgressColor(action) {
+    if (!action.risks || action.risks.length === 0) {
+        return 'var(--success-color)';
+    }
+    const maxRisk = Math.max(...action.risks.map(r => r.level));
+    if (maxRisk <= 4) return 'var(--success-color)';
+    if (maxRisk <= 8) return 'var(--warning-color)';
+    return 'var(--danger-color)';
+}
+
+function renderProofLinks(reg) {
+    if (!reg.proofLinks || reg.proofLinks.length === 0) return '';
+    return `
+        <div class="proof-links">
+            <strong>Liens de matérialité:</strong>
+            <ul>
+                ${reg.proofLinks.map(link => `<li><a href="${link}" target="_blank">${link}</a></li>`).join('')}
+            </ul>
+        </div>
+    `;
+}
+
+function renderJustification(reg) {
+    if (reg.status !== 'Non Applicable') return '';
+    return `
+        <div class="justification-input-container">
+            <input type="text" class="input" id="justification-input-${reg.id}" placeholder="Ajouter une justification...">
+            <button class="button" onclick="addJustification('${reg.id}')">Ajouter</button>
+        </div>
+        ${renderJustificationList(reg)}
+    `;
+}
+
+function renderJustificationList(reg) {
+    if (!reg.justifications || reg.justifications.length === 0) return '';
+    return `
+        <div class="justification-list">
+            ${reg.justifications.map(justification => `
+                <div class="justification-item">
+                    <span>${justification.text}</span>
+                    <span>${new Date(justification.timestamp).toLocaleString()}</span>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
 function renderRegulations() {
-    const filteredRegs = filterRegulations();
     const regulationsList = document.getElementById('regulationsList');
     const complianceRate = document.querySelector('.compliance-rate');
     complianceRate.textContent = `Taux de conformité: ${calculateCompliance()}%`;
-    if (!Array.isArray(filteredRegs) || filteredRegs.length === 0) {
-        regulationsList.innerHTML = '<div>Aucune régulation trouvée</div>';
-        return;
-    }
-    regulationsList.innerHTML = filteredRegs.map(reg => `
-        <div class="regulation-item">
-            <div class="regulation-header">
-                <input type="checkbox" class="checkbox" ${reg.completed ? 'checked' : ''} onchange="toggleCompletion('${reg.id}')"> <strong>Compliant</strong>
-            </div>
-            <div class="regulation-content">
-                <div class="regulation-text">${reg.text}</div>
-                <code><i class="regulation-text">${reg.id}</i></code>
-                ${renderLinks(reg)}
-                <div class="actions-container">
-                    <h4>Actions associées:</h4>
-                    ${renderActions(reg)}
-                    <div class="action-input-container">
-                        <input type="text" class="input" id="action-input-${reg.id}" placeholder="Nouvelle action...">
-                        <button class="button" onclick="addAction('${reg.id}', document.getElementById('action-input-${reg.id}').value)">Ajouter</button>
+    regulationsList.innerHTML = '';
+    if (activeStatus === 'Actions with Risks') {
+        const actionsWithRisks = [];
+        regulations.forEach(reg => {
+            reg.actions.forEach(action => {
+                if ((reg.status === 'all' || reg.status === 'A faire' || reg.status === 'En cours') && action.risks && action.risks.length > 0) {
+                    actionsWithRisks.push({regulation: reg, action: action});
+                }
+            });
+        });
+        if (actionsWithRisks.length === 0) {
+            regulationsList.innerHTML = '<div>Aucune action avec risques trouvée</div>';
+            return;
+        }
+        actionsWithRisks.forEach(item => {
+            const reg = item.regulation;
+            const action = item.action;
+            if (!filterRegulation(reg)) return;
+            regulationsList.innerHTML += `
+                <div class="regulation-item">
+                    <div class="regulation-header">
+                        <strong>${reg.text} (${reg.id})</strong>
+                    </div>
+                    <div class="regulation-content">
+                        <div class="action-item" id="action-${action.id}">
+                            <span class="action-text">${action.text}</span>
+                            <div class="progress-container">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${action.percentage || 0}%; background-color: ${getProgressColor(action)};"></div>
+                                </div>
+                                <span class="progress-value">${action.percentage || 0}%</span>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="button secondary" onclick="editAction('${reg.id}', ${action.id})">Éditer</button>
+                                <button class="button secondary" onclick="removeAction('${reg.id}', ${action.id})">Supprimer</button>
+                                <button class="button secondary" onclick="addRisk('${reg.id}', ${action.id})">Ajouter Risque</button>
+                            </div>
+                            ${action.risks && action.risks.length > 0 ? `
+                                <div class="risk-container">
+                                    <strong>Risques:</strong>
+                                    ${action.risks.map(risk => `
+                                        <div class="risk-item" id="risk-${risk.id}">
+                                            ${risk.isEditing ? `
+                                                <div class="risk-edit-form">
+                                                    <input type="number" min="1" max="5" value="${risk.severity}" id="edit-severity-${risk.id}">
+                                                    <input type="number" min="1" max="5" value="${risk.likelihood}" id="edit-likelihood-${risk.id}">
+                                                    <textarea id="edit-description-${risk.id}" class="input">${risk.description}</textarea>
+                                                    <button class="button" onclick="saveRiskEdit('${reg.id}', ${action.id}, ${risk.id})">Sauvegarder</button>
+                                                    <button class="button secondary" onclick="cancelRiskEdit('${reg.id}', ${action.id}, ${risk.id})">Annuler</button>
+                                                </div>
+                                            ` : `
+                                                <div>
+                                                    <span>Gravité: ${risk.severity}</span>
+                                                    <span>Vraisemblance: ${risk.likelihood}</span>
+                                                    <span>Niveau de Risque: ${risk.level}</span>
+                                                </div>
+                                                <div>Description: ${risk.description}</div>
+                                                <div class="action-buttons">
+                                                    <button class="button secondary" onclick="editRisk('${reg.id}', ${action.id}, ${risk.id})">Éditer</button>
+                                                    <button class="button secondary" onclick="deleteRisk('${reg.id}', ${action.id}, ${risk.id})">Supprimer</button>
+                                                </div>
+                                            `}
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            ` : ''}
+                        </div>
                     </div>
                 </div>
+            `;
+        });
+        return;
+    }
+    if (activeStatus === 'all') {
+        document.getElementById('toggleVisibility').style.display = 'flex';
+    } else {
+        document.getElementById('toggleVisibility').style.display = 'none';
+    }
+    let filteredRegs = regulations.filter(filterRegulation);
+    if (filteredRegs.length === 0) {
+        regulationsList.innerHTML = '<div>Aucune exigence trouvée</div>';
+        return;
+    }
+    filteredRegs.forEach(reg => {
+        regulationsList.innerHTML += `
+            <div class="regulation-item">
+                <div class="regulation-header">
+                    <label><input type="radio" name="status-${reg.id}" class="checkbox" value="Compliant" ${reg.status === 'Compliant' ? 'checked' : ''} onchange="updateStatus('${reg.id}', 'Compliant')"> Compliant</label>
+                    <label><input type="radio" name="status-${reg.id}" class="checkbox" value="Non Applicable" ${reg.status === 'Non Applicable' ? 'checked' : ''} onchange="updateStatus('${reg.id}', 'Non Applicable')"> Non Applicable</label>
+                    <label><input type="radio" name="status-${reg.id}" class="checkbox" value="Documentation" ${reg.status === 'Documentation' ? 'checked' : ''} onchange="updateStatus('${reg.id}', 'Documentation')"> Documentation</label>
+                    <label><input type="radio" name="status-${reg.id}" class="checkbox" value="Tous" ${reg.status === 'all' ? 'checked' : ''} onchange="updateStatus('${reg.id}', 'Tous')"> Remettre dans Tous</label>
+                </div>
+                <div class="regulation-content">
+                    ${reg.isEditing ? `
+                        <div class="edit-regulation-form">
+                            <textarea id="edit-reg-text-${reg.id}" class="input">${reg.text}</textarea>
+                            <button class="button" onclick="saveRegulationEdit('${reg.id}')">Sauvegarder</button>
+                            <button class="button secondary" onclick="cancelRegulationEdit('${reg.id}')">Annuler</button>
+                        </div>
+                    ` : `
+                        <div class="regulation-text">${reg.text}</div>
+                        <div class="regulation-id"><i>${reg.id}</i></div>
+                        ${renderLinks(reg)}
+                        ${reg.status === 'Compliant' ? `
+                            <div class="proof-input-container">
+                                <input type="text" class="input" id="proof-input-${reg.id}" placeholder="Lien de matérialité...">
+                                <button class="button" onclick="addProof('${reg.id}', document.getElementById('proof-input-${reg.id}').value)">Ajouter</button>
+                            </div>
+                            ${renderProofLinks(reg)}
+                        ` : reg.status === 'Non Applicable' ? `
+                            ${renderJustification(reg)}
+                        ` : ''}
+                        <div class="actions-container">
+                            <h4>Actions associées:</h4>
+                            ${renderActions(reg)}
+                            ${(reg.status === 'all' || reg.status === 'A faire' || reg.status === 'En cours') ? `
+                                <div class="action-input-container">
+                                    <input type="text" class="input" id="action-input-${reg.id}" placeholder="Nouvelle action...">
+                                    <button class="button" onclick="addAction('${reg.id}', document.getElementById('action-input-${reg.id}').value)">Ajouter</button>
+                                </div>
+                            ` : ''}
+                        </div>
+                        <div class="action-buttons">
+                            <button class="button secondary" onclick="editRegulation('${reg.id}')">Éditer</button>
+                            <button class="button secondary" onclick="deleteRegulation('${reg.id}')">Supprimer</button>
+                        </div>
+                    `}
+                </div>
             </div>
-        </div>
-    `).join('');
+        `;
+    });
 }
 
-function filterRegulations() {
-    if (!Array.isArray(regulations)) return [];
+function filterRegulation(reg) {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-    const currentFilter = activeFilter || 'all';
-    return regulations.filter(reg => {
-        if (!reg) return false;
-        const textMatch = reg.id && reg.id.toLowerCase().includes(searchTerm);
-        const categoryMatch = currentFilter === 'all' || reg.category === currentFilter;
-        return textMatch && categoryMatch;
-    });
+    if (searchTerm && !reg.text.toLowerCase().includes(searchTerm) && !reg.id.toLowerCase().includes(searchTerm)) {
+        return false;
+    }
+    if (activeFilter !== 'all' && reg.category !== activeFilter) {
+        return false;
+    }
+    if (activeStatus === 'A faire') {
+        if (reg.status !== 'all' && reg.status !== 'A faire') {
+            return false;
+        }
+        const totalProgress = reg.actions.reduce((sum, action) => sum + (action.percentage || 0), 0);
+        if (totalProgress > 0) return false;
+    } else if (activeStatus === 'En cours') {
+        if (reg.status !== 'all' && reg.status !== 'En cours') {
+            return false;
+        }
+        const totalProgress = reg.actions.reduce((sum, action) => sum + (action.percentage || 0), 0);
+        if (totalProgress === 0) return false;
+    } else if (activeStatus === 'all') {
+        const showCompliant = document.getElementById('showCompliant').checked;
+        const showNonApplicable = document.getElementById('showNonApplicable').checked;
+        const showDocumentation = document.getElementById('showDocumentation').checked;
+        if ((reg.status === 'Compliant' && !showCompliant) ||
+            (reg.status === 'Non Applicable' && !showNonApplicable) ||
+            (reg.status === 'Documentation' && !showDocumentation)) {
+            return false;
+        }
+    } else if (activeStatus !== 'all' && reg.status !== activeStatus) {
+        return false;
+    }
+    return true;
 }
 
 function calculateCompliance() {
     let totalCompliance = 0;
-    let totalRequirements = regulations.length;
+    let totalApplicable = 0;
     regulations.forEach(reg => {
-        if (reg.completed) {
+        if (reg.status === 'Non Applicable' || reg.status === 'Documentation') return;
+        totalApplicable++;
+        if (reg.status === 'Compliant') {
             totalCompliance += 100;
         } else {
-            let actionCompliance = 0;
             if (reg.actions.length > 0) {
                 let totalActionProgress = reg.actions.reduce((sum, action) => sum + (action.percentage || 0), 0);
-                actionCompliance = totalActionProgress / reg.actions.length;
-            }
-            if (actionCompliance === 100) {
-                reg.completed = true;
-                totalCompliance += 100;
-            } else {
-                totalCompliance += actionCompliance;
+                let averageProgress = totalActionProgress / reg.actions.length;
+                totalCompliance += averageProgress;
             }
         }
     });
-    return totalRequirements ? (totalCompliance / totalRequirements).toFixed(1) : '0.0';
+    return totalApplicable ? (totalCompliance / totalApplicable).toFixed(1) : '0.0';
 }
 
-function toggleCompletion(regulationId) {
+function updateStatus(regulationId, status) {
     regulations = regulations.map(reg => {
         if (reg.id === regulationId) {
-            return { ...reg, completed: !reg.completed };
+            if (status === 'Tous') {
+                return { ...reg, status: 'all', justification: '', proofLinks: [], justifications: [] };
+            }
+            return { ...reg, status: status, justification: status !== 'Non Applicable' ? '' : reg.justification, proofLinks: status !== 'Compliant' ? [] : reg.proofLinks };
         }
         return reg;
     });
@@ -504,16 +802,89 @@ function toggleCompletion(regulationId) {
     autoSave();
 }
 
+function addJustification(regulationId) {
+    const input = document.getElementById(`justification-input-${regulationId}`);
+    const text = input.value.trim();
+    if (!text) return;
+    const timestamp = Date.now();
+    regulations = regulations.map(reg => {
+        if (reg.id === regulationId) {
+            return {
+                ...reg,
+                justifications: [...(reg.justifications || []), { text, timestamp }]
+            };
+        }
+        return reg;
+    });
+    input.value = '';
+    renderRegulations();
+    autoSave();
+}
+
+function addProof(regulationId, proofLink) {
+    if (!proofLink.trim()) return;
+    regulations = regulations.map(reg => {
+        if (reg.id === regulationId) {
+            return { ...reg, proofLinks: [...(reg.proofLinks || []), proofLink.trim()] };
+        }
+        return reg;
+    });
+    renderRegulations();
+    autoSave();
+    document.getElementById(`proof-input-${regulationId}`).value = '';
+}
+
+function editRegulation(regulationId) {
+    regulations = regulations.map(reg => {
+        if (reg.id === regulationId) {
+            return { ...reg, isEditing: true };
+        }
+        return reg;
+    });
+    renderRegulations();
+}
+
+function saveRegulationEdit(regulationId) {
+    const newText = document.getElementById(`edit-reg-text-${regulationId}`).value;
+    regulations = regulations.map(reg => {
+        if (reg.id === regulationId) {
+            return { ...reg, text: newText, isEditing: false };
+        }
+        return reg;
+    });
+    renderRegulations();
+    autoSave();
+}
+
+function cancelRegulationEdit(regulationId) {
+    regulations = regulations.map(reg => {
+        if (reg.id === regulationId) {
+            return { ...reg, isEditing: false };
+        }
+        return reg;
+    });
+    renderRegulations();
+}
+
+function deleteRegulation(regulationId) {
+    if (!confirm('Êtes-vous sûr de vouloir supprimer cette exigence ?')) return;
+    regulations = regulations.filter(reg => reg.id !== regulationId);
+    renderRegulations();
+    autoSave();
+}
+
 function addAction(regulationId, actionText) {
     if (!actionText.trim()) return;
-regulations = regulations.map(reg => {
+    regulations = regulations.map(reg => {
         if (reg.id === regulationId) {
             return {
                 ...reg,
                 actions: [...reg.actions, {
                     id: Date.now(),
-                    text: actionText,
-                    percentage: 0
+                    text: actionText.trim(),
+                    percentage: 0,
+                    isEditing: false,
+                    risks: []
                 }]
             };
         }
@@ -544,7 +915,7 @@ function editAction(regulationId, actionId) {
 function saveActionEdit(regulationId, actionId) {
     const newText = document.getElementById(`edit-text-${actionId}`).value;
     const newPercentage = parseInt(document.getElementById(`edit-percentage-${actionId}`).value);
-    if (newText.trim() === '') return;
+    if (newText.trim() === '' || isNaN(newPercentage)) return;
     regulations = regulations.map(reg => {
         if (reg.id === regulationId) {
             return {
@@ -553,7 +924,7 @@ function saveActionEdit(regulationId, actionId) {
                     action.id === actionId
                         ? {
                             ...action,
-                            text: newText,
+                            text: newText.trim(),
                             percentage: newPercentage,
                             isEditing: false
                           }
@@ -591,6 +962,152 @@ function removeAction(regulationId, actionId) {
             return {
                 ...reg,
                 actions: reg.actions.filter(action => action.id !== actionId)
+            };
+        }
+        return reg;
+    });
+    renderRegulations();
+    autoSave();
+}
+
+function addRisk(regulationId, actionId) {
+    const severity = prompt("Entrez le niveau de gravité (1-5):");
+    const likelihood = prompt("Entrez le niveau de vraisemblance (1-5):");
+    const description = prompt("Décrivez le risque:");
+    const severityNum = parseInt(severity);
+    const likelihoodNum = parseInt(likelihood);
+    if (isNaN(severityNum) || isNaN(likelihoodNum) || severityNum < 1 || severityNum > 5 || likelihoodNum < 1 || likelihoodNum > 5 || !description.trim()) {
+        alert("Entrées invalides. Veuillez vérifier vos entrées.");
+        return;
+    }
+    const riskLevel = severityNum * likelihoodNum;
+    regulations = regulations.map(reg => {
+        if (reg.id === regulationId) {
+            return {
+                ...reg,
+                actions: reg.actions.map(action => {
+                    if (action.id === actionId) {
+                        return {
+                            ...action,
+                            risks: [...(action.risks || []), {
+                                id: Date.now(),
+                                severity: severityNum,
+                                likelihood: likelihoodNum,
+                                level: riskLevel,
+                                description: description.trim(),
+                                isEditing: false
+                            }]
+                        };
+                    }
+                    return action;
+                })
+            };
+        }
+        return reg;
+    });
+    renderRegulations();
+    autoSave();
+}
+
+function editRisk(regulationId, actionId, riskId) {
+    regulations = regulations.map(reg => {
+        if (reg.id === regulationId) {
+            return {
+                ...reg,
+                actions: reg.actions.map(action => {
+                    if (action.id === actionId) {
+                        return {
+                            ...action,
+                            risks: action.risks.map(risk =>
+                                risk.id === riskId
+                                    ? { ...risk, isEditing: true }
+                                    : risk
+                            )
+                        };
+                    }
+                    return action;
+                })
+            };
+        }
+        return reg;
+    });
+    renderRegulations();
+}
+
+function saveRiskEdit(regulationId, actionId, riskId) {
+    const severity = parseInt(document.getElementById(`edit-severity-${riskId}`).value);
+    const likelihood = parseInt(document.getElementById(`edit-likelihood-${riskId}`).value);
+    const description = document.getElementById(`edit-description-${riskId}`).value.trim();
+    if (isNaN(severity) || isNaN(likelihood) || severity < 1 || severity > 5 || likelihood < 1 || likelihood > 5 || !description) {
+        alert("Entrées invalides. Veuillez vérifier vos entrées.");
+        return;
+    }
+    const riskLevel = severity * likelihood;
+    regulations = regulations.map(reg => {
+        if (reg.id === regulationId) {
+            return {
+                ...reg,
+                actions: reg.actions.map(action => {
+                    if (action.id === actionId) {
+                        return {
+                            ...action,
+                            risks: action.risks.map(risk =>
+                                risk.id === riskId
+                                    ? { ...risk, severity, likelihood, level: riskLevel, description, isEditing: false }
+                                    : risk
+                            )
+                        };
+                    }
+                    return action;
+                })
+            };
+        }
+        return reg;
+    });
+    renderRegulations();
+    autoSave();
+}
+
+function cancelRiskEdit(regulationId, actionId, riskId) {
+    regulations = regulations.map(reg => {
+        if (reg.id === regulationId) {
+            return {
+                ...reg,
+                actions: reg.actions.map(action => {
+                    if (action.id === actionId) {
+                        return {
+                            ...action,
+                            risks: action.risks.map(risk =>
+                                risk.id === riskId
+                                    ? { ...risk, isEditing: false }
+                                    : risk
+                            )
+                        };
+                    }
+                    return action;
+                })
+            };
+        }
+        return reg;
+    });
+    renderRegulations();
+}
+
+function deleteRisk(regulationId, actionId, riskId) {
+    if (!confirm('Êtes-vous sûr de vouloir supprimer ce risque ?')) return;
+    regulations = regulations.map(reg => {
+        if (reg.id === regulationId) {
+            return {
+                ...reg,
+                actions: reg.actions.map(action => {
+                    if (action.id === actionId) {
+                        return {
+                            ...action,
+                            risks: action.risks.filter(risk => risk.id !== riskId)
+                        };
+                    }
+                    return action;
+                })
             };
         }
         return reg;
@@ -645,7 +1162,6 @@ function importData(event) {
 }
 
 function handleSearchInput(event) {
-    searchTerm = event.target.value;
     renderRegulations();
 }
 
@@ -654,6 +1170,15 @@ function handleCategoryFilter(event) {
         document.querySelectorAll('.category-filter').forEach(filter => filter.classList.remove('active'));
         event.target.classList.add('active');
         activeFilter = event.target.dataset.category;
+        renderRegulations();
+    }
+}
+
+function handleStatusTabClick(event) {
+    if (event.target.classList.contains('tab')) {
+        document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+        event.target.classList.add('active');
+        activeStatus = event.target.dataset.status;
         renderRegulations();
     }
 }
@@ -671,15 +1196,10 @@ function resetArticleForm() {
 
 function resetAll() {
     const confirmReset = confirm('⚠️ ATTENTION : Vous êtes sur le point de réinitialiser TOUTE l\'application et supprimer TOUTES les données. Cette action est irréversible. Voulez-vous vraiment continuer ?');
-   
     if (confirmReset) {
-        // Reset des données
         regulations = initializeRegulations();
-        // Sauvegarde du nouvel état
         autoSave();
-        // Reset du formulaire
         resetArticleForm();
-        // Mise à jour de l'affichage
         renderRegulations();
     }
 }
@@ -689,7 +1209,6 @@ function addNewArticle() {
     const reference = document.getElementById('articleReference').value;
     const text = document.getElementById('articleText').value;
     const parsedRequirements = parseRequirementsFromText(text);
-
     parsedRequirements.forEach(req => {
         const articleId = `${reference}-${req.id}`;
         const article = {
@@ -702,16 +1221,17 @@ function addNewArticle() {
             itsLinks: [],
             level1Link: '',
             actions: [],
-            completed: false
+            status: 'all',
+            justification: '',
+            proofLinks: [],
+            justifications: []
         };
-
         if (category === 'Level 1') {
             article.rtsLinks = document.getElementById('rtsLink').value.split(',').map(s => s.trim()).filter(Boolean);
             article.itsLinks = document.getElementById('itsLink').value.split(',').map(s => s.trim()).filter(Boolean);
         } else if (category === 'RTS' || category === 'ITS') {
             article.level1Link = document.getElementById('level1Link').value.trim();
         }
-
         const existingIndex = regulations.findIndex(reg => reg.id === articleId);
         if (existingIndex !== -1) {
             regulations[existingIndex] = article;
@@ -719,32 +1239,26 @@ function addNewArticle() {
             regulations.push(article);
         }
     });
-
     renderRegulations();
     autoSave();
     resetArticleForm();
-        }
+}
 
 function parseRequirementsFromText(text) {
     const lines = text.split(/\r?\n/);
     const requirements = [];
     let parentChain = [];
-
     lines.forEach((line, index) => {
         const content = line.trim();
         if (!content) return;
-
         const indentation = line.search(/\S|$/);
         const level = Math.floor(indentation / 2);
-
         parentChain = parentChain.slice(0, level);
         parentChain[level] = content;
-
         const nextLine = lines[index + 1];
         const nextIndentation = nextLine ? nextLine.search(/\S|$/) : -1;
         const nextLevel = Math.floor(nextIndentation / 2);
         const isLeaf = index === lines.length - 1 || nextLevel <= level;
-
         if (isLeaf) {
             const fullPath = parentChain.slice(0, level + 1).join('.');
             const requirement = {
@@ -756,80 +1270,14 @@ function parseRequirementsFromText(text) {
             requirements.push(requirement);
         }
     });
-
     return requirements;
 }
 
-function addNewArticle() {
-    const category = document.getElementById('articleCategory').value;
-    const reference = document.getElementById('articleReference').value;
-    const text = document.getElementById('articleText').value;
-    const parsedRequirements = parseRequirementsFromText(text);
-
-    parsedRequirements.forEach(req => {
-        const articleId = `${reference}-${req.id}`;
-        const article = {
-            id: articleId,
-            category: category,
-            text: req.originalText,
-            fullPath: req.id,
-            parentChain: req.parentChain,
-            rtsLinks: [],
-            itsLinks: [],
-            level1Link: '',
-            actions: [],
-            completed: false
-        };
-
-        if (category === 'Level 1') {
-            article.rtsLinks = document.getElementById('rtsLink').value.split(',').map(s => s.trim()).filter(Boolean);
-            article.itsLinks = document.getElementById('itsLink').value.split(',').map(s => s.trim()).filter(Boolean);
-        } else if (category === 'RTS' || category === 'ITS') {
-            article.level1Link = document.getElementById('level1Link').value.trim();
-        }
-
-        const existingIndex = regulations.findIndex(reg => reg.id === articleId);
-        if (existingIndex !== -1) {
-            regulations[existingIndex] = article;
-        } else {
-            regulations.push(article);
-        }
-    });
-
-    renderRegulations();
-    autoSave();
-    resetArticleForm();
-}
-
-function resetArticleForm() {
-    document.getElementById('articleCategory').value = '';
-    document.getElementById('articleReference').value = '';
-    document.getElementById('articleText').value = '';
-    document.getElementById('rtsLink').value = '';
-    document.getElementById('itsLink').value = '';
-    document.getElementById('level1Link').value = '';
-    toggleConditionalFields();
-}
-
-function toggleConditionalFields() {
-    const category = document.getElementById('articleCategory').value;
-    const level1Fields = document.getElementById('level1Fields');
-    const rtsItsFields = document.getElementById('rtsItsFields');
-    level1Fields.classList.remove('visible');
-    rtsItsFields.classList.remove('visible');
-
-    if (category === 'Level 1') {
-        level1Fields.classList.add('visible');
-    } else if (category === 'RTS' || category === 'ITS') {
-        rtsItsFields.classList.add('visible');
-    }
-}
-
-   
 document.addEventListener('DOMContentLoaded', () => {
     autoLoad();
     document.getElementById('searchInput').addEventListener('input', handleSearchInput);
     document.getElementById('categoryFilters').addEventListener('click', handleCategoryFilter);
+    document.getElementById('statusTabs').addEventListener('click', handleStatusTabClick);
     renderRegulations();
 });
 </script>
