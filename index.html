@@ -1,0 +1,641 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+:root {
+    --primary-color: #3b82f6;
+    --secondary-color: #1d4ed8;
+    --background-color: #f3f4f6;
+    --card-background: #ffffff;
+    --text-color: #1f2937;
+    --border-color: #e5e7eb;
+    --success-color: #10b981;
+    --danger-color: #ef4444;
+}
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.5;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+.card {
+    background-color: var(--card-background);
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+.header {
+    margin-bottom: 1.5rem;
+}
+.title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+.compliance-rate {
+    font-size: 1.25rem;
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+.import-export-bar {
+    display: flex;
+    gap: 1rem;
+    background-color: var(--card-background);
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    align-items: center;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.search-container {
+    margin-bottom: 1rem;
+}
+.input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.25rem;
+    font-size: 1rem;
+}
+.button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-right: 0.5rem;
+}
+.button:hover {
+    background-color: var(--secondary-color);
+}
+.button.secondary {
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+}
+.button.secondary:hover {
+    background-color: var(--background-color);
+}
+.filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+.category-filter {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    background-color: var(--background-color);
+}
+.category-filter.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+.add-article-container {
+    background-color: var(--card-background);
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+.form-header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.form-header:hover {
+    background-color: var(--secondary-color);
+}
+.form-content {
+    padding: 1.5rem;
+    display: none;
+}
+.form-content.visible {
+    display: block;
+}
+.form-group {
+    margin-bottom: 1rem;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+.form-group select,
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    margin-top: 0.25rem;
+}
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+.conditional-fields {
+    padding-left: 1rem;
+    border-left: 2px solid var(--primary-color);
+    margin-top: 1rem;
+    display: none;
+}
+.conditional-fields.visible {
+    display: block;
+}
+.error-message {
+    color: var(--danger-color);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: none;
+}
+.error-message.visible {
+    display: block;
+}
+.regulation-item {
+    border: 1px solid var(--border-color);
+    border-radius: 0.25rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: var(--card-background);
+}
+.regulation-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+.regulation-header .checkbox {
+    flex-shrink: 0;
+    margin: 0;
+}
+.regulation-header .regulation-id {
+    font-weight: bold;
+}
+.regulation-header .regulation-category {
+    color: var(--primary-color);
+    font-size: 0.875rem;
+}
+.regulation-content {
+    margin-left: 0;
+}
+.regulation-text {
+    margin-bottom: 1rem;
+}
+.regulation-links {
+    margin: 0.5rem 0;
+    font-size: 0.875rem;
+    color: var(--secondary-color);
+}
+.actions-container {
+    margin-top: 1rem;
+}
+.action-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    background-color: var(--background-color);
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
+    gap: 1rem;
+}
+.action-text {
+    flex: 1;
+}
+.progress-container {
+    width: 200px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+}
+.progress-bar {
+    flex: 1;
+    height: 8px;
+    background-color: var(--background-color);
+    border-radius: 4px;
+    overflow: hidden;
+}
+.progress-fill {
+    height: 100%;
+    background-color: var(--success-color);
+    transition: width 0.3s ease;
+}
+.progress-value {
+    min-width: 3.5rem;
+    text-align: right;
+    font-size: 0.875rem;
+}
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+.action-edit-form {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    width: 100%;
+}
+.action-edit-form input[type="text"] {
+    flex: 1;
+    padding: 0.375rem 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.25rem;
+}
+.action-edit-form input[type="number"] {
+    width: 5rem;
+    padding: 0.375rem 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.25rem;
+}
+.action-input-container {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+.save-status {
+    font-size: 0.875rem;
+    color: var(--primary-color);
+    margin-left: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.save-status.visible {
+    opacity: 1;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="add-article-container">
+        <div class="form-header" onclick="toggleForm()">
+            <span>Ajouter un nouvel article</span>
+            <span id="form-toggle">▼</span>
+        </div>
+        <div class="form-content" id="articleForm">
+            <div class="form-group">
+                <label for="articleCategory">Catégorie</label>
+                <select id="articleCategory" class="input" onchange="toggleConditionalFields()">
+                    <option value="">Sélectionnez une catégorie</option>
+                    <option value="Level 1">Level 1</option>
+                    <option value="RTS">RTS</option>
+                    <option value="ITS">ITS</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="articleReference">Référence</label>
+                <input type="text" id="articleReference" class="input" placeholder="ex: L1-1, RTS-1, ITS-1">
+            </div>
+            <div class="form-group">
+                <label for="articleText">Texte de l'article</label>
+                <textarea id="articleText" class="input" placeholder="Entrez le texte de l'article"></textarea>
+            </div>
+           
+<div class="conditional-fields" id="level1Fields">
+                <div class="form-group">
+                    <label for="rtsLink">RTS associée(s)</label>
+                    <input type="text" id="rtsLink" class="input" placeholder="ex: RTS-1, RTS-2">
+                </div>
+                <div class="form-group">
+                    <label for="itsLink">ITS associée(s)</label>
+                    <input type="text" id="itsLink" class="input" placeholder="ex: ITS-1, ITS-2">
+                </div>
+            </div>
+            <div class="conditional-fields" id="rtsItsFields">
+                <div class="form-group">
+                    <label for="level1Link">Article Level 1 associé</label>
+                    <input type="text" id="level1Link" class="input" placeholder="ex: L1-1">
+                </div>
+            </div>
+            <div class="error-message" id="formError"></div>
+            <button class="button" onclick="addNewArticle()">Ajouter l'article</button>
+        </div>
+    </div>
+    <div class="card header">
+        <h1 class="title">Suivi de Conformité DORA</h1>
+        <div class="compliance-rate"></div>
+        <div class="import-export-bar">
+            <button class="button secondary" onclick="exportData()">Exporter</button>
+            <button class="button secondary" onclick="document.getElementById('importInput').click()">Importer</button>
+            <input type="file" id="importInput" style="display: none" onchange="importData(event)">
+            <button class="button secondary" onclick="resetAll()">Reset All</button>
+        </div>
+        <div class="search-container">
+            <input type="text" class="input" id="searchInput" placeholder="Rechercher un article...">
+        </div>
+        <div class="filters" id="categoryFilters">
+            <span class="category-filter active" data-category="all">Tous</span>
+            <span class="category-filter" data-category="Level 1">Level 1</span>
+            <span class="category-filter" data-category="RTS">RTS</span>
+            <span class="category-filter" data-category="ITS">ITS</span>
+        </div>
+        <span class="save-status" id="saveStatus">Modifications sauvegardées</span>
+    </div>
+    <div id="regulationsList"></div>
+</div>
+<script>
+let regulations = [];
+let activeFilter = 'all';
+
+function initializeRegulations() {
+    const initialRegulations = [];
+    return initialRegulations;
+}
+
+function toggleForm() {
+    const formContent = document.getElementById('articleForm');
+    const formToggle = document.getElementById('form-toggle');
+    formContent.classList.toggle('visible');
+    formToggle.textContent = formContent.classList.contains('visible') ? '▲' : '▼';
+}
+
+function toggleConditionalFields() {
+    const category = document.getElementById('articleCategory').value;
+    const level1Fields = document.getElementById('level1Fields');
+    const rtsItsFields = document.getElementById('rtsItsFields');
+    level1Fields.classList.remove('visible');
+    rtsItsFields.classList.remove('visible');
+    if (category === 'Level 1') {
+        level1Fields.classList.add('visible');
+    } else if (category === 'RTS' || category === 'ITS') {
+        rtsItsFields.classList.add('visible');
+    }
+}
+
+function renderLinks(article) {
+    if (!article) return '';
+    let linksHtml = '';
+    if (article.category === 'Level 1') {
+        if (Array.isArray(article.rtsLinks) && article.rtsLinks.length > 0) {
+            linksHtml += `<div class="regulation-links"><div>RTS associées: ${article.rtsLinks.join(', ')}</div></div>`;
+        }
+        if (Array.isArray(article.itsLinks) && article.itsLinks.length > 0) {
+            linksHtml += `<div class="regulation-links"><div>ITS associée(s): ${article.itsLinks.join(', ')}</div></div>`;
+        }
+    } else if (article.category !== 'Level 1' && article.level1Link) {
+        linksHtml += `<div class="regulation-links">Article Level 1 associé: ${article.level1Link}</div>`;
+    }
+    return linksHtml;
+}
+
+function renderActions(article) {
+    if (!article || !Array.isArray(article.actions)) return '';
+    return article.actions.map(action => `
+        <div class="action-item" id="action-${action.id}">
+            ${action.isEditing ? `
+                <div class="action-edit-form">
+                    <input type="text" class="action-edit-input" value="${action.text}" id="edit-text-${action.id}">
+                    <input type="number" class="action-edit-percentage" value="${action.percentage || 0}" min="0" max="100" id="edit-percentage-${action.id}">
+                    <button class="button" onclick="saveActionEdit('${article.id}', ${action.id})">Sauvegarder</button>
+                    <button class="button secondary" onclick="cancelActionEdit('${article.id}', ${action.id})">Annuler</button>
+                </div>
+            ` : `
+                <span class="action-text">${action.text}</span>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${action.percentage || 0}%"></div>
+                    </div>
+                    <span class="progress-value">${action.percentage || 0}%</span>
+                </div>
+                <div class="action-buttons">
+                    <button class="button secondary" onclick="editAction('${article.id}', ${action.id})">Éditer</button>
+                    <button class="button secondary" onclick="removeAction('${article.id}', ${action.id})">Supprimer</button>
+                </div>
+            `}
+        </div>
+    `).join('');
+}
+
+function renderRegulations() {
+    const filteredRegs = filterRegulations();
+    const regulationsList = document.getElementById('regulationsList');
+    const complianceRate = document.querySelector('.compliance-rate');
+    complianceRate.textContent = `Taux de conformité: ${calculateCompliance()}%`;
+    if (!Array.isArray(filteredRegs) || filteredRegs.length === 0) {
+        regulationsList.innerHTML = '<div>Aucune régulation trouvée</div>';
+        return;
+    }
+    regulationsList.innerHTML = filteredRegs.map(reg => `
+        <div class="regulation-item">
+            <div class="regulation-header">
+                <input type="checkbox" class="checkbox" ${reg.completed ? 'checked' : ''} onchange="toggleCompletion('${reg.id}')"> Compliant
+            </div>
+            <div class="regulation-content">
+                <div class="regulation-text">${reg.text}</div>
+                ${renderLinks(reg)}
+                <div class="actions-container">
+                    <h4>Actions associées:</h4>
+                    ${renderActions(reg)}
+                    <div class="action-input-container">
+                        <input type="text" class="input" id="action-input-${reg.id}" placeholder="Nouvelle action...">
+                        <button class="button" onclick="addAction('${reg.id}', document.getElementById('action-input-${reg.id}').value)">Ajouter</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function filterRegulations() {
+    if (!Array.isArray(regulations)) return [];
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const currentFilter = activeFilter || 'all';
+    return regulations.filter(reg => {
+        if (!reg) return false;
+        const textMatch = reg.text && reg.text.toLowerCase().includes(searchTerm);
+        const categoryMatch = currentFilter === 'all' || reg.category === currentFilter;
+        return textMatch && categoryMatch;
+    });
+}
+
+function calculateCompliance() {
+    let totalCompliance = 0;
+    let totalRequirements = regulations.length;
+    regulations.forEach(reg => {
+        if (reg.completed) {
+            totalCompliance += 100;
+        } else {
+            let actionCompliance = 0;
+            if (reg.actions.length > 0) {
+                let totalActionProgress = reg.actions.reduce((sum, action) => sum + (action.percentage || 0), 0);
+                actionCompliance = totalActionProgress / reg.actions.length;
+            }
+            if (actionCompliance === 100) {
+                reg.completed = true;
+                totalCompliance += 100;
+            } else {
+                totalCompliance += actionCompliance;
+            }
+        }
+    });
+    return totalRequirements ? (totalCompliance / totalRequirements).toFixed(1) : '0.0';
+}
+
+function toggleCompletion(regulationId) {
+    regulations = regulations.map(reg => {
+        if (reg.id === regulationId) {
+            return { ...reg, completed: !reg.completed };
+        }
+        return reg;
+    });
+    renderRegulations();
+    autoSave();
+}
+
+function addAction(regulationId, actionText) {
+    if (!actionText.trim()) return;
+regulations = regulations.map(reg => {
+        if (reg.id === regulationId) {
+            return {
+                ...reg,
+                actions: [...reg.actions, {
+                    id: Date.now(),
+                    text: actionText,
+                    percentage: 0
+                }]
+            };
+        }
+        return reg;
+    });
+    renderRegulations();
+    autoSave();
+    document.getElementById(`action-input-${regulationId}`).value = '';
+}
+
+function editAction(regulationId, actionId) {
+    regulations = regulations.map(reg => {
+        if (reg.id === regulationId) {
+            return {
+                ...reg,
+                actions: reg.actions.map(action =>
+                    action.id === actionId
+                        ? { ...action, isEditing: true }
+                        : action
+                )
+            };
+        }
+        return reg;
+    });
+    renderRegulations();
+}
+
+function saveActionEdit(regulationId, actionId) {
+    const newText = document.getElementById(`edit-text-${actionId}`).value;
+    const newPercentage = parseInt(document.getElementById(`edit-percentage-${actionId}`).value);
+    if (newText.trim() === '') return;
+    regulations = regulations.map(reg => {
+        if (reg.id === regulationId) {
+            return {
+                ...reg,
+                actions: reg.actions.map(action =>
+                    action.id === actionId
+                        ? {
+                            ...action,
+                            text: newText,
+                            percentage: newPercentage,
+                            isEditing: false
+                          }
+                        : action
+                )
+            };
+        }
+        return reg;
+    });
+    renderRegulations();
+    autoSave();
+}
+
+function cancelActionEdit(regulationId, actionId) {
+    regulations = regulations.map(reg => {
+        if (reg.id === regulationId) {
+            return {
+                ...reg,
+                actions: reg.actions.map(action =>
+                    action.id === actionId
+                        ? { ...action, isEditing: false }
+                        : action
+                )
+            };
+        }
+        return reg;
+    });
+    renderRegulations();
+}
+
+function removeAction(regulationId, actionId) {
+    if (!confirm('Êtes-vous sûr de vouloir supprimer cette action ?')) return;
+    regulations = regulations.map(reg => {
+        if (reg.id === regulationId) {
+            return {
+                ...reg,
+                actions: reg.actions.filter(action => action.id !== actionId)
+            };
+        }
+        return reg;
+    });
+    renderRegulations();
+    autoSave();
+}
+
+function autoSave() {
+    localStorage.setItem('doraCompliance', JSON.stringify(regulations));
+    const saveStatus = document.getElementById('saveStatus');
+    saveStatus.classList.add('visible');
+    setTimeout(() => {
+        saveStatus.classList.remove('visible');
+    }, 2000);
+}
+
+function autoLoad() {
+    const savedState = localStorage.getItem('doraCompliance');
+    if (savedState) {
+        regulations = JSON.parse(savedState);
+    } else {
+        regulations = initializeRegulations();
+    }
+}
+
+function exportData() {
+    const dataStr = JSON.stringify(regulations, null, 2);
+    const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+    const exportFileDefaultName = 'dora-compliance.json';
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
+}
+
+function importData(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const importedData = JSON.parse(e.target.result);
+            regulations = importedData;
+            autoSave();
+            renderRegulations();
+        } catch (error) {
+            alert('Erreur lors de l\'importation du fichier. Assurez-vous que le format est correct.');
+        }
+    };
+    reader.readAsText(fil
