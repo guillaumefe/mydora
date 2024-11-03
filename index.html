@@ -614,6 +614,347 @@ body {
     align-items: center;
     margin-bottom: var(--space-3);
 }
+
+/* Styles pour les sections principales */
+.regulation-item {
+    background-color: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--space-6);
+    border: 1px solid var(--gray-200);
+    transition: box-shadow 0.2s ease;
+}
+
+.regulation-item:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.regulation-header {
+    background-color: var(--gray-50);
+    border-top-left-radius: var(--radius-lg);
+    border-top-right-radius: var(--radius-lg);
+    padding: var(--space-4);
+    border-bottom: 2px solid var(--primary-100);
+    gap: var(--space-4);
+}
+
+.regulation-content {
+    padding: var(--space-4);
+}
+
+/* Style pour le texte de l'exigence */
+.regulation-text {
+    font-size: 1.1rem;
+    color: var(--gray-800);
+    padding: var(--space-4);
+    background-color: var(--primary-50);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-4);
+    border-left: 4px solid var(--primary-500);
+}
+
+.regulation-id {
+    color: var(--gray-500);
+    margin-bottom: var(--space-4);
+    font-size: 0.9rem;
+}
+
+/* Style pour la section RACI */
+.raci-container {
+    background-color: var(--gray-50);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    margin: var(--space-4) 0;
+    border: 1px solid var(--gray-200);
+}
+
+.raci-container h4 {
+    color: var(--gray-700);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-2);
+    border-bottom: 2px solid var(--primary-200);
+}
+
+/* Style pour les actions */
+.actions-container {
+    background-color: white;
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    margin-top: var(--space-4);
+    border: 1px solid var(--gray-200);
+}
+
+.actions-container h4 {
+    color: var(--gray-700);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-2);
+    border-bottom: 2px solid var(--primary-200);
+}
+
+.action-item {
+    background-color: var(--gray-50);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-3);
+    border: 1px solid var(--gray-200);
+    overflow: hidden;
+}
+
+.action-header {
+    background-color: white;
+    padding: var(--space-3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.action-content {
+    padding: var(--space-3);
+}
+
+/* Style pour les risques */
+.risk-item {
+    background-color: white;
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    margin-bottom: var(--space-3);
+    border: 1px solid var(--warning-200);
+    border-left: 4px solid var(--warning-500);
+}
+
+/* Style pour les remédiations */
+.remediation-actions {
+    margin-left: var(--space-4);
+    margin-top: var(--space-3);
+}
+
+.remediation-item {
+    background-color: var(--success-50);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    margin-bottom: var(--space-2);
+    border: 1px solid var(--success-200);
+    border-left: 4px solid var(--success-500);
+}
+
+/* Buttons améliorés */
+.button {
+    font-weight: 500;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
+}
+
+.button.secondary {
+    border: 1px solid var(--gray-200);
+    background-color: white;
+}
+
+.button.secondary:hover {
+    background-color: var(--gray-50);
+    border-color: var(--gray-300);
+}
+
+/* Status badges pour les risques */
+.risk-level {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-left: var(--space-2);
+}
+
+.risk-level.high {
+    background-color: var(--danger-50);
+    color: var(--danger-600);
+}
+
+.risk-level.medium {
+    background-color: var(--warning-50);
+    color: var(--warning-600);
+}
+
+.risk-level.low {
+    background-color: var(--success-50);
+    color: var(--success-600);
+}
+
+/* Animation pour le collapse */
+.action-content {
+    transition: all 0.3s ease-in-out;
+}
+
+.action-item.collapsed .action-content {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* Séparateurs visuels */
+.section-divider {
+    height: 1px;
+    background-color: var(--gray-200);
+    margin: var(--space-4) 0;
+}
+
+/* Input groups */
+.action-input-container {
+    display: flex;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+    padding: var(--space-3);
+    background-color: var(--gray-50);
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--gray-300);
+}
+
+.action-input-container .input {
+    flex: 1;
+}
+
+/* Styles pour la boîte de dialogue de confirmation */
+.confirm-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.confirm-dialog.visible {
+    opacity: 1;
+}
+
+.confirm-dialog-content {
+    background: white;
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    max-width: 400px;
+    width: 90%;
+    box-shadow: var(--shadow-lg);
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.confirm-dialog.visible .confirm-dialog-content {
+    transform: translateY(0);
+}
+
+.confirm-dialog h3 {
+    color: var(--gray-900);
+    font-size: 1.25rem;
+    margin-bottom: var(--space-4);
+}
+
+.confirm-dialog p {
+    color: var(--gray-600);
+    margin-bottom: var(--space-4);
+}
+
+.confirm-dialog .warning-text {
+    color: var(--danger-600);
+    font-size: 0.875rem;
+}
+
+.confirm-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+}
+
+.button.danger {
+    background-color: var(--danger-500);
+    color: white;
+}
+
+.button.danger:hover {
+    background-color: var(--danger-600);
+}
+
+/* Animation pour la suppression */
+.action-item.removing {
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.3s ease;
+}
+
+/* Styles pour les sections pliables */
+.section-container {
+    margin: var(--space-4) 0;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.section-header {
+    background-color: var(--gray-50);
+    padding: var(--space-3) var(--space-4);
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s ease;
+}
+
+.section-header:hover {
+    background-color: var(--gray-100);
+}
+
+.section-header h4 {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    color: var(--gray-700);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.toggle-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    transition: transform 0.2s ease;
+    color: var(--gray-600);
+}
+
+.section-content {
+    padding: var(--space-4);
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+/* État replié */
+.section-container.collapsed .section-content {
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.section-container.collapsed .toggle-icon {
+    transform: rotate(-90deg);
+}
+
+/* Animation pour le collapse */
+.section-content {
+    transition: height 0.3s ease, padding 0.3s ease;
+}
+
+
+
 </style>
 </head>
 <body>
@@ -784,7 +1125,7 @@ function renderActions(reg) {
     if (!reg || !Array.isArray(reg.actions)) return '';
 
     return reg.actions.map(action => {
-        const isCollapsed = action.isCollapsed || false; // Par défaut, déplié
+        const isCollapsed = action.isCollapsed || false;
         return `
             <div class="action-item ${isCollapsed ? 'collapsed' : ''}" id="action-${action.id}">
                 <div class="action-header">
@@ -795,9 +1136,15 @@ function renderActions(reg) {
                         <span class="action-text">${action.text || ''}</span>
                     </div>
                     <div class="action-buttons">
-                        <button class="button secondary" onclick="editAction('${reg.id}', ${action.id})">Éditer</button>
-                        <button class="button secondary" onclick="removeAction('${reg.id}', ${action.id})">Supprimer</button>
-                        <button class="button secondary" onclick="addRiskPrompt('${reg.id}', ${action.id})">Ajouter un Risque</button>
+                        <button class="button secondary" onclick="editAction('${reg.id}', ${action.id})">
+                            Éditer
+                        </button>
+                        <button class="button secondary" onclick="removeAction('${reg.id}', ${action.id})">
+                            Supprimer
+                        </button>
+                        <button class="button secondary" onclick="addRiskPrompt('${reg.id}', ${action.id})">
+                            Ajouter un Risque
+                        </button>
                     </div>
                 </div>
                 <div class="action-content">
@@ -1139,6 +1486,95 @@ function renderRegulations() {
         `;
     });
 }
+function renderRegulations() {
+    const regulationsList = document.getElementById('wallItems');
+    const complianceRate = document.querySelector('.compliance-rate');
+    complianceRate.textContent = `Taux de conformité: ${calculateCompliance()}%`;
+    regulationsList.innerHTML = '';
+
+    let filteredRegs = regulations.filter(filterRegulation);
+    if (filteredRegs.length === 0) {
+        regulationsList.innerHTML = '<div>Aucune exigence trouvée</div>';
+        return;
+    }
+
+    filteredRegs.forEach(reg => {
+        regulationsList.innerHTML += `
+            <div class="regulation-item" id="regulation-${reg.id}">
+                <div class="regulation-header">
+                    <!-- ... status radios inchangés ... -->
+                </div>
+                <div class="regulation-content">
+                    <div class="regulation-text">${reg.text}</div>
+                    <div class="regulation-id"><i>${reg.id}</i></div>
+                    ${renderLinks(reg)}
+                    
+                    <!-- Section RACI avec toggle -->
+                    <div class="section-container ${reg.raciCollapsed ? 'collapsed' : ''}" data-section="raci">
+                        <div class="section-header" onclick="toggleSection('${reg.id}', 'raci')">
+                            <h4>
+                                <span class="toggle-icon">${reg.raciCollapsed ? '▸' : '▾'}</span>
+                                RACI
+                            </h4>
+                        </div>
+                        <div class="section-content">
+                            ${renderRACI(reg)}
+                        </div>
+                    </div>
+
+                    <!-- Section Actions avec toggle -->
+                    <div class="section-container ${reg.actionsCollapsed ? 'collapsed' : ''}" data-section="actions">
+                        <div class="section-header" onclick="toggleSection('${reg.id}', 'actions')">
+                            <h4>
+                                <span class="toggle-icon">${reg.actionsCollapsed ? '▸' : '▾'}</span>
+                                Actions associées
+                            </h4>
+                        </div>
+                        <div class="section-content">
+                            <div>${renderActions(reg)}</div>
+                            <div class="action-input-container">
+                                <input type="text" class="input" id="action-input-${reg.id}" placeholder="Nouvelle action...">
+                                <button class="button" onclick="addAction('${reg.id}', document.getElementById('action-input-${reg.id}').value)">
+                                    Ajouter
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    ${renderJustification(reg)}
+                    ${renderProofLinks(reg)}
+                </div>
+            </div>
+        `;
+    });
+}
+
+// Ajouter la fonction toggleSection
+function toggleSection(regulationId, sectionType) {
+    regulations = regulations.map(reg => {
+        if (reg.id === regulationId) {
+            const collapseKey = `${sectionType}Collapsed`;
+            return {
+                ...reg,
+                [collapseKey]: !reg[collapseKey]
+            };
+        }
+        return reg;
+    });
+
+    // Mettre à jour visuellement sans re-render complet
+    const sectionContainer = document.querySelector(`#regulation-${regulationId} .section-container[data-section="${sectionType}"]`);
+    if (sectionContainer) {
+        sectionContainer.classList.toggle('collapsed');
+        const toggleIcon = sectionContainer.querySelector('.toggle-icon');
+        if (toggleIcon) {
+            toggleIcon.textContent = sectionContainer.classList.contains('collapsed') ? '▸' : '▾';
+        }
+    }
+
+    autoSave();
+}
+
 
 function updateStatus(regulationId, status) {
     regulations = regulations.map(reg => {
@@ -1360,7 +1796,42 @@ function cancelActionEdit(regulationId, actionId) {
     renderRegulations();
 }
 
+// Modifier le gestionnaire de suppression d'action
 function removeAction(regulationId, actionId) {
+    const actionElement = document.getElementById(`action-${actionId}`);
+    if (!actionElement) return;
+
+    // Créer la boîte de dialogue de confirmation
+    const confirmDialog = document.createElement('div');
+    confirmDialog.className = 'confirm-dialog';
+    confirmDialog.innerHTML = `
+        <div class="confirm-dialog-content">
+            <h3>Confirmation de suppression</h3>
+            <p>Êtes-vous sûr de vouloir supprimer cette action ?</p>
+            <p class="warning-text">Cette action est irréversible.</p>
+            <div class="confirm-buttons">
+                <button class="button secondary" onclick="cancelDeleteAction('${actionId}')">Annuler</button>
+                <button class="button danger" onclick="confirmDeleteAction('${regulationId}', '${actionId}')">Supprimer</button>
+            </div>
+        </div>
+    `;
+
+    // Ajouter la boîte de dialogue au corps du document
+    document.body.appendChild(confirmDialog);
+
+    // Ajouter un effet de fade-in
+    setTimeout(() => confirmDialog.classList.add('visible'), 10);
+}
+
+function cancelDeleteAction(actionId) {
+    const confirmDialog = document.querySelector('.confirm-dialog');
+    if (confirmDialog) {
+        confirmDialog.classList.remove('visible');
+        setTimeout(() => confirmDialog.remove(), 300);
+    }
+}
+
+function confirmDeleteAction(regulationId, actionId) {
     const actionElement = document.getElementById(`action-${actionId}`);
     if (actionElement) {
         actionElement.classList.add('removing');
@@ -1380,6 +1851,9 @@ function removeAction(regulationId, actionId) {
             autoSave();
         }, 300);
     }
+
+    // Fermer la boîte de dialogue
+    cancelDeleteAction(actionId);
 }
 
 function addRiskPrompt(regulationId, actionId) {
@@ -2122,7 +2596,9 @@ function addNewArticle() {
             responsible: '',
             accountable: '',
             consulted: '',
-            informed: ''
+            informed: '',
+            raciCollapsed: false,
+            actionsCollapsed: false
         };
         if (category === 'Level 1') {
             article.rtsLinks = document.getElementById('rtsLink').value.split(',').map(s => s.trim()).filter(Boolean);
@@ -2247,9 +2723,40 @@ document.addEventListener('DOMContentLoaded', () => {
     renderRegulations();
 });
 
+function getRiskLevelClass(level) {
+    if (level >= 15) return 'high';
+    if (level >= 8) return 'medium';
+    return 'low';
+}
+
 function initializeWall() {
     renderWallItems();
 }
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
