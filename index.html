@@ -1156,6 +1156,111 @@ function renderActions(reg) {
         `;
     }).join('');
 }
+function renderActions(reg) {
+    if (!reg || !Array.isArray(reg.actions)) return '';
+
+    return reg.actions.map(action => {
+        const isCollapsed = action.isCollapsed || false;
+        return `
+            <div class="action-item ${isCollapsed ? 'collapsed' : ''}" id="action-${action.id}">
+                <div class="action-header">
+                    <div class="action-title">
+                        <button class="toggle-button" onclick="toggleAction('${reg.id}', ${action.id})">
+                            ${isCollapsed ? '▸' : '▾'}
+                        </button>
+                        <span class="action-text">${action.text || ''}</span>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="button secondary" onclick="editAction('${reg.id}', ${action.id})">
+                            Éditer
+                        </button>
+                        <button class="button secondary" onclick="removeAction('${reg.id}', ${action.id})">
+                            Supprimer
+                        </button>
+                        <button class="button secondary" onclick="addRiskPrompt('${reg.id}', ${action.id})">
+                            Ajouter un Risque
+                        </button>
+                    </div>
+                </div>
+                <div class="action-content">
+                    <div class="form-group">
+                        <label for="percentage-${action.id}">Pourcentage d'avancement:</label>
+                        <input type="number" id="percentage-${action.id}" class="input" min="0" max="100" value="${action.percentage}" onchange="updateActionPercentage('${reg.id}', ${action.id}, this.value)">
+                    </div>
+                    <div class="action-progress-bar">
+                        <div class="action-progress-fill" style="width: ${action.percentage}%; background-color: ${getProgressBarColor(action.percentage)};"></div>
+                    </div>
+                    <div class="raci-container">
+                        <h5>RACI</h5>
+                        <div class="raci-group">
+                            <label for="action-responsible-${action.id}">Responsable (R):</label>
+                            <input type="text" id="action-responsible-${action.id}" class="input" value="${action.raci.responsible}" placeholder="Responsable" onchange="updateActionRACI('${reg.id}', ${action.id}, 'responsible', this.value)">
+                        </div>
+                        <div class="raci-group">
+                            <label for="action-accountable-${action.id}">Autorité (A):</label>
+                            <input type="text" id="action-accountable-${action.id}" class="input" value="${action.raci.accountable}" placeholder="Autorité" onchange="updateActionRACI('${reg.id}', ${action.id}, 'accountable', this.value)">
+                        </div>
+                        <div class="raci-group">
+                            <label for="action-consulted-${action.id}">Consultés (C):</label>
+                            <input type="text" id="action-consulted-${action.id}" class="input" value="${action.raci.consulted}" placeholder="Consultés" onchange="updateActionRACI('${reg.id}', ${action.id}, 'consulted', this.value)">
+                        </div>
+                        <div class="raci-group">
+                            <label for="action-informed-${action.id}">Informés (I):</label>
+                            <input type="text" id="action-informed-${action.id}" class="input" value="${action.raci.informed}" placeholder="Informés" onchange="updateActionRACI('${reg.id}', ${action.id}, 'informed', this.value)">
+                        </div>
+                    </div>
+                    <div class="risks-container">
+                        ${renderRisks(reg.id, action.id)}
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+
+function updateActionPercentage(regulationId, actionId, value) {
+    const percentage = Math.min(Math.max(parseInt(value), 0), 100); // Ensure 0 <= percentage <= 100
+    regulations = regulations.map(reg => {
+        if (reg.id === regulationId) {
+            return {
+                ...reg,
+                actions: reg.actions.map(action =>
+                    action.id === actionId
+                        ? { ...action, percentage }
+                        : action
+                )
+            };
+        }
+        return reg;
+    });
+    renderRegulations();
+    autoSave();
+}
+
+function updateActionRACI(regulationId, actionId, raciType, value) {
+    regulations = regulations.map(reg => {
+        if (reg.id === regulationId) {
+            return {
+                ...reg,
+                actions: reg.actions.map(action =>
+                    action.id === actionId
+                        ? { 
+                            ...action, 
+                            raci: { 
+                                ...action.raci, 
+                                [raciType]: value 
+                            } 
+                          }
+                        : action
+                )
+            };
+        }
+        return reg;
+    });
+    autoSave();
+}
+
 
 function toggleAction(regulationId, actionId) {
     regulations = regulations.map(reg => {
@@ -1287,6 +1392,11 @@ function renderJustificationList(reg) {
     `;
 }
 
+function getProgressBarColor(percentage) {
+    if (percentage >= 80) return 'var(--success-500)';
+    if (percentage >= 50) return 'var(--warning-500)';
+    return 'var(--danger-500)';
+}
 
 
 function filterRegulation(reg) {
@@ -1353,6 +1463,7 @@ function calculateCompliance() {
     });
     return totalApplicable ? (totalCompliance / totalApplicable).toFixed(1) : '0.0';
 }
+
 
 function renderRegulations() {
     const regulationsList = document.getElementById('wallItems');
@@ -1699,6 +1810,13 @@ function addAction(regulationId, actionText) {
         risks: [],
         assignedTo: '',
         responsible: '',
+        // RACI fields
+        raci: {
+            responsible: '',
+            accountable: '',
+            consulted: '',
+            informed: ''
+        },
         startDate: '',
         endDate: '',
         newDeadline: ''
@@ -1736,6 +1854,82 @@ function addAction(regulationId, actionText) {
     document.getElementById(`action-input-${regulationId}`).value = '';
     autoSave();
 }
+function addAction(regulationId, actionText) {
+    if (!actionText.trim()) return;
+
+    const newAction = {
+        id: Date.now(),
+        text: actionText.trim(),
+        percentage: 0, // Initialize percentage
+        isEditing: false,
+        isCollapsed: false,
+        risks: [],
+        assignedTo: '',
+        responsible: '',
+        startDate: '',
+        endDate: '',
+        newDeadline: '',
+        // RACI fields
+        raci: {
+            responsible: '',
+            accountable: '',
+            consulted: '',
+            informed: ''
+        }
+    };
+
+    regulations = regulations.map(reg => {
+        if (reg.id === regulationId) {
+            return {
+                ...reg,
+                actions: [...reg.actions, newAction]
+            };
+        }
+        return reg;
+    });
+
+    renderRegulations();
+    autoSave();
+}
+function addAction(regulationId, actionText) {
+    if (!actionText.trim()) return;
+
+    const newAction = {
+        id: Date.now(),
+        text: actionText.trim(),
+        percentage: 0, // Initialisation du pourcentage
+        isEditing: false,
+        isCollapsed: false,
+        risks: [],
+        assignedTo: '',
+        responsible: '',
+        startDate: '',
+        endDate: '',
+        newDeadline: '',
+        // Champs RACI initialisés
+        raci: {
+            responsible: '',
+            accountable: '',
+            consulted: '',
+            informed: ''
+        }
+    };
+
+    regulations = regulations.map(reg => {
+        if (reg.id === regulationId) {
+            return {
+                ...reg,
+                actions: [...reg.actions, newAction]
+            };
+        }
+        return reg;
+    });
+
+    renderRegulations();
+    autoSave();
+}
+
+
 
 function editAction(regulationId, actionId) {
     regulations = regulations.map(reg => {
@@ -2149,10 +2343,27 @@ function autoLoad() {
     const savedState = localStorage.getItem('doraCompliance');
     if (savedState) {
         regulations = JSON.parse(savedState);
+        // Initialiser raci pour chaque action si non défini
+        regulations.forEach(reg => {
+            if (Array.isArray(reg.actions)) {
+                reg.actions.forEach(action => {
+                    if (!action.raci) {
+                        action.raci = {
+                            responsible: '',
+                            accountable: '',
+                            consulted: '',
+                            informed: ''
+                        };
+                    }
+                });
+            }
+        });
     } else {
         regulations = initializeRegulations();
     }
 }
+
+
 
 function exportData() {
     const dataStr = JSON.stringify(regulations, null, 2);
@@ -2302,6 +2513,112 @@ function exportProject() {
     XLSX.utils.book_append_sheet(wb, ws, 'Projet');
     XLSX.writeFile(wb, 'projet.xlsx');
 }
+function exportProject() {
+    const wb = XLSX.utils.book_new();
+    const wsData = [];
+
+    // Updated headers to include RACI and Percentage
+    wsData.push([
+        'Category', 
+        'Reference', 
+        'Responsible (R)', 
+        'Accountable (A)',
+        'Consulted (C)',
+        'Informed (I)',
+        'Action', 
+        'Assigné à', 
+        'Responsable', 
+        'Date de début', 
+        'Date de fin', 
+        'Nouvelle Deadline', 
+        'Progression (%)', // Added Percentage
+        'Existence de risque', 
+        'Existence de remédiation'
+    ]);
+
+    regulations.forEach(reg => {
+        if (!reg.actions || reg.actions.length === 0) {
+            wsData.push([
+                reg.category,
+                reg.id,
+                reg.responsible || '',
+                reg.accountable || '',
+                reg.consulted || '',
+                reg.informed || '',
+                '', // Action
+                '', // Assigné à
+                '', // Responsable
+                '', // Date début
+                '', // Date fin
+                '', // Deadline
+                '', // Progression
+                '', // Risque
+                ''  // Remédiation
+            ]);
+        } else {
+            reg.actions.forEach(action => {
+                const hasUnremediatedRisk = action.risks && action.risks.some(risk => !risk.remediated);
+                const hasRemediation = action.risks && action.risks.some(risk => risk.remediationActions && risk.remediationActions.length > 0);
+
+                wsData.push([
+                    reg.category,
+                    reg.id,
+                    reg.responsible || '',  // RACI de l'exigence
+                    reg.accountable || '',
+                    reg.consulted || '',
+                    reg.informed || '',
+                    action.text,
+                    action.assignedTo || '',
+                    action.responsible || '',
+                    action.startDate || '',
+                    action.endDate || '',
+                    action.newDeadline || '',
+                    action.percentage || 0, // Percentage
+                    hasUnremediatedRisk ? 'x' : '',
+                    hasRemediation ? 'x' : ''
+                ]);
+            });
+        }
+    });
+
+    const ws = XLSX.utils.aoa_to_sheet(wsData);
+
+    // Define column widths
+    const colWidths = [
+        {wch: 10},  // Category
+        {wch: 12},  // Reference
+        {wch: 20},  // Responsible (R)
+        {wch: 20},  // Accountable (A)
+        {wch: 20},  // Consulted (C)
+        {wch: 20},  // Informed (I)
+        {wch: 30},  // Action
+        {wch: 15},  // Assigné à
+        {wch: 15},  // Responsable
+        {wch: 12},  // Date début
+        {wch: 12},  // Date fin
+        {wch: 15},  // Nouvelle Deadline
+        {wch: 15},  // Progression (%)
+        {wch: 10},  // Existence risque
+        {wch: 10}   // Existence remédiation
+    ];
+
+    ws['!cols'] = colWidths;
+
+    // Style for the header row
+    for (let i = 0; i < wsData[0].length; i++) {
+        const cellRef = XLSX.utils.encode_cell({r: 0, c: i});
+        if (!ws[cellRef]) ws[cellRef] = {};
+        ws[cellRef].s = {
+            font: { bold: true },
+            fill: { fgColor: { rgb: "CCCCCC" } },
+            alignment: { vertical: 'center', horizontal: 'center' }
+        };
+    }
+
+    XLSX.utils.book_append_sheet(wb, ws, 'Projet');
+    XLSX.writeFile(wb, 'projet.xlsx');
+}
+
 
 function markRiskAsRemediated(regulationId, actionId, riskId) {
     regulations = regulations.map(reg => {
@@ -2735,28 +3052,3 @@ function initializeWall() {
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
