@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1222,26 +1221,32 @@ function exportData() {
 function exportProject() {
     const wb = XLSX.utils.book_new();
     const wsData = [];
-    wsData.push(['Action', 'Assigné à', 'Responsable', 'Date de début', 'Date de fin', 'Nouvelle Deadline', 'Progression']);
+
+    // Ajout des en-têtes de colonnes avec la source de réglementation
+    wsData.push(['Category', 'Reference', 'Action', 'Assigné à', 'Responsable', 'Date de début', 'Date de fin', 'Nouvelle Deadline', 'Progression']);
+
+    // Parcours des réglementations pour extraire les actions et leur source
     regulations.forEach(reg => {
         reg.actions.forEach(action => {
-            if (reg.status === 'all' || reg.status === 'A faire' || reg.status === 'En cours') {
-                wsData.push([
-                    action.text,
-                    action.assignedTo || '',
-                    action.responsible || '',
-                    action.startDate || '',
-                    action.endDate || '',
-                    action.newDeadline || '',
-                    action.percentage || 0
-                ]);
-            }
+            wsData.push([
+                reg.category,                   // Catégorie de l'exigence (Level 1, RTS, ITS)
+                reg.id,                         // Référence de l'exigence
+                action.text,                    // Texte de l'action
+                action.assignedTo || '',        // Assigné à
+                action.responsible || '',       // Responsable
+                action.startDate || '',         // Date de début
+                action.endDate || '',           // Date de fin
+                action.newDeadline || '',       // Nouvelle deadline
+                action.percentage || 0          // Progression
+            ]);
         });
     });
+
     const ws = XLSX.utils.aoa_to_sheet(wsData);
     XLSX.utils.book_append_sheet(wb, ws, 'Projet');
     XLSX.writeFile(wb, 'projet.xlsx');
 }
+
 
 function importData(event) {
     const file = event.target.files[0];
