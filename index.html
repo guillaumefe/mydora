@@ -5277,6 +5277,192 @@ function renderRegulations(regulations, reset = false) {
         container.appendChild(regulationElement);
     });
 }
+
+// Structure modifiée pour avoir un nombre pair de segments
+// dora/regulations/[regulationId]
+
+// Initialisation de la référence à la collection
+const COLLECTION_PATH = 'dora/v1/regulations';
+
+// Fonction pour ajouter un nouvel article modifiée
+async function addNewArticle() {
+    try {
+        const category = document.getElementById('articleCategory').value;
+        const reference = document.getElementById('articleReference').value;
+        const text = document.getElementById('articleText').value;
+        
+        if (!category || !reference || !text) {
+            showNotification('Tous les champs sont obligatoires', 'error');
+            return;
+        }
+
+        showLoading();
+        
+        const parsedRequirements = parseRequirementsFromText(text);
+        const batch = db.batch();
+
+        // Utilisez la nouvelle structure de collection
+        for (const req of parsedRequirements) {
+            const displayId = `${reference}-${req.id}`;
+            const docRef = db.collection(COLLECTION_PATH).doc(displayId.replace(/[./]/g, '-'));
+            
+            const articleData = {
+                id: displayId,
+                category: category,
+                text: req.originalText,
+                fullPath: req.id,
+                parentChain: req.parentChain,
+                status: 'all',
+                actions: [],
+                justification: '',
+                proofLinks: [],
+                justifications: [],
+                responsible: '',
+                accountable: '',
+                consulted: '',
+                informed: '',
+                raciCollapsed: false,
+                actionsCollapsed: false,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            if (category === 'Level 1') {
+                articleData.rtsLinks = document.getElementById('rtsLink').value
+                    .split(',').map(s => s.trim()).filter(Boolean);
+                articleData.itsLinks = document.getElementById('itsLink').value
+                    .split(',').map(s => s.trim()).filter(Boolean);
+            } else if (category === 'RTS' || category === 'ITS') {
+                articleData.level1Link = document.getElementById('level1Link').value.trim();
+            }
+
+            batch.set(docRef, articleData);
+        }
+
+        await batch.commit();
+        console.log('Documents ajoutés avec succès');
+        showNotification('Articles ajoutés avec succès', 'success');
+        resetArticleForm();
+        await loadRegulations(true);
+        
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout:', error);
+        showNotification('Erreur lors de l\'ajout des articles', 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// Fonction de suppression modifiée
+async function deleteRegulation(regulationId) {
+    try {
+        if (!regulationId) {
+            console.error('ID de régulation manquant');
+            showNotification('Erreur: ID manquant', 'error');
+            return;
+        }
+
+        if (!confirm('⚠️ Êtes-vous sûr de vouloir supprimer cette exigence ? Cette action est irréversible.')) {
+            return;
+        }
+
+        showLoading();
+
+        // Rechercher le document avec la nouvelle structure
+        const cleanId = regulationId.replace(/[./]/g, '-');
+        const docRef = db.collection(COLLECTION_PATH).doc(cleanId);
+        
+        console.log('Tentative de suppression:', cleanId);
+        
+        const doc = await docRef.get();
+        if (!doc.exists) {
+            throw new Error('Document non trouvé dans Firestore');
+        }
+
+        // Supprimer le document
+        await docRef.delete();
+        console.log('Document supprimé avec succès');
+
+        // Supprimer l'élément du DOM
+        const element = document.getElementById(`regulation-${regulationId}`);
+        if (element) {
+            element.remove();
+        }
+
+        showNotification('Exigence supprimée avec succès', 'success');
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur détaillée:', error);
+        showNotification(`Erreur lors de la suppression: ${error.message}`, 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// Fonction de chargement modifiée
+async function loadRegulations(reset = false) {
+    if (isLoading) return;
+    isLoading = true;
+
+    try {
+        showLoading();
+
+        if (reset) {
+            document.getElementById('wallItems').innerHTML = '';
+            lastDoc = null;
+        }
+
+        let query = db.collection(COLLECTION_PATH)
+            .orderBy('createdAt', 'desc')
+            .limit(BATCH_SIZE);
+
+        if (lastDoc && !reset) {
+            query = query.startAfter(lastDoc);
+        }
+
+        const snapshot = await query.get();
+        
+        if (!snapshot.empty) {
+            lastDoc = snapshot.docs[snapshot.docs.length - 1];
+            const regulations = snapshot.docs.map(doc => ({
+                id: doc.data().id,
+                ...doc.data()
+            }));
+            
+            renderRegulations(regulations, reset);
+        } else {
+            if (reset) {
+                document.getElementById('wallItems').innerHTML = 
+                    '<div class="no-data">Aucune donnée trouvée</div>';
+            }
+        }
+
+    } catch (error) {
+        console.error('Erreur de chargement:', error);
+        showNotification('Erreur lors du chargement des données', 'error');
+    } finally {
+        isLoading = false;
+        hideLoading();
+    }
+}
+
+// Fonction pour mettre à jour le statut
+async function updateStatus(regulationId, status) {
+    try {
+        const cleanId = regulationId.replace(/[./]/g, '-');
+        await db.collection(COLLECTION_PATH).doc(cleanId).update({
+            status: status === 'Tous' ? 'all' : status,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        showNotification('Statut mis à jour', 'success');
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour du statut:', error);
+        showNotification('Erreur lors de la mise à jour du statut', 'error');
+    }
+}
 </script>
 
 </body>
