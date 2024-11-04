@@ -4561,6 +4561,535 @@ document.addEventListener('DOMContentLoaded', () => {
     setupIntersectionObserver();
 });
 
+// Fonction de suppression d'une régulation
+async function deleteRegulation(regulationId) {
+    try {
+        if (!confirm('Êtes-vous sûr de vouloir supprimer cette exigence ?')) {
+            return;
+        }
+
+        showLoading();
+        
+        // Supprimer le document de Firestore
+        await db.collection('regulations').doc(regulationId).delete();
+        
+        // Supprimer l'élément du DOM
+        const element = document.getElementById(`regulation-${regulationId}`);
+        if (element) {
+            element.remove();
+        }
+        
+        showNotification('Exigence supprimée avec succès', 'success');
+        
+        // Recharger les données pour mettre à jour le taux de conformité
+        await loadRegulations(true);
+        
+    } catch (error) {
+        console.error('Erreur lors de la suppression:', error);
+        showNotification('Erreur lors de la suppression', 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// Fonction pour passer en mode édition
+function editRegulation(regulationId) {
+    const regulationElement = document.getElementById(`regulation-${regulationId}`);
+    if (!regulationElement) return;
+
+    const textElement = regulationElement.querySelector('.regulation-text');
+    const originalText = textElement.textContent;
+
+    // Créer le formulaire d'édition
+    const editForm = document.createElement('div');
+    editForm.className = 'edit-form';
+    editForm.innerHTML = `
+        <textarea class="input" id="edit-text-${regulationId}">${originalText}</textarea>
+        <div class="button-group mt-2">
+            <button class="button" onclick="saveRegulationEdit('${regulationId}')">Sauvegarder</button>
+            <button class="button secondary" onclick="cancelRegulationEdit('${regulationId}', '${originalText}')">Annuler</button>
+        </div>
+    `;
+
+    textElement.replaceWith(editForm);
+}
+
+// Fonction pour sauvegarder les modifications
+async function saveRegulationEdit(regulationId) {
+    try {
+        showLoading();
+        
+        const textArea = document.getElementById(`edit-text-${regulationId}`);
+        if (!textArea) return;
+
+        const newText = textArea.value.trim();
+        if (!newText) {
+            showNotification('Le texte ne peut pas être vide', 'error');
+            return;
+        }
+
+        // Mettre à jour dans Firestore
+        await db.collection('regulations').doc(regulationId).update({
+            text: newText,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        // Mettre à jour l'affichage
+        const editForm = textArea.closest('.edit-form');
+        const textElement = document.createElement('div');
+        textElement.className = 'regulation-text';
+        textElement.textContent = newText;
+        editForm.replaceWith(textElement);
+
+        showNotification('Modifications sauvegardées', 'success');
+
+    } catch (error) {
+        console.error('Erreur lors de la sauvegarde:', error);
+        showNotification('Erreur lors de la sauvegarde', 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// Fonction pour annuler l'édition
+function cancelRegulationEdit(regulationId, originalText) {
+    const editForm = document.getElementById(`edit-text-${regulationId}`).closest('.edit-form');
+    if (!editForm) return;
+
+    const textElement = document.createElement('div');
+    textElement.className = 'regulation-text';
+    textElement.textContent = originalText;
+    editForm.replaceWith(textElement);
+}
+
+// Mise à jour du statut dans Firestore
+async function updateStatus(regulationId, status) {
+    try {
+        await db.collection('regulations').doc(regulationId).update({
+            status: status === 'Tous' ? 'all' : status,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        showNotification('Statut mis à jour', 'success');
+        
+        // Recharger les données pour mettre à jour le taux de conformité
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour du statut:', error);
+        showNotification('Erreur lors de la mise à jour du statut', 'error');
+        
+        // Réinitialiser les radios en cas d'erreur
+        const radios = document.querySelectorAll(`input[name="status-${regulationId}"]`);
+        radios.forEach(radio => {
+            radio.checked = radio.defaultChecked;
+        });
+    }
+}
+
+// Mise à jour du RACI dans Firestore
+async function updateRACI(regulationId, raciType, value) {
+    try {
+        const updates = {
+            [raciType]: value,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        await db.collection('regulations').doc(regulationId).update(updates);
+        showNotification('RACI mis à jour', 'success');
+
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour du RACI:', error);
+        showNotification('Erreur lors de la mise à jour du RACI', 'error');
+    }
+}
+
+// Styles pour le formulaire d'édition
+const editStyles = `
+    .edit-form {
+        margin: 10px 0;
+    }
+
+    .edit-form textarea {
+        width: 100%;
+        min-height: 100px;
+        padding: 8px;
+        margin-bottom: 8px;
+        border: 1px solid var(--gray-200);
+        border-radius: var(--radius-md);
+    }
+
+    .edit-form .button-group {
+        display: flex;
+        gap: 8px;
+    }
+
+    .mt-2 {
+        margin-top: 8px;
+    }
+`;
+
+// Ajouter les styles au document
+function addEditStyles() {
+    const styleElement = document.createElement('style');
+    styleElement.textContent = editStyles;
+    document.head.appendChild(styleElement);
+}
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', () => {
+    addEditStyles();
+});
+
+
+// Fonction de suppression corrigée
+async function deleteRegulation(regulationId) {
+    try {
+        if (!regulationId) {
+            console.error('ID de régulation manquant');
+            showNotification('Erreur: ID manquant', 'error');
+            return;
+        }
+
+        // Confirmation de suppression
+        if (!confirm('⚠️ Êtes-vous sûr de vouloir supprimer cette exigence ? Cette action est irréversible.')) {
+            return;
+        }
+
+        showLoading();
+        console.log('Tentative de suppression de:', regulationId);
+
+        // Récupérer une référence au document
+        const docRef = db.collection('regulations').doc(regulationId);
+
+        // Vérifier que le document existe
+        const doc = await docRef.get();
+        if (!doc.exists) {
+            throw new Error('Document non trouvé dans Firestore');
+        }
+
+        // Supprimer le document
+        await docRef.delete();
+        console.log('Document supprimé de Firestore:', regulationId);
+
+        // Supprimer l'élément du DOM
+        const element = document.getElementById(`regulation-${regulationId}`);
+        if (element) {
+            element.remove();
+            console.log('Élément supprimé du DOM');
+        }
+
+        showNotification('Exigence supprimée avec succès', 'success');
+
+        // Recharger les données pour mettre à jour l'affichage
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur lors de la suppression:', error);
+        showNotification(`Erreur lors de la suppression: ${error.message}`, 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// Fonction utilitaire pour vérifier la connexion Firestore
+async function checkFirestoreConnection() {
+    try {
+        const testDoc = await db.collection('regulations').doc('test').get();
+        return true;
+    } catch (error) {
+        console.error('Erreur de connexion Firestore:', error);
+        return false;
+    }
+}
+
+// Fonction pour afficher une notification plus visible
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 25px;
+        background: ${type === 'error' ? '#fee2e2' : '#ecfdf5'};
+        color: ${type === 'error' ? '#dc2626' : '#059669'};
+        border-radius: 6px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        font-weight: 500;
+        animation: slideIn 0.3s ease;
+    `;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    console.log(`${type.toUpperCase()}: ${message}`);
+    
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    }, 5000);
+}
+
+// Animation pour les notifications
+const notificationStyles = `
+    @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+    
+    @keyframes slideOut {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+    }
+    
+    .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+`;
+
+// Fonction pour montrer l'indicateur de chargement
+function showLoading() {
+    const overlay = document.createElement('div');
+    overlay.className = 'loading-overlay';
+    overlay.innerHTML = `
+        <div style="
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        ">
+            <div class="spinner"></div>
+            <span>Traitement en cours...</span>
+        </div>
+    `;
+    document.body.appendChild(overlay);
+}
+
+// Fonction pour cacher l'indicateur de chargement
+function hideLoading() {
+    const overlay = document.querySelector('.loading-overlay');
+    if (overlay) {
+        overlay.remove();
+    }
+}
+
+// Ajouter les styles au document
+function addStyles() {
+    const style = document.createElement('style');
+    style.textContent = notificationStyles;
+    document.head.appendChild(style);
+}
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', () => {
+    addStyles();
+    
+    // Vérifier la connexion à Firestore
+    checkFirestoreConnection().then(isConnected => {
+        if (!isConnected) {
+            showNotification('Problème de connexion à la base de données', 'error');
+        }
+    });
+});
+
+// Fonction de suppression corrigée
+async function deleteRegulation(regulationId) {
+    try {
+        if (!regulationId) {
+            console.error('ID de régulation manquant');
+            showNotification('Erreur: ID manquant', 'error');
+            return;
+        }
+
+        // Debug log
+        console.log('Tentative de suppression du document:', regulationId);
+
+        // Confirmation de suppression
+        if (!confirm('⚠️ Êtes-vous sûr de vouloir supprimer cette exigence ? Cette action est irréversible.')) {
+            return;
+        }
+
+        showLoading();
+
+        // Récupérer tous les documents qui correspondent à l'ID
+        const querySnapshot = await db.collection('regulations')
+            .where('id', '==', regulationId)
+            .get();
+
+        console.log('Documents trouvés:', querySnapshot.size);
+
+        if (querySnapshot.empty) {
+            // Essayer de supprimer directement avec l'ID comme identifiant du document
+            const docRef = db.collection('regulations').doc(regulationId);
+            const doc = await docRef.get();
+            
+            if (!doc.exists) {
+                throw new Error('Document non trouvé dans Firestore');
+            }
+            
+            await docRef.delete();
+        } else {
+            // Supprimer tous les documents trouvés
+            const batch = db.batch();
+            querySnapshot.forEach((doc) => {
+                console.log('Suppression du document:', doc.id);
+                batch.delete(doc.ref);
+            });
+            await batch.commit();
+        }
+
+        // Supprimer l'élément du DOM
+        const element = document.getElementById(`regulation-${regulationId}`);
+        if (element) {
+            element.remove();
+            console.log('Élément supprimé du DOM');
+        }
+
+        showNotification('Exigence supprimée avec succès', 'success');
+
+        // Recharger les données pour mettre à jour l'affichage
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur détaillée:', error);
+        showNotification(`Erreur lors de la suppression: ${error.message}`, 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// Fonction modifiée pour ajouter un nouvel article
+async function addNewArticle() {
+    try {
+        const category = document.getElementById('articleCategory').value;
+        const reference = document.getElementById('articleReference').value;
+        const text = document.getElementById('articleText').value;
+        
+        if (!category || !reference || !text) {
+            showNotification('Tous les champs sont obligatoires', 'error');
+            return;
+        }
+
+        showLoading();
+        
+        const parsedRequirements = parseRequirementsFromText(text);
+        const batch = db.batch();
+
+        for (const req of parsedRequirements) {
+            const articleId = `${reference}-${req.id}`;
+            // Utiliser articleId comme ID du document Firestore
+            const docRef = db.collection('regulations').doc(articleId);
+            
+            const articleData = {
+                id: articleId, // Garder l'ID dans les données aussi
+                category: category,
+                text: req.originalText,
+                fullPath: req.id,
+                parentChain: req.parentChain,
+                status: 'all',
+                actions: [],
+                justification: '',
+                proofLinks: [],
+                justifications: [],
+                responsible: '',
+                accountable: '',
+                consulted: '',
+                informed: '',
+                raciCollapsed: false,
+                actionsCollapsed: false,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            // Ajouter les liens spécifiques selon la catégorie
+            if (category === 'Level 1') {
+                articleData.rtsLinks = document.getElementById('rtsLink').value
+                    .split(',').map(s => s.trim()).filter(Boolean);
+                articleData.itsLinks = document.getElementById('itsLink').value
+                    .split(',').map(s => s.trim()).filter(Boolean);
+            } else if (category === 'RTS' || category === 'ITS') {
+                articleData.level1Link = document.getElementById('level1Link').value.trim();
+            }
+
+            console.log('Ajout du document:', articleId, articleData);
+            batch.set(docRef, articleData);
+        }
+
+        await batch.commit();
+        console.log('Batch commité avec succès');
+        
+        showNotification('Articles ajoutés avec succès', 'success');
+        resetArticleForm();
+        await loadRegulations(true);
+        
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout:', error);
+        showNotification('Erreur lors de l\'ajout des articles', 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// Fonction de chargement modifiée
+async function loadRegulations(reset = false) {
+    if (isLoading) return;
+    isLoading = true;
+
+    try {
+        showLoading();
+
+        if (reset) {
+            document.getElementById('wallItems').innerHTML = '';
+            lastDoc = null;
+        }
+
+        let query = db.collection('regulations')
+            .orderBy('createdAt', 'desc')
+            .limit(BATCH_SIZE);
+
+        if (lastDoc && !reset) {
+            query = query.startAfter(lastDoc);
+        }
+
+        const snapshot = await query.get();
+        console.log('Documents chargés:', snapshot.size);
+        
+        if (!snapshot.empty) {
+            lastDoc = snapshot.docs[snapshot.docs.length - 1];
+            const regulations = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+            
+            console.log('Données chargées:', regulations);
+            renderRegulations(regulations, reset);
+        } else {
+            if (reset) {
+                document.getElementById('wallItems').innerHTML = 
+                    '<div class="no-data">Aucune donnée trouvée</div>';
+            }
+        }
+
+    } catch (error) {
+        console.error('Erreur de chargement:', error);
+        showNotification('Erreur lors du chargement des données', 'error');
+    } finally {
+        isLoading = false;
+        hideLoading();
+    }
+}
 </script>
 
 </body>
