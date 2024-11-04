@@ -56,6 +56,296 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+
+.container {
+  width: 100%;
+  padding: var(--space-4);
+  margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding: var(--space-6);
+  }
+}
+
+.card,
+.regulation-item {
+  background-color: white;
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  margin-bottom: var(--space-4);
+  border: 1px solid var(--gray-200);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease;
+}
+
+.card:hover,
+.regulation-item:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.header {
+  margin-bottom: var(--space-6);
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin-bottom: var(--space-2);
+}
+
+.compliance-rate {
+  font-size: 1.125rem;
+  color: var(--primary-600);
+  font-weight: 500;
+  margin-bottom: var(--space-4);
+}
+
+.import-export-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  background-color: var(--primary-50);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-4);
+}
+
+.search-container {
+  margin-bottom: var(--space-4);
+}
+
+.input {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 2px var(--primary-100);
+}
+
+.button,
+.action-buttons .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  background-color: var(--primary-600);
+  color: white;
+  gap: var(--space-2);
+}
+
+.button:hover,
+.action-buttons .button:hover {
+  background-color: var(--primary-700);
+}
+
+.button.secondary,
+.button.secondary:hover {
+  background-color: var(--gray-100);
+  color: var(--gray-700);
+}
+
+.tabs,
+.raci-grid {
+  display: flex;
+  overflow-x: auto;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: var(--space-2);
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  padding: var(--space-2) var(--space-4);
+  background-color: var(--gray-100);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--gray-700);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab.active {
+  background-color: var(--primary-600);
+  color: white;
+}
+
+.add-article-container,
+.section-container {
+  background-color: white;
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-4);
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+}
+
+.form-header,
+.section-header {
+  background-color: var(--primary-600);
+  color: white;
+  padding: var(--space-4);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+}
+
+.form-content,
+.section-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.form-content.visible,
+.section-content {
+  max-height: 2000px;
+  padding: var(--space-4);
+}
+
+.form-group,
+.remediation-actions {
+  margin-bottom: var(--space-4);
+}
+
+.form-group label,
+.raci-label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-weight: 500;
+  color: var(--gray-700);
+}
+
+.regulation-header,
+.action-header,
+.actions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-3);
+}
+
+.action-item,
+.remediation-item,
+.risk-item {
+  background-color: var(--gray-50);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  margin-bottom: var(--space-3);
+  border: 1px solid var(--gray-200);
+  overflow: hidden;
+}
+
+.save-status {
+  position: fixed;
+  bottom: var(--space-4);
+  right: var(--space-4);
+  background-color: var(--success-500);
+  color: white;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-lg);
+}
+
+.save-status.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.button-group,
+.category-controls,
+.header-content {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.config-label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+:root {
+  --primary-50: #eff6ff;
+  --primary-100: #dbeafe;
+  --primary-200: #bfdbfe;
+  --primary-500: #3b82f6;
+  --primary-600: #2563eb;
+  --primary-700: #1d4ed8;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-900: #111827;
+  --success-50: #ecfdf5;
+  --success-500: #10b981;
+  --success-600: #059669;
+  --warning-50: #fffbeb;
+  --warning-500: #f59e0b;
+  --warning-600: #d97706;
+  --danger-50: #fef2f2;
+  --danger-500: #ef4444;
+  --danger-600: #dc2626;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  background-color: var(--gray-50);
+  color: var(--gray-900);
+  -webkit-font-smoothing: antialiased;
+}
+
 .container {
   width: 100%;
   padding: var(--space-4);
@@ -975,6 +1265,9 @@ body {
 }
 
 
+
+</style>
+
 </style>
 </head>
 <body>
@@ -1060,11 +1353,237 @@ body {
     </div>
     <div id="wallItems"></div>
     <div id="regulationsList"></div>
+
+</div>
 </div>
 
 <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/shim.min.js"></script>
 <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+
+
+
+<!-- Ajouter dans le head de votre HTML, avant vos autres scripts -->
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+
+
+
+
+
+
 <script>
+
+
+// Variables pour le lazy loading
+let lastDoc = null;
+let isLoading = false;
+const BATCH_SIZE = 10;
+
+
+// Recherche et filtrage
+async function searchAndFilter(searchTerm, filter, status) {
+    let query = db.collection('regulations');
+
+    if (filter !== 'all') {
+        query = query.where('category', '==', filter);
+    }
+    if (status !== 'all') {
+        query = query.where('status', '==', status);
+    }
+
+    query = query.limit(BATCH_SIZE);
+
+    try {
+        const snapshot = await query.get();
+        const regulations = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        // Filtrage texte côté client
+        const filtered = searchTerm ? regulations.filter(reg => 
+            reg.text.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            reg.id.toLowerCase().includes(searchTerm.toLowerCase())
+        ) : regulations;
+
+        renderBatch(filtered, true);
+    } catch (error) {
+        console.error("Erreur de recherche:", error);
+    }
+}
+
+// Fonction principale de rendu des lots
+function renderBatch(data) {
+    const { items, total, hasMore, startIndex } = data;
+    const container = document.getElementById('wallItems');
+    
+    // Si c'est le premier lot, nettoyer le conteneur
+    if (startIndex === 0) {
+        container.innerHTML = '';
+    }
+
+    // Vérifier si items est un tableau
+    if (!Array.isArray(items)) {
+        console.error('Items n\'est pas un tableau:', items);
+        return;
+    }
+
+    // Rendre chaque élément
+    items.forEach(reg => {
+        const articleElement = document.createElement('div');
+        articleElement.className = 'regulation-item fade-in';
+        articleElement.id = `regulation-${reg.id}`;
+        articleElement.innerHTML = renderRegulationContent(reg);
+        container.appendChild(articleElement);
+    });
+
+    // Gérer le bouton "Charger plus"
+    if (hasMore) {
+        appendLoadMoreButton(container);
+    }
+
+    // Mettre à jour les statistiques
+    updateStats(total);
+}
+
+function updateStats(total) {
+    const statsElement = document.querySelector('.compliance-rate');
+    if (statsElement) {
+        const visibleItems = document.querySelectorAll('.regulation-item').length;
+        statsElement.textContent = `Affichage de ${visibleItems} sur ${total} éléments`;
+    }
+}
+
+function appendLoadMoreButton(container) {
+    let button = container.querySelector('.load-more');
+    if (!button) {
+        button = document.createElement('button');
+        button.className = 'button load-more';
+        button.textContent = 'Charger plus';
+        button.onclick = () => loadRegulations(false);
+        container.appendChild(button);
+    }
+}
+
+// Configuration de l'Intersection Observer
+function setupIntersectionObserver() {
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !isLoading && lastDoc) {
+                loadRegulations(false);
+            }
+        });
+    }, {
+        rootMargin: '100px'
+    });
+
+    let sentinel = document.querySelector('.load-sentinel');
+    if (!sentinel) {
+        sentinel = document.createElement('div');
+        sentinel.className = 'load-sentinel';
+        document.getElementById('wallItems').appendChild(sentinel);
+    }
+
+    observer.observe(sentinel);
+}
+
+// CRUD Operations
+async function addRegulation(regulation) {
+    try {
+        await db.collection('regulations').add(regulation);
+        loadRegulations(true);
+    } catch (error) {
+        console.error("Erreur d'ajout:", error);
+    }
+}
+
+async function updateRegulation(id, updates) {
+    try {
+        await db.collection('regulations').doc(id).update(updates);
+    } catch (error) {
+        console.error("Erreur de mise à jour:", error);
+    }
+}
+
+async function deleteRegulation(id) {
+    try {
+        await db.collection('regulations').doc(id).delete();
+        loadRegulations(true);
+    } catch (error) {
+        console.error("Erreur de suppression:", error);
+    }
+}
+
+// Migration des données existantes
+async function migrateToFirebase() {
+    if (!confirm('Voulez-vous migrer les données vers Firebase ?')) return;
+
+    try {
+        const batch = db.batch();
+        let count = 0;
+
+        for (const reg of regulations) {
+            const docRef = db.collection('regulations').doc();
+            batch.set(docRef, reg);
+            count++;
+
+            // Firebase limite les batches à 500 opérations
+            if (count === 499) {
+                await batch.commit();
+                count = 0;
+            }
+        }
+
+        if (count > 0) {
+            await batch.commit();
+        }
+
+        alert('Migration terminée');
+    } catch (error) {
+        console.error('Erreur de migration:', error);
+        alert('Erreur pendant la migration');
+    }
+}
+
+// Modification des gestionnaires d'événements existants
+function handleSearchInput(event) {
+    searchAndFilter(event.target.value, activeFilter, activeStatus);
+}
+
+function handleCategoryFilter(event) {
+    if (event.target.classList.contains('category-filter')) {
+        document.querySelectorAll('.category-filter')
+            .forEach(filter => filter.classList.remove('active'));
+        event.target.classList.add('active');
+        activeFilter = event.target.dataset.category;
+        searchAndFilter(
+            document.getElementById('searchInput').value,
+            activeFilter,
+            activeStatus
+        );
+    }
+}
+
+function handleStatusTabClick(event) {
+    if (event.target.classList.contains('tab')) {
+        document.querySelectorAll('.tab')
+            .forEach(tab => tab.classList.remove('active'));
+        event.target.classList.add('active');
+        activeStatus = event.target.dataset.status;
+        searchAndFilter(
+            document.getElementById('searchInput').value,
+            activeFilter,
+            activeStatus
+        );
+    }
+}
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', () => {
+    loadRegulations(true);
+});
+
+
 let regulations = [];
 let activeFilter = 'all';
 let activeStatus = 'all';
@@ -1083,8 +1602,7 @@ function renderWallItems() {
             wallItem.classList.add('wall-item');
 
             wallItem.innerHTML = `
-                <h3>${action.text}</h3>
-                <button onclick="editActionPrompt('${reg.id}', ${action.id})">Éditer</button>
+                <h3>${action.text}</h3>®
                 <button onclick="confirmDeleteAction('${reg.id}', ${action.id})">Supprimer</button>
                 <button onclick="addRiskPrompt('${reg.id}', ${action.id})">Ajouter un Risque</button>
                 <div id="risks-${action.id}"></div>
@@ -1156,9 +1674,6 @@ function renderActions(reg) {
                         <span class="action-text">${action.text || ''}</span>
                     </div>
                     <div class="action-buttons">
-                        <button class="button secondary" onclick="editAction('${reg.id}', ${action.id})">
-                            Éditer
-                        </button>
                         <button class="button secondary" onclick="removeAction('${reg.id}', ${action.id})">
                             Supprimer
                         </button>
@@ -1191,9 +1706,6 @@ function renderActions(reg) {
                         <span class="action-text">${action.text || ''}</span>
                     </div>
                     <div class="action-buttons">
-                        <button class="button secondary" onclick="editAction('${reg.id}', ${action.id})">
-                            Éditer
-                        </button>
                         <button class="button secondary" onclick="removeAction('${reg.id}', ${action.id})">
                             Supprimer
                         </button>
@@ -1490,6 +2002,274 @@ function calculateCompliance(regList) {
 }
 
 
+// Helper function pour isoler le rendu du contenu d'une régulation
+function renderRegulationContent(reg) {
+    return `
+        <div class="regulation-header">
+            <!-- Code HTML existant pour regulation-header -->
+            <label>
+                <input type="radio" 
+                    name="status-${reg.id}" 
+                    class="checkbox" 
+                    value="Compliant" 
+                    ${reg.status === 'Compliant' ? 'checked' : ''} 
+                    onchange="updateStatus('${reg.id}', 'Compliant')"> Compliant
+            </label>
+            <!-- Autres radios... -->
+        </div>
+        <div class="regulation-content">
+            <div class="regulation-text">${reg.text}</div>
+            <div class="regulation-id"><i>${reg.id}</i></div>
+            ${renderLinks(reg)}
+            ${renderRACI(reg)}
+            ${renderActions(reg)}
+            ${renderJustification(reg)}
+            ${renderProofLinks(reg)}
+            
+            <div class="action-buttons">
+                <button class="button secondary" onclick="editRegulation('${reg.id}')">Éditer</button>
+                <button class="button secondary" onclick="deleteRegulation('${reg.id}')">Supprimer</button>
+            </div>
+        </div>
+    `;
+}
+
+
+
+// Ajout des variables pour le lazy loading
+let currentPage = 1;
+const ITEMS_PER_PAGE = 20;
+let hasMore = true;
+
+// Modification de la fonction renderRegulations pour supporter le lazy loading
+function renderRegulations(reset = false) {
+    const regulationsList = document.getElementById('wallItems');
+    const complianceRate = document.querySelector('.compliance-rate');
+    
+    // Réinitialisation si demandée
+    if (reset) {
+        regulationsList.innerHTML = '';
+        currentPage = 1;
+        hasMore = true;
+    }
+
+    // Filtrer les réglementations
+    let filteredRegs = regulations.filter(filterRegulation);
+    
+    // Calculer le taux de conformité
+    let compliancePercentage = calculateCompliance(filteredRegs);
+    complianceRate.textContent = `Taux de conformité: ${compliancePercentage}%`;
+
+    if (filteredRegs.length === 0) {
+        regulationsList.innerHTML = '<div>Aucune exigence trouvée</div>';
+        return;
+    }
+
+    // Calculer la plage d'éléments à afficher
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    const end = start + ITEMS_PER_PAGE;
+    const regsToRender = filteredRegs.slice(start, end);
+    hasMore = end < filteredRegs.length;
+
+    // Rendre les éléments
+    regsToRender.forEach(reg => {
+        regulationsList.innerHTML += `
+            <div class="regulation-item" id="regulation-${reg.id}">
+                <!-- Code HTML existant pour regulation-item -->
+                ${renderRegulationContent(reg)}
+            </div>
+        `;
+    });
+
+    // Ajouter un élément observateur pour l'infinite scroll
+    if (hasMore) {
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && !isLoading) {
+                loadMoreRegulations();
+            }
+        }, {
+            rootMargin: '100px',
+        });
+
+        const sentinel = document.createElement('div');
+        sentinel.className = 'loading-sentinel';
+        regulationsList.appendChild(sentinel);
+        observer.observe(sentinel);
+    }
+}
+function renderRegulations(reset = false) {
+    const regulationsList = document.getElementById('wallItems');
+    const complianceRate = document.querySelector('.compliance-rate');
+    
+    // Si reset, réinitialiser la page et le conteneur
+    if (reset) {
+        currentPage = 1;
+        regulationsList.innerHTML = '';
+    }
+
+    // Calculer les index de début et de fin pour ce lot
+    const startIndex = (currentPage - 1) * 10;
+    const endIndex = startIndex + 10;
+    
+    // Prendre seulement les 10 éléments concernés
+    const currentBatch = regulations.slice(startIndex, endIndex);
+
+    // Filtrer uniquement ce petit lot
+    const filteredBatch = currentBatch.filter(filterRegulation);
+    
+    // Gérer le cas où il n'y a pas de données
+    if (regulations.length === 0) {
+        regulationsList.innerHTML = '<div>Aucune exigence trouvée</div>';
+        return;
+    }
+
+    // Rendre uniquement les éléments filtrés de ce lot
+    filteredBatch.forEach(reg => {
+        regulationsList.innerHTML += `
+            <div class="regulation-item" id="regulation-${reg.id}">
+                <div class="regulation-header">
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            class="checkbox" 
+                            value="Compliant" 
+                            ${reg.status === 'Compliant' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Compliant')"> Compliant
+                    </label>
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            class="checkbox" 
+                            value="Non Applicable" 
+                            ${reg.status === 'Non Applicable' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Non Applicable')"> Non Applicable
+                    </label>
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            class="checkbox" 
+                            value="Documentation" 
+                            ${reg.status === 'Documentation' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Documentation')"> Documentation
+                    </label>
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            class="checkbox" 
+                            value="Tous" 
+                            ${reg.status === 'all' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Tous')"> Remettre dans Tous
+                    </label>
+                </div>
+                <div class="regulation-content">
+                    <div class="regulation-text">${reg.text}</div>
+                    <div class="regulation-id"><i>${reg.id}</i></div>
+                    ${renderLinks(reg)}
+                    
+                    <div class="section-container ${reg.raciCollapsed ? 'collapsed' : ''}" data-section="raci">
+                        <div class="section-header" onclick="toggleSection('${reg.id}', 'raci')">
+                            <h4>
+                                <span class="toggle-icon">${reg.raciCollapsed ? '▸' : '▾'}</span>
+                                RACI
+                            </h4>
+                        </div>
+                        <div class="section-content">
+                            ${renderRACI(reg)}
+                        </div>
+                    </div>
+
+                    <div class="section-container ${reg.actionsCollapsed ? 'collapsed' : ''}" data-section="actions">
+                        <div class="section-header" onclick="toggleSection('${reg.id}', 'actions')">
+                            <h4>
+                                <span class="toggle-icon">${reg.actionsCollapsed ? '▸' : '▾'}</span>
+                                Actions associées
+                            </h4>
+                        </div>
+                        <div class="section-content">
+                            <div>${renderActions(reg)}</div>
+                            <div class="action-input-container">
+                                <input type="text" class="input" id="action-input-${reg.id}" placeholder="Nouvelle action...">
+                                <button class="button" onclick="addAction('${reg.id}', document.getElementById('action-input-${reg.id}').value)">
+                                    Ajouter
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    // Ajouter le bouton "Charger plus" si nécessaire
+    if (endIndex < regulations.length) {
+        const loadMoreButton = document.createElement('button');
+        loadMoreButton.className = 'button load-more';
+        loadMoreButton.textContent = 'Charger plus';
+        loadMoreButton.onclick = () => {
+            currentPage++;
+            renderRegulations(false);
+        };
+        regulationsList.appendChild(loadMoreButton);
+    }
+}
+
+
+// Mise à jour des gestionnaires d'événements pour réinitialiser le lazy loading
+function handleSearchInput(event) {
+    renderRegulations(true); // true pour reset
+}
+
+function handleCategoryFilter(event) {
+    if (event.target.classList.contains('category-filter')) {
+        document.querySelectorAll('.category-filter').forEach(filter => filter.classList.remove('active'));
+        event.target.classList.add('active');
+        activeFilter = event.target.dataset.category;
+        renderRegulations(true); // true pour reset
+    }
+}
+
+function handleStatusTabClick(event) {
+    if (event.target.classList.contains('tab')) {
+        document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+        event.target.classList.add('active');
+        activeStatus = event.target.dataset.status;
+        renderRegulations(true); // true pour reset
+    }
+}
+
+// Ajouter les styles nécessaires
+const lazyLoadStyles = `
+    .loading-sentinel {
+        height: 20px;
+        margin: 20px 0;
+    }
+
+    .loading-indicator {
+        text-align: center;
+        padding: 20px;
+        color: var(--gray-600);
+    }
+
+    /* Animation de chargement */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .regulation-item {
+        animation: fadeIn 0.3s ease-in;
+    }
+`;
+
+// Ajouter les styles au document
+function addLazyLoadStyles() {
+    const styleElement = document.createElement('style');
+    styleElement.textContent = lazyLoadStyles;
+    document.head.appendChild(styleElement);
+}
+
+
+
 
 function renderRegulations() {
     const regulationsList = document.getElementById('wallItems');
@@ -1622,6 +2402,7 @@ function toggleSection(regulationId, sectionType) {
 
     autoSave();
 }
+
 
 
 function updateStatus(regulationId, status) {
@@ -2315,7 +3096,9 @@ function exportData() {
     const linkElement = document.createElement('a');
     linkElement.setAttribute('href', dataUri);
     linkElement.setAttribute('download', exportFileDefaultName);
+    document.body.appendChild(linkElement); // Required for Firefox
     linkElement.click();
+    linkElement.remove();
 }
 
 function exportProject() {
@@ -2831,79 +3614,288 @@ function resetAll() {
     }
 }
 
-function addNewArticle() {
+// Fonction pour ajouter un nouvel article
+async function addNewArticle() {
     const category = document.getElementById('articleCategory').value;
     const reference = document.getElementById('articleReference').value;
     const text = document.getElementById('articleText').value;
-    const parsedRequirements = parseRequirementsFromText(text);
-    parsedRequirements.forEach(req => {
-        const articleId = `${reference}-${req.id}`;
-        const article = {
-            id: articleId,
-            category: category,
-            text: req.originalText,
-            fullPath: req.id,
-            parentChain: req.parentChain,
-            rtsLinks: [],
-            itsLinks: [],
-            level1Link: '',
-            actions: [],
-            status: 'all',
-            justification: '',
-            proofLinks: [],
-            justifications: [],
-            // Nouveaux champs RACI
-            responsible: '',
-            accountable: '',
-            consulted: '',
-            informed: '',
-            raciCollapsed: false,
-            actionsCollapsed: false
-        };
-        if (category === 'Level 1') {
-            article.rtsLinks = document.getElementById('rtsLink').value.split(',').map(s => s.trim()).filter(Boolean);
-            article.itsLinks = document.getElementById('itsLink').value.split(',').map(s => s.trim()).filter(Boolean);
-        } else if (category === 'RTS' || category === 'ITS') {
-            article.level1Link = document.getElementById('level1Link').value.trim();
+    
+    if (!category || !reference || !text) {
+        showError('Tous les champs sont obligatoires');
+        return;
+    }
+
+    showLoading();
+    
+    try {
+        const parsedRequirements = parseRequirementsFromText(text);
+        const batch = db.batch();
+
+        // Création des articles dans Firestore
+        for (const req of parsedRequirements) {
+            const articleId = `${reference}-${req.id}`;
+            const docRef = db.collection('regulations').doc(articleId);
+            
+            const articleData = {
+                id: articleId,
+                category: category,
+                text: req.originalText,
+                fullPath: req.id,
+                parentChain: req.parentChain,
+                status: 'all',
+                actions: [],
+                justification: '',
+                proofLinks: [],
+                justifications: [],
+                responsible: '',
+                accountable: '',
+                consulted: '',
+                informed: '',
+                raciCollapsed: false,
+                actionsCollapsed: false,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            // Ajout des liens spécifiques selon la catégorie
+            if (category === 'Level 1') {
+                articleData.rtsLinks = document.getElementById('rtsLink').value
+                    .split(',').map(s => s.trim()).filter(Boolean);
+                articleData.itsLinks = document.getElementById('itsLink').value
+                    .split(',').map(s => s.trim()).filter(Boolean);
+            } else if (category === 'RTS' || category === 'ITS') {
+                articleData.level1Link = document.getElementById('level1Link').value.trim();
+            }
+
+            batch.set(docRef, articleData);
         }
-        const existingIndex = regulations.findIndex(reg => reg.id === articleId);
-        if (existingIndex !== -1) {
-            regulations[existingIndex] = article;
-        } else {
-            regulations.push(article);
+
+        await batch.commit();
+        
+        resetArticleForm();
+        showNotification('Articles ajoutés avec succès', 'success');
+        
+        // Recharger les données
+        await resetAndReload();
+        
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout:', error);
+        showNotification('Erreur lors de l\'ajout des articles', 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+
+// Fonctions de gestion du chargement progressif
+let lastLoadedDoc = null;
+
+async function loadMoreRegulations() {
+    if (isLoading) return;
+    
+    isLoading = true;
+    showLoading();
+
+    try {
+        let query = db.collection('regulations')
+            .orderBy('createdAt', 'desc')
+            .limit(BATCH_SIZE);
+
+        if (lastLoadedDoc) {
+            query = query.startAfter(lastLoadedDoc);
         }
+
+        const snapshot = await query.get();
+        const regulations = [];
+
+        snapshot.forEach(doc => {
+            regulations.push(doc.data());
+        });
+
+        if (regulations.length > 0) {
+            lastLoadedDoc = snapshot.docs[snapshot.docs.length - 1];
+            renderRegulationsBatch(regulations);
+            
+            // Configurer l'observation pour le prochain lot
+            setupIntersectionObserver();
+        }
+
+        if (snapshot.empty) {
+            hideLoadMoreButton();
+        }
+
+    } catch (error) {
+        console.error('Erreur de chargement:', error);
+        showNotification('Erreur lors du chargement des articles', 'error');
+    } finally {
+        isLoading = false;
+        hideLoading();
+    }
+}
+function loadMoreRegulations() {
+    if (db) {
+        db.collection('moreRegulations').get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    console.log(doc.id, " => ", doc.data());
+                });
+            })
+            .catch((error) => {
+                console.error("Erreur lors du chargement des réglementations supplémentaires:", error);
+            });
+    } else {
+        console.error("Firestore is not initialized.");
+    }
+}
+function renderRegulationsBatch(regulations) {
+    const container = document.getElementById('wallItems');
+    
+    regulations.forEach(reg => {
+        const regulationElement = document.createElement('div');
+        regulationElement.className = 'regulation-item fade-in';
+        regulationElement.id = `regulation-${reg.id}`;
+        regulationElement.innerHTML = `
+            <div class="regulation-header">
+                <!-- Votre code HTML existant pour l'en-tête -->
+            </div>
+            <div class="regulation-content">
+                <div class="regulation-text">${reg.text}</div>
+                <div class="regulation-id"><i>${reg.id}</i></div>
+                ${renderLinks(reg)}
+                ${renderRACI(reg)}
+                ${renderActions(reg)}
+                ${renderJustification(reg)}
+                ${renderProofLinks(reg)}
+            </div>
+        `;
+        
+        container.appendChild(regulationElement);
     });
-    renderRegulations();
-    autoSave();
-    resetArticleForm();
+}
+
+function setupIntersectionObserver() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !isLoading) {
+                loadMoreRegulations();
+            }
+        });
+    }, {
+        rootMargin: '100px',
+        threshold: 0.1
+    });
+
+    // Créer ou mettre à jour la sentinelle
+    let sentinel = document.querySelector('.load-sentinel');
+    if (!sentinel) {
+        sentinel = document.createElement('div');
+        sentinel.className = 'load-sentinel';
+        document.getElementById('wallItems').appendChild(sentinel);
+    }
+
+    observer.observe(sentinel);
+}
+
+// Fonction pour réinitialiser et recharger
+function resetAndReload() {
+    lastDoc = null;
+    return loadRegulations(true);
+}
+
+
+// Fonctions utilitaires
+function showLoading() {
+    let loader = document.querySelector('.global-loader');
+    if (!loader) {
+        loader = document.createElement('div');
+        loader.className = 'global-loader';
+        loader.innerHTML = '<div class="loader-spinner"></div>';
+        document.body.appendChild(loader);
+    }
+    loader.style.display = 'flex';
+}
+
+function hideLoading() {
+    const loader = document.querySelector('.global-loader');
+    if (loader) {
+        loader.style.display = 'none';
+    }
 }
 
 function parseRequirementsFromText(text) {
-    const lines = text.split(/\r?\n/);
+    // Nettoyer les lignes
+    const lines = text.split(/\r?\n/)
+        .map(line => line.replace(/\r$/, ''))
+        .filter(line => line.trim())
+        .map(line => ({
+            text: line.trim(),
+            indent: line.search(/\S/)
+        }));
+
     const requirements = [];
-    let parentChain = [];
-    lines.forEach((line, index) => {
-        const content = line.trim();
-        if (!content) return;
-        const indentation = line.search(/\S|$/);
-        const level = Math.floor(indentation / 2);
-        parentChain = parentChain.slice(0, level);
-        parentChain[level] = content;
-        const nextLine = lines[index + 1];
-        const nextIndentation = nextLine ? nextLine.search(/\S|$/) : -1;
-        const nextLevel = Math.floor(nextIndentation / 2);
-        const isLeaf = index === lines.length - 1 || nextLevel <= level;
-        if (isLeaf) {
-            const fullPath = parentChain.slice(0, level + 1).join('.');
-            const requirement = {
-                id: fullPath,
-                originalText: content,
-                level: level,
-                parentChain: parentChain.slice(0, level)
-            };
-            requirements.push(requirement);
+
+    // Pour chaque ligne, regarder si c'est une feuille et trouver son vrai parent
+    for (let i = 0; i < lines.length; i++) {
+        const current = lines[i];
+        const next = lines[i + 1];
+        
+        // Une ligne est une feuille si :
+        // - Elle a un parent (une ligne au-dessus moins indentée)
+        // - ET soit c'est la dernière ligne, soit la suivante n'est pas plus indentée
+        let hasParent = false;
+        let parentIndex = i - 1;
+        while (parentIndex >= 0) {
+            if (lines[parentIndex].indent < current.indent) {
+                hasParent = true;
+                break;
+            }
+            parentIndex--;
         }
+
+        const isLastLine = i === lines.length - 1;
+        const isLeaf = hasParent && (isLastLine || !next || next.indent <= current.indent);
+
+        if (isLeaf) {
+            // Trouver le vrai parent (première ligne au-dessus avec indentation moindre)
+            let parentChain = [];
+            let currentIndent = current.indent;
+            let searchIndex = i - 1;
+            
+            while (searchIndex >= 0) {
+                const potentialParent = lines[searchIndex];
+                if (potentialParent.indent < currentIndent) {
+                    parentChain.unshift(potentialParent.text);
+                    currentIndent = potentialParent.indent;
+                    if (currentIndent === 0) break; // On a atteint la racine
+                }
+                searchIndex--;
+            }
+
+            requirements.push({
+                id: [...parentChain, current.text].join('.'),
+                originalText: current.text,
+                parentChain: parentChain
+            });
+        }
+    }
+
+    return requirements;
+}
+
+  // Fonction helper pour vérifier la validité du parsing
+function validateRequirementsParsing(text) {
+    const requirements = parseRequirementsFromText(text);
+    console.log("Requirements parsed:", requirements);
+    
+    requirements.forEach((req, index) => {
+        console.log(`\nRequirement #${index + 1}:`);
+        console.log("ID:", req.id);
+        console.log("Original Text:", req.originalText);
+        console.log("Context:", req.context);
+        console.log("Full Text:", req.fullText);
+        console.log("Level:", req.level);
+        console.log("Parent Chain:", req.parentChain);
     });
+    
     return requirements;
 }
 
@@ -2977,6 +3969,7 @@ function updateRACI(regulationId, raciType, value) {
 document.addEventListener('DOMContentLoaded', () => {
     autoLoad();
     initializeWall();
+    renderRegulations(true);
     document.getElementById('searchInput').addEventListener('input', handleSearchInput);
     document.getElementById('categoryFilters').addEventListener('click', handleCategoryFilter);
     document.getElementById('statusTabs').addEventListener('click', handleStatusTabClick);
@@ -3006,11 +3999,3422 @@ function updateCategory(regulationId, selectedCategory) {
 }
 
 
+// Ajouter au début du script existant dans l'index.html
 
+// Création du Web Worker inline
+const workerScript = `
+    let regulations = [];
+    let filteredRegs = [];
+    const BATCH_SIZE = 10;
 
+    self.onmessage = function(e) {
+        const { type, data } = e.data;
+        
+        switch (type) {
+            case 'INIT_DATA':
+                regulations = data.regulations;
+                filterAndSendBatch(0);
+                break;
+                
+            case 'FILTER_UPDATE':
+                const { searchTerm, activeFilter, activeStatus } = data;
+                filterRegulations(searchTerm, activeFilter, activeStatus);
+                break;
+                
+            case 'REQUEST_BATCH':
+                const { startIndex } = data;
+                filterAndSendBatch(startIndex);
+                break;
+        }
+    };
+
+    function filterRegulations(searchTerm, activeFilter, activeStatus) {
+        filteredRegs = regulations.filter(reg => {
+            // Filtrage par recherche
+            if (searchTerm) {
+                const searchLower = searchTerm.toLowerCase();
+                const inText = reg.text.toLowerCase().includes(searchLower);
+                const inId = reg.id.toLowerCase().includes(searchLower);
+                const inActions = reg.actions.some(action => {
+                    return action.text.toLowerCase().includes(searchLower) ||
+                           (action.assignedTo && action.assignedTo.toLowerCase().includes(searchLower)) ||
+                           (action.raci?.responsible && action.raci.responsible.toLowerCase().includes(searchLower));
+                });
+                
+                if (!inText && !inId && !inActions) return false;
+            }
+
+            // Filtrage par catégorie
+            if (activeFilter !== 'all' && reg.category !== activeFilter) {
+                return false;
+            }
+
+            // Filtrage par statut
+            if (activeStatus === 'A faire') {
+                const totalProgress = reg.actions.reduce((sum, action) => sum + (action.percentage || 0), 0);
+                if (totalProgress > 0) return false;
+            } else if (activeStatus === 'En cours') {
+                const totalProgress = reg.actions.reduce((sum, action) => sum + (action.percentage || 0), 0);
+                if (totalProgress === 0) return false;
+            } else if (activeStatus !== 'all' && reg.status !== activeStatus) {
+                return false;
+            }
+
+            return true;
+        });
+
+        // Calculer la conformité
+        const complianceRate = calculateCompliance(filteredRegs);
+        
+        // Envoyer les métadonnées
+        self.postMessage({
+            type: 'METADATA_UPDATE',
+            data: {
+                total: filteredRegs.length,
+                complianceRate
+            }
+        });
+
+        // Envoyer le premier lot
+        filterAndSendBatch(0);
+    }
+
+    function calculateCompliance(regList) {
+        let totalCompliance = 0;
+        let totalApplicable = 0;
+        
+        regList.forEach(reg => {
+            if (reg.status === 'Non Applicable' || reg.status === 'Documentation') return;
+            totalApplicable++;
+            
+            if (reg.status === 'Compliant') {
+                totalCompliance += 100;
+            } else if (reg.actions.length > 0) {
+                const totalActionProgress = reg.actions.reduce((sum, action) => 
+                    sum + (action.percentage || 0), 0);
+                const averageProgress = totalActionProgress / reg.actions.length;
+                totalCompliance += averageProgress;
+            }
+        });
+        
+        return totalApplicable ? (totalCompliance / totalApplicable).toFixed(1) : '0.0';
+    }
+
+    function filterAndSendBatch(startIndex) {
+        const endIndex = startIndex + BATCH_SIZE;
+        const batch = filteredRegs.slice(startIndex, endIndex);
+        const hasMore = endIndex < filteredRegs.length;
+
+        self.postMessage({
+            type: 'BATCH_READY',
+            data: {
+                items: batch,
+                total: filteredRegs.length,
+                hasMore: hasMore,
+                startIndex: startIndex
+            }
+        });
+    }
+`;
+
+// Créer le Worker à partir du script
+const workerBlob = new Blob([workerScript], { type: 'application/javascript' });
+const workerUrl = URL.createObjectURL(workerBlob);
+
+// Variables globales pour la pagination
+let hasMoreItems = true;
+let dataWorker = null;
+
+// Initialisation du worker et du système de chargement progressif
 function initializeWall() {
-    renderWallItems();
+    // Créer et configurer le worker
+    dataWorker = new Worker(workerUrl);
+    
+    // Gestionnaire des messages du worker
+    dataWorker.onmessage = function(e) {
+        const { type, data } = e.data;
+        if (type === 'BATCH_READY') {
+            renderBatch(data);
+        } else if (type === 'METADATA_UPDATE') {
+            updateMetadata(data);
+        }
+    };
+
+    // Initialiser avec les données actuelles
+    dataWorker.postMessage({
+        type: 'INIT_DATA',
+        data: { regulations }
+    });
+
+    // Configurer l'observateur d'intersection
+    setupIntersectionObserver();
 }
+
+// Nettoyage à la fermeture
+window.addEventListener('beforeunload', () => {
+    if (dataWorker) {
+        dataWorker.terminate();
+    }
+    URL.revokeObjectURL(workerUrl);
+});
+
+// Modification des gestionnaires d'événements existants
+function handleSearchInput(event) {
+    if (!dataWorker) return;
+    
+    dataWorker.postMessage({
+        type: 'FILTER_UPDATE',
+        data: {
+            searchTerm: event.target.value,
+            activeFilter,
+            activeStatus
+        }
+    });
+}
+
+function handleCategoryFilter(event) {
+    if (!event.target.classList.contains('category-filter') || !dataWorker) return;
+    
+    document.querySelectorAll('.category-filter').forEach(filter => 
+        filter.classList.remove('active'));
+    event.target.classList.add('active');
+    activeFilter = event.target.dataset.category;
+    
+    dataWorker.postMessage({
+        type: 'FILTER_UPDATE',
+        data: {
+            searchTerm: document.getElementById('searchInput').value,
+            activeFilter,
+            activeStatus
+        }
+    });
+}
+
+function handleStatusTabClick(event) {
+    if (!event.target.classList.contains('tab') || !dataWorker) return;
+    
+    document.querySelectorAll('.tab').forEach(tab => 
+        tab.classList.remove('active'));
+    event.target.classList.add('active');
+    activeStatus = event.target.dataset.status;
+    
+    dataWorker.postMessage({
+        type: 'FILTER_UPDATE',
+        data: {
+            searchTerm: document.getElementById('searchInput').value,
+            activeFilter,
+            activeStatus
+        }
+    });
+}
+
+// Fonction pour charger le prochain lot
+function loadNextBatch() {
+    if (isLoading || !hasMoreItems) return;
+    
+    isLoading = true;
+    
+    // Demander le prochain lot au worker
+    dataWorker.postMessage({
+        type: 'REQUEST_BATCH',
+        data: { 
+            startIndex: currentPage * 10 // 10 éléments par lot
+        }
+    });
+}
+
+// Fonction pour rendre un lot
+// Fonction pour rendre un lot d'articles
+function renderBatch(regulations, reset) {
+    const container = document.getElementById('wallItems');
+    
+    if (reset) {
+        container.innerHTML = '';
+    }
+
+    regulations.forEach(reg => {
+        const regulationElement = document.createElement('div');
+        regulationElement.className = 'regulation-item fade-in';
+        regulationElement.id = `regulation-${reg.id}`;
+        regulationElement.innerHTML = renderRegulationContent(reg);
+        container.appendChild(regulationElement);
+    });
+
+    setupIntersectionObserver();
+}
+
+
+// Helper fonction pour créer l'élément de régulation
+function createRegulationElement(regulation) {
+    const element = document.createElement('div');
+    element.className = 'regulation-item';
+    element.id = `regulation-${regulation.id}`;
+    
+    // Réutiliser votre code HTML existant pour la structure de l'élément
+    element.innerHTML = `
+        <div class="regulation-header">
+            ${renderRegulationContent(regulation)}
+        </div>
+    `;
+
+    return element;
+}
+
+// Variables globales pour le suivi des statistiques
+let globalStats = {
+    totalItems: 0,
+    visibleItems: 0,
+    compliantCount: 0,
+    inProgressCount: 0,
+    complianceRate: 0
+};
+
+function updateMetadata(currentBatch) {
+    // Mise à jour des statistiques pour le lot actuel
+    let batchStats = currentBatch.reduce((stats, reg) => {
+        // Compter les éléments par statut
+        if (reg.status === 'Compliant') {
+            stats.compliantCount++;
+        } else if (reg.actions && reg.actions.some(action => action.percentage > 0)) {
+            stats.inProgressCount++;
+        }
+
+        // Calculer le taux de conformité pour cet élément
+        if (reg.status !== 'Non Applicable' && reg.status !== 'Documentation') {
+            stats.applicableCount++;
+            if (reg.status === 'Compliant') {
+                stats.complianceTotal += 100;
+            } else if (reg.actions.length > 0) {
+                const avgProgress = reg.actions.reduce((sum, action) => 
+                    sum + (action.percentage || 0), 0) / reg.actions.length;
+                stats.complianceTotal += avgProgress;
+            }
+        }
+
+        return stats;
+    }, {
+        compliantCount: 0,
+        inProgressCount: 0,
+        applicableCount: 0,
+        complianceTotal: 0
+    });
+
+    // Mettre à jour les statistiques globales
+    globalStats.totalItems = regulations.length;
+    globalStats.visibleItems = currentBatch.length;
+    globalStats.compliantCount = batchStats.compliantCount;
+    globalStats.inProgressCount = batchStats.inProgressCount;
+    
+    // Calculer le taux de conformité
+    const complianceRate = batchStats.applicableCount > 0 
+        ? (batchStats.complianceTotal / batchStats.applicableCount).toFixed(1) 
+        : '0.0';
+
+    // Mettre à jour l'interface
+    updateUI(complianceRate, batchStats);
+}
+
+function updateUI(complianceRate, stats) {
+    // Mettre à jour le taux de conformité
+    const complianceElement = document.querySelector('.compliance-rate');
+    if (complianceElement) {
+        complianceElement.textContent = `Taux de conformité: ${complianceRate}%`;
+    }
+
+    // Mettre à jour le compteur d'éléments visibles
+    const countElement = document.createElement('div');
+    countElement.className = 'items-count';
+    countElement.textContent = `Affichage de ${globalStats.visibleItems} sur ${globalStats.totalItems} éléments`;
+    
+    // Insérer le compteur après le taux de conformité
+    if (complianceElement && !document.querySelector('.items-count')) {
+        complianceElement.insertAdjacentElement('afterend', countElement);
+    }
+
+    // Mettre à jour les badges de statut
+    updateStatusBadges(stats);
+}
+
+function updateStatusBadges(stats) {
+    const badges = {
+        compliant: `<span class="badge badge-success">Compliant: ${stats.compliantCount}</span>`,
+        inProgress: `<span class="badge badge-warning">En cours: ${stats.inProgressCount}</span>`,
+        total: `<span class="badge badge-info">Total visible: ${globalStats.visibleItems}</span>`
+    };
+
+    // Créer ou mettre à jour le conteneur de badges
+    let badgesContainer = document.querySelector('.status-badges');
+    if (!badgesContainer) {
+        badgesContainer = document.createElement('div');
+        badgesContainer.className = 'status-badges';
+        document.querySelector('.header').appendChild(badgesContainer);
+    }
+
+    badgesContainer.innerHTML = Object.values(badges).join('');
+}
+
+// Style pour les nouveaux éléments
+const metadataStyles = `
+    .items-count {
+        color: var(--gray-600);
+        font-size: 0.875rem;
+        margin-bottom: var(--space-4);
+    }
+
+    .status-badges {
+        display: flex;
+        gap: var(--space-2);
+        margin-bottom: var(--space-4);
+        flex-wrap: wrap;
+    }
+
+    .badge {
+        padding: var(--space-1) var(--space-2);
+        border-radius: var(--radius-sm);
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+    .badge-success {
+        background-color: var(--success-50);
+        color: var(--success-600);
+    }
+
+    .badge-warning {
+        background-color: var(--warning-50);
+        color: var(--warning-600);
+    }
+
+    .badge-info {
+        background-color: var(--primary-50);
+        color: var(--primary-600);
+    }
+`;
+
+// Ajouter les styles
+function addMetadataStyles() {
+    const style = document.createElement('style');
+    style.textContent = metadataStyles;
+    document.head.appendChild(style);
+}
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', addMetadataStyles);
+
+
+// Variables globales
+let isOffline = false;
+
+
+// Fonction de chargement des régulations
+async function loadRegulations(reset = false) {
+    if (isLoading) return;
+    isLoading = true;
+
+    try {
+        showLoadingIndicator();
+
+        if (reset) {
+            document.getElementById('wallItems').innerHTML = '';
+            lastDoc = null;
+        }
+
+        // Construire la requête
+        let query = db.collection('regulations')
+            .orderBy('createdAt', 'desc')
+            .limit(BATCH_SIZE);
+
+        if (lastDoc && !reset) {
+            query = query.startAfter(lastDoc);
+        }
+
+        const snapshot = await query.get();
+        
+        if (!snapshot.empty) {
+            lastDoc = snapshot.docs[snapshot.docs.length - 1];
+            const regulations = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+
+            // Envoyer les données au worker
+            if (dataWorker) {
+                dataWorker.postMessage({
+                    type: 'BATCH_READY',
+                    data: {
+                        items: regulations,
+                        total: snapshot.size,
+                        hasMore: regulations.length === BATCH_SIZE,
+                        startIndex: reset ? 0 : document.querySelectorAll('.regulation-item').length
+                    }
+                });
+            } else {
+                // Fallback si le worker n'est pas disponible
+                renderBatch({
+                    items: regulations,
+                    total: snapshot.size,
+                    hasMore: regulations.length === BATCH_SIZE,
+                    startIndex: reset ? 0 : document.querySelectorAll('.regulation-item').length
+                });
+            }
+        } else {
+            if (reset) {
+                document.getElementById('wallItems').innerHTML = 
+                    '<div class="no-data">Aucune donnée trouvée</div>';
+            }
+            hideLoadMoreButton();
+        }
+
+    } catch (error) {
+        console.error('Erreur de chargement:', error);
+        showNotification('Erreur lors du chargement des données', 'error');
+    } finally {
+        isLoading = false;
+        hideLoadingIndicator();
+    }
+}
+
+// Fonctions utilitaires pour l'interface
+function showLoadingIndicator() {
+    const indicator = document.createElement('div');
+    indicator.className = 'loading-indicator';
+    indicator.innerHTML = '<div class="spinner"></div>';
+    document.getElementById('wallItems').appendChild(indicator);
+}
+
+function hideLoadingIndicator() {
+    const indicator = document.querySelector('.loading-indicator');
+    if (indicator) {
+        indicator.remove();
+    }
+}
+
+// Gestion de l'interface de chargement
+function hideLoadMoreButton() {
+    const button = document.querySelector('.load-more');
+    if (button) {
+        button.remove();
+    }
+}
+
+// Gestion de l'état offline
+function updateOfflineStatus(offline) {
+    isOffline = offline;
+    const statusBadge = document.getElementById('connection-status') || 
+                       document.createElement('div');
+    statusBadge.id = 'connection-status';
+    statusBadge.className = `status-badge ${offline ? 'offline' : 'online'}`;
+    statusBadge.textContent = offline ? 'Hors ligne' : 'En ligne';
+    
+    document.querySelector('.header').appendChild(statusBadge);
+}
+
+// Gestion des erreurs
+function handleLoadError(error) {
+    let message = 'Une erreur est survenue';
+    
+    if (error.code === 'unavailable') {
+        message = 'La connexion au serveur est impossible. Mode hors ligne activé.';
+    } else if (error.code === 'permission-denied') {
+        message = 'Accès non autorisé. Vérifiez les règles de sécurité.';
+    }
+
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.textContent = message;
+    
+    const container = document.getElementById('wallItems');
+    container.insertBefore(errorDiv, container.firstChild);
+}
+
+// Indicateurs de chargement
+function addLoadingIndicator() {
+    const indicator = document.createElement('div');
+    indicator.className = 'loading-indicator';
+    indicator.innerHTML = `
+        <div class="spinner"></div>
+        <div class="loading-text">Chargement...</div>
+    `;
+    document.getElementById('wallItems').appendChild(indicator);
+    return indicator;
+}
+
+function removeLoadingIndicator() {
+    const indicator = document.querySelector('.loading-indicator');
+    if (indicator) indicator.remove();
+}
+
+// Styles pour les indicateurs
+const styles = `
+    .status-badge {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-weight: 500;
+        z-index: 1000;
+    }
+    
+    .status-badge.online {
+        background-color: var(--success-50);
+        color: var(--success-600);
+    }
+    
+    .status-badge.offline {
+        background-color: var(--danger-50);
+        color: var(--danger-600);
+    }
+
+    .loading-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        gap: 10px;
+    }
+
+    .spinner {
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--gray-200);
+        border-top-color: var(--primary-500);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    .error-message {
+        background-color: var(--danger-50);
+        color: var(--danger-600);
+        padding: 12px;
+        border-radius: 4px;
+        margin: 12px 0;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+    .global-loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    .loader-spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid var(--gray-200);
+        border-top-color: var(--primary-500);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    .load-sentinel {
+        height: 20px;
+        margin: 20px 0;
+    }
+
+    .fade-in {
+        opacity: 0;
+        animation: fadeIn 0.3s ease forwards;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeIn {
+        to { opacity: 1; }
+    }
+`;
+
+// Ajouter les styles
+const styleSheet = document.createElement('style');
+styleSheet.textContent = styles;
+document.head.appendChild(styleSheet);
+
+// Initialisation au chargement de la page
+document.addEventListener('DOMContentLoaded', () => {
+    resetAndReload();
+});
+
+        // Configuration Firebase en dur
+        const firebaseConfig = {
+          apiKey: "AIzaSyCTkHkB4fwTYaid1ly_Wv50_VE9dyTVGEg",
+          authDomain: "mydora-5767a.firebaseapp.com",
+          projectId: "mydora-5767a",
+          storageBucket: "mydora-5767a.firebasestorage.app",
+          messagingSenderId: "716389188012",
+          appId: "1:716389188012:web:e72fbdf6931b56a55d3a09"
+        };
+
+        // Initialisation automatique de Firebase
+        (function initializeFirebase() {
+            try {
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(firebaseConfig);
+                    db = firebase.firestore(); // Initialise Firestore
+                } else {
+                    console.log("Firebase est déjà initialisé");
+                }
+            } catch (error) {
+                console.error("Erreur d'initialisation de Firebase :", error);
+            }
+        })();
+
+// Utilitaires pour la gestion des erreurs et notifications
+function showError(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-notification';
+    errorDiv.textContent = message;
+    document.body.appendChild(errorDiv);
+    setTimeout(() => errorDiv.remove(), 3000);
+}
+
+function showNotification(message, type) {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    setTimeout(() => notification.remove(), 3000);
+}
+        
+async function publishArticle(article) {
+    const db = firebase.firestore();
+    try {
+        // Ajoute un article à la collection "articles"
+        await db.collection("articles").add({
+            title: article.title,
+            content: article.content,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        console.log("Article publié avec succès");
+    } catch (error) {
+        console.error("Erreur lors de la publication de l'article :", error);
+    }
+}
+
+// Styles globaux pour l'application
+const globalStyles = `
+    .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 12px 20px;
+        border-radius: 4px;
+        z-index: 1000;
+        animation: slideIn 0.3s ease;
+    }
+
+    .notification.success {
+        background-color: var(--success-50);
+        color: var(--success-600);
+    }
+
+    .notification.error {
+        background-color: var(--danger-50);
+        color: var(--danger-600);
+    }
+
+    .loading-indicator {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .spinner {
+        width: 30px;
+        height: 30px;
+        border: 3px solid var(--gray-200);
+        border-top-color: var(--primary-500);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    @keyframes slideIn {
+        from { transform: translateX(100%); }
+        to { transform: translateX(0); }
+    }
+
+    .load-more {
+        display: block;
+        margin: 20px auto;
+        padding: 8px 16px;
+    }
+
+    .load-sentinel {
+        height: 20px;
+        margin: 20px 0;
+    }
+`;
+
+// Fonction pour ajouter les styles
+function addStyles() {
+    const styleElement = document.createElement('style');
+    styleElement.textContent = globalStyles;
+    document.head.appendChild(styleElement);
+}
+
+// Code du Worker
+const workerCode = `
+    let regulations = [];
+    let filteredRegs = [];
+    
+    self.onmessage = function(e) {
+        const { type, data } = e.data;
+        
+        switch (type) {
+            case 'INIT_DATA':
+                regulations = data.regulations || [];
+                filterAndSendBatch(0);
+                break;
+                
+            case 'FILTER_UPDATE':
+                const { searchTerm, activeFilter, activeStatus } = data;
+                filterRegulations(searchTerm, activeFilter, activeStatus);
+                break;
+                
+            case 'REQUEST_BATCH':
+                const { startIndex } = data;
+                filterAndSendBatch(startIndex);
+                break;
+                
+            case 'BATCH_READY':
+                // Traiter directement les données reçues de Firestore
+                self.postMessage({
+                    type: 'RENDER_BATCH',
+                    data: data
+                });
+                break;
+        }
+    };
+
+    function filterRegulations(searchTerm, activeFilter, activeStatus) {
+        filteredRegs = regulations.filter(reg => {
+            if (searchTerm) {
+                const searchLower = searchTerm.toLowerCase();
+                const inText = reg.text.toLowerCase().includes(searchLower);
+                const inId = reg.id.toLowerCase().includes(searchLower);
+                return inText || inId;
+            }
+            return true;
+        });
+
+        if (activeFilter !== 'all') {
+            filteredRegs = filteredRegs.filter(reg => reg.category === activeFilter);
+        }
+
+        if (activeStatus !== 'all') {
+            filteredRegs = filteredRegs.filter(reg => reg.status === activeStatus);
+        }
+
+        filterAndSendBatch(0);
+    }
+
+    function filterAndSendBatch(startIndex) {
+        const batchSize = 10;
+        const endIndex = startIndex + batchSize;
+        const batch = filteredRegs.slice(startIndex, endIndex);
+        
+        self.postMessage({
+            type: 'RENDER_BATCH',
+            data: {
+                items: batch,
+                total: filteredRegs.length,
+                hasMore: endIndex < filteredRegs.length,
+                startIndex: startIndex
+            }
+        });
+    }
+`;
+
+// Création et initialisation du Worker
+function initializeWorker() {
+    const blob = new Blob([workerCode], { type: 'application/javascript' });
+    const workerUrl = URL.createObjectURL(blob);
+    const worker = new Worker(workerUrl);
+    
+    worker.onmessage = function(e) {
+        const { type, data } = e.data;
+        if (type === 'RENDER_BATCH') {
+            renderBatch(data);
+        }
+    };
+    
+    return worker;
+}
+
+// Fonction de rendu modifiée
+function renderBatch(data) {
+    if (!data || !data.items || !Array.isArray(data.items)) {
+        console.error('Invalid data received:', data);
+        return;
+    }
+
+    const container = document.getElementById('wallItems');
+    
+    if (data.startIndex === 0) {
+        container.innerHTML = '';
+    }
+
+    data.items.forEach(reg => {
+        const articleElement = document.createElement('div');
+        articleElement.className = 'regulation-item fade-in';
+        articleElement.id = `regulation-${reg.id}`;
+        articleElement.innerHTML = renderRegulationContent(reg);
+        container.appendChild(articleElement);
+    });
+
+    if (data.hasMore) {
+        setupIntersectionObserver();
+    }
+
+    updateStats(data.total);
+}
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', () => {
+    addStyles();
+    const dataWorker = initializeWorker();
+    loadRegulations(true);
+    setupIntersectionObserver();
+    
+    // Event listeners pour la recherche et les filtres
+    document.getElementById('searchInput')?.addEventListener('input', e => {
+        dataWorker.postMessage({
+            type: 'FILTER_UPDATE',
+            data: {
+                searchTerm: e.target.value,
+                activeFilter,
+                activeStatus
+            }
+        });
+    });
+});
+
+// Fonction pour initialiser Firebase et vérifier/créer la collection
+async function initializeFirebase() {
+    try {
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+            console.log("Firebase initialisé avec succès");
+            
+            // Vérifier si la collection existe
+            const regulations = await db.collection('regulations').get();
+            console.log("Collection vérifiée ou créée");
+        }
+    } catch (error) {
+        console.error("Erreur d'initialisation:", error);
+        showNotification('Erreur de connexion à Firebase', 'error');
+    }
+}
+
+// Fonction modifiée pour ajouter un nouvel article avec vérification
+async function addNewArticle() {
+    try {
+        showLoading();
+
+        // Récupérer les valeurs du formulaire
+        const category = document.getElementById('articleCategory').value;
+        const reference = document.getElementById('articleReference').value;
+        const text = document.getElementById('articleText').value;
+        
+        // Validation
+        if (!category || !reference || !text) {
+            showNotification('Tous les champs sont obligatoires', 'error');
+            return;
+        }
+
+        // Créer l'article de test
+        const testDoc = {
+            id: `${reference}-test`,
+            category: category,
+            text: text,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        // Test d'écriture
+        console.log("Tentative d'écriture:", testDoc);
+        const docRef = await db.collection('regulations').add(testDoc);
+        console.log("Document écrit avec ID:", docRef.id);
+
+        // Si le test réussit, procéder avec les vrais articles
+        const parsedRequirements = parseRequirementsFromText(text);
+        const batch = db.batch();
+
+        for (const req of parsedRequirements) {
+            const articleId = `${reference}-${req.id}`;
+            const articleRef = db.collection('regulations').doc(articleId);
+            
+            const articleData = {
+                id: articleId,
+                category: category,
+                text: req.originalText,
+                fullPath: req.id,
+                parentChain: req.parentChain,
+                status: 'all',
+                actions: [],
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                // Autres champs RACI
+                responsible: '',
+                accountable: '',
+                consulted: '',
+                informed: ''
+            };
+
+            if (category === 'Level 1') {
+                articleData.rtsLinks = document.getElementById('rtsLink').value
+                    .split(',').map(s => s.trim()).filter(Boolean);
+                articleData.itsLinks = document.getElementById('itsLink').value
+                    .split(',').map(s => s.trim()).filter(Boolean);
+            } else if (category === 'RTS' || category === 'ITS') {
+                articleData.level1Link = document.getElementById('level1Link').value.trim();
+            }
+
+            batch.set(articleRef, articleData);
+            console.log("Article préparé:", articleData);
+        }
+
+        // Exécuter le batch
+        await batch.commit();
+        console.log("Batch commité avec succès");
+
+        showNotification('Articles ajoutés avec succès', 'success');
+        resetArticleForm();
+        
+        // Recharger les articles
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout:', error);
+        showNotification(`Erreur: ${error.message}`, 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// Fonction de vérification de la connexion Firestore
+async function checkFirestoreConnection() {
+    try {
+        const timestamp = await db.collection('regulations')
+            .add({
+                test: true,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        await timestamp.delete();
+        console.log("Connexion Firestore OK");
+        return true;
+    } catch (error) {
+        console.error("Erreur de connexion Firestore:", error);
+        return false;
+    }
+}
+
+// Initialisation avec vérifications
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        await initializeFirebase();
+        const isConnected = await checkFirestoreConnection();
+        
+        if (!isConnected) {
+            showNotification('Erreur de connexion à la base de données', 'error');
+            return;
+        }
+
+        showNotification('Connecté à la base de données', 'success');
+        await loadRegulations(true);
+        
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', handleSearchInput);
+        document.getElementById('categoryFilters').addEventListener('click', handleCategoryFilter);
+        document.getElementById('statusTabs').addEventListener('click', handleStatusTabClick);
+        
+    } catch (error) {
+        console.error("Erreur d'initialisation:", error);
+        showNotification('Erreur de démarrage de l\'application', 'error');
+    }
+});
+
+// Fonction pour afficher les notifications plus visibles
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 25px;
+        background: ${type === 'error' ? '#fee2e2' : '#ecfdf5'};
+        color: ${type === 'error' ? '#dc2626' : '#059669'};
+        border-radius: 6px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        font-weight: 500;
+    `;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    console.log(type === 'error' ? `Erreur: ${message}` : message);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 5000);
+}
+
+// Fonctions d'aide pour l'interface
+function showLoading() {
+    const loader = document.createElement('div');
+    loader.className = 'global-loader';
+    loader.innerHTML = `
+        <div style="
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        ">
+            <div class="spinner"></div>
+            <span>Chargement...</span>
+        </div>
+    `;
+    document.body.appendChild(loader);
+}
+
+function hideLoading() {
+    const loader = document.querySelector('.global-loader');
+    if (loader) {
+        loader.remove();
+    }
+}
+
+
+// Fonction de lecture des données avec pagination
+async function loadRegulations(reset = false) {
+    if (isLoading) return;
+    isLoading = true;
+    showLoading();
+
+    try {
+        if (reset) {
+            document.getElementById('wallItems').innerHTML = '';
+            lastDoc = null;
+        }
+
+        // Construire la requête de base
+        let query = db.collection('regulations')
+            .orderBy('createdAt', 'desc')
+            .limit(BATCH_SIZE);
+
+        // Ajouter le startAfter si ce n'est pas un reset
+        if (!reset && lastDoc) {
+            query = query.startAfter(lastDoc);
+        }
+
+        const snapshot = await query.get();
+        
+        if (!snapshot.empty) {
+            // Sauvegarder le dernier document pour la pagination
+            lastDoc = snapshot.docs[snapshot.docs.length - 1];
+            
+            // Convertir les documents en données
+            const regulations = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+
+            // Rendre les données
+            renderRegulations(regulations, reset);
+            
+            // Configurer l'observateur pour le chargement infini
+            setupIntersectionObserver();
+
+            showNotification(`${regulations.length} articles chargés`, 'success');
+        } else {
+            if (reset) {
+                document.getElementById('wallItems').innerHTML = 
+                    '<div class="no-data">Aucune donnée trouvée</div>';
+            }
+        }
+
+    } catch (error) {
+        console.error('Erreur de chargement:', error);
+        showNotification('Erreur lors du chargement des données', 'error');
+    } finally {
+        isLoading = false;
+        hideLoading();
+    }
+}
+
+// Fonction de rendu des régulations
+function renderRegulations(regulations, reset = false) {
+    const container = document.getElementById('wallItems');
+    
+    // Si reset, vider le conteneur
+    if (reset) {
+        container.innerHTML = '';
+    }
+
+    // Calculer le taux de conformité
+    let complianceRate = calculateCompliance(regulations);
+    updateComplianceRate(complianceRate);
+
+    // Rendre chaque régulation
+    regulations.forEach(reg => {
+        const regulationElement = document.createElement('div');
+        regulationElement.className = 'regulation-item fade-in';
+        regulationElement.id = `regulation-${reg.id}`;
+        regulationElement.innerHTML = `
+            <div class="regulation-header">
+                <div class="status-controls">
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            class="checkbox" 
+                            value="Compliant" 
+                            ${reg.status === 'Compliant' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Compliant')"> Compliant
+                    </label>
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            value="Non Applicable" 
+                            ${reg.status === 'Non Applicable' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Non Applicable')"> Non Applicable
+                    </label>
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            value="Documentation" 
+                            ${reg.status === 'Documentation' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Documentation')"> Documentation
+                    </label>
+                </div>
+            </div>
+            <div class="regulation-content">
+                <div class="regulation-text">${reg.text}</div>
+                <div class="regulation-id"><i>${reg.id}</i></div>
+                ${renderLinks(reg)}
+                ${renderRACI(reg)}
+                ${renderActions(reg)}
+                ${renderJustification(reg)}
+                ${renderProofLinks(reg)}
+                
+                <div class="action-buttons">
+                    <button class="button secondary" onclick="editRegulation('${reg.id}')">Éditer</button>
+                    <button class="button secondary" onclick="deleteRegulation('${reg.id}')">Supprimer</button>
+                </div>
+            </div>
+        `;
+        
+        container.appendChild(regulationElement);
+    });
+}
+
+// Fonction de recherche et filtrage
+async function searchAndFilter(searchTerm, filter, status) {
+    showLoading();
+    try {
+        // Construire la requête de base
+        let query = db.collection('regulations');
+
+        // Appliquer les filtres
+        if (filter !== 'all') {
+            query = query.where('category', '==', filter);
+        }
+        if (status !== 'all' && status !== 'Exigences with Risks') {
+            query = query.where('status', '==', status);
+        }
+
+        // Exécuter la requête
+        const snapshot = await query.get();
+        let results = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        // Filtrage côté client pour la recherche textuelle
+        if (searchTerm) {
+            results = results.filter(reg => 
+                reg.text.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                reg.id.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+        }
+
+        // Filtrage spécial pour "Exigences with Risks"
+        if (status === 'Exigences with Risks') {
+            results = results.filter(reg => 
+                reg.actions && reg.actions.some(action => 
+                    action.risks && action.risks.length > 0
+                )
+            );
+        }
+
+        // Rendre les résultats
+        renderRegulations(results, true);
+
+    } catch (error) {
+        console.error('Erreur de recherche:', error);
+        showNotification('Erreur lors de la recherche', 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// Configuration de l'Intersection Observer pour le lazy loading
+function setupIntersectionObserver() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !isLoading && lastDoc) {
+                loadRegulations(false);
+            }
+        });
+    }, {
+        rootMargin: '100px'
+    });
+
+    let sentinel = document.querySelector('.load-sentinel');
+    if (!sentinel) {
+        sentinel = document.createElement('div');
+        sentinel.className = 'load-sentinel';
+        document.getElementById('wallItems').appendChild(sentinel);
+    }
+
+    observer.observe(sentinel);
+}
+
+// Mise à jour d'une régulation dans Firestore
+async function updateRegulation(id, updates) {
+    try {
+        await db.collection('regulations').doc(id).update(updates);
+        showNotification('Mise à jour réussie', 'success');
+    } catch (error) {
+        console.error('Erreur de mise à jour:', error);
+        showNotification('Erreur lors de la mise à jour', 'error');
+    }
+}
+
+// Fonction de mise à jour du taux de conformité
+function updateComplianceRate(rate) {
+    const element = document.querySelector('.compliance-rate');
+    if (element) {
+        element.textContent = `Taux de conformité: ${rate}%`;
+    }
+}
+
+
+// Utilitaire pour debounce
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            timeout = null;
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', () => {
+    // Charger les données initiales
+    loadRegulations(true);
+
+    // Gestionnaires d'événements pour les filtres
+    document.getElementById('searchInput').addEventListener('input', debounce((e) => {
+        searchAndFilter(
+            e.target.value,
+            activeFilter,
+            activeStatus
+        );
+    }, 300));
+
+    document.getElementById('categoryFilters').addEventListener('click', (e) => {
+        if (e.target.classList.contains('category-filter')) {
+            activeFilter = e.target.dataset.category;
+            searchAndFilter(
+                document.getElementById('searchInput').value,
+                activeFilter,
+                activeStatus
+            );
+        }
+    });
+
+    document.getElementById('statusTabs').addEventListener('click', (e) => {
+        if (e.target.classList.contains('tab')) {
+            activeStatus = e.target.dataset.status;
+            searchAndFilter(
+                document.getElementById('searchInput').value,
+                activeFilter,
+                activeStatus
+            );
+        }
+    });
+});
+
+// Fonction de calcul de conformité corrigée
+function calculateCompliance(regList) {
+    // Vérifier que regList est un tableau
+    if (!Array.isArray(regList)) {
+        console.error('Liste de régulations invalide:', regList);
+        return '0.0';
+    }
+
+    let totalCompliance = 0;
+    let totalApplicable = 0;
+
+    regList.forEach(reg => {
+        // Vérifier que reg est un objet valide
+        if (!reg || typeof reg !== 'object') return;
+
+        if (reg.status === 'Non Applicable' || reg.status === 'Documentation') return;
+        
+        totalApplicable++;
+        if (reg.status === 'Compliant') {
+            totalCompliance += 100;
+        } else {
+            if (Array.isArray(reg.actions) && reg.actions.length > 0) {
+                const totalActionProgress = reg.actions.reduce((sum, action) => {
+                    return sum + (Number(action.percentage) || 0);
+                }, 0);
+                const averageProgress = totalActionProgress / reg.actions.length;
+                totalCompliance += averageProgress;
+            }
+        }
+    });
+
+    return totalApplicable ? (totalCompliance / totalApplicable).toFixed(1) : '0.0';
+}
+
+// Fonction de rendu modifiée
+function renderRegulations(regulations, reset = false) {
+    const container = document.getElementById('wallItems');
+    
+    // Vérifier que regulations est un tableau
+    if (!Array.isArray(regulations)) {
+        console.error('Données de régulations invalides:', regulations);
+        container.innerHTML = '<div class="error">Erreur de chargement des données</div>';
+        return;
+    }
+    
+    if (reset) {
+        container.innerHTML = '';
+    }
+
+    // Calculer et mettre à jour le taux de conformité
+    const complianceRate = calculateCompliance(regulations);
+    const complianceElement = document.querySelector('.compliance-rate');
+    if (complianceElement) {
+        complianceElement.textContent = `Taux de conformité: ${complianceRate}%`;
+    }
+
+    // Rendre chaque régulation
+    regulations.forEach(reg => {
+        if (!reg || typeof reg !== 'object') return;
+
+        const regulationElement = document.createElement('div');
+        regulationElement.className = 'regulation-item fade-in';
+        regulationElement.id = `regulation-${reg.id}`;
+        regulationElement.innerHTML = `
+            <div class="regulation-header">
+                <div class="status-controls">
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            class="checkbox" 
+                            value="Compliant" 
+                            ${reg.status === 'Compliant' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Compliant')"> Compliant
+                    </label>
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            value="Non Applicable" 
+                            ${reg.status === 'Non Applicable' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Non Applicable')"> Non Applicable
+                    </label>
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            value="Documentation" 
+                            ${reg.status === 'Documentation' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Documentation')"> Documentation
+                    </label>
+                </div>
+            </div>
+            <div class="regulation-content">
+                <div class="regulation-text">${reg.text || ''}</div>
+                <div class="regulation-id"><i>${reg.id || ''}</i></div>
+                ${renderLinks(reg)}
+                ${renderRACI(reg)}
+                ${renderActions(reg)}
+                ${renderJustification(reg)}
+                ${renderProofLinks(reg)}
+                
+                <div class="action-buttons">
+                    <button class="button secondary" onclick="editRegulation('${reg.id}')">Éditer</button>
+                    <button class="button secondary" onclick="deleteRegulation('${reg.id}')">Supprimer</button>
+                </div>
+            </div>
+        `;
+        
+        container.appendChild(regulationElement);
+    });
+
+    // Configurer l'observateur pour le lazy loading
+    setupIntersectionObserver();
+}
+
+// Fonction de chargement des données modifiée
+async function loadRegulations(reset = false) {
+    if (isLoading) return;
+    isLoading = true;
+    showLoading();
+
+    try {
+        if (reset) {
+            document.getElementById('wallItems').innerHTML = '';
+            lastDoc = null;
+        }
+
+        let query = db.collection('regulations')
+            .orderBy('createdAt', 'desc')
+            .limit(BATCH_SIZE);
+
+        if (lastDoc && !reset) {
+            query = query.startAfter(lastDoc);
+        }
+
+        const snapshot = await query.get();
+        
+        if (!snapshot.empty) {
+            lastDoc = snapshot.docs[snapshot.docs.length - 1];
+            const regulations = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+
+            renderRegulations(regulations, reset);
+            console.log(`${regulations.length} articles chargés`);
+        } else {
+            if (reset) {
+                document.getElementById('wallItems').innerHTML = 
+                    '<div class="no-data">Aucune donnée trouvée</div>';
+            }
+        }
+
+    } catch (error) {
+        console.error('Erreur de chargement:', error);
+        showNotification('Erreur lors du chargement des données', 'error');
+    } finally {
+        isLoading = false;
+        hideLoading();
+    }
+}
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', () => {
+    addStyles();
+    loadRegulations(true);
+    setupIntersectionObserver();
+});
+
+// Fonction de suppression d'une régulation
+async function deleteRegulation(regulationId) {
+    try {
+        if (!confirm('Êtes-vous sûr de vouloir supprimer cette exigence ?')) {
+            return;
+        }
+
+        showLoading();
+        
+        // Supprimer le document de Firestore
+        await db.collection('regulations').doc(regulationId).delete();
+        
+        // Supprimer l'élément du DOM
+        const element = document.getElementById(`regulation-${regulationId}`);
+        if (element) {
+            element.remove();
+        }
+        
+        showNotification('Exigence supprimée avec succès', 'success');
+        
+        // Recharger les données pour mettre à jour le taux de conformité
+        await loadRegulations(true);
+        
+    } catch (error) {
+        console.error('Erreur lors de la suppression:', error);
+        showNotification('Erreur lors de la suppression', 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// Fonction pour passer en mode édition
+function editRegulation(regulationId) {
+    const regulationElement = document.getElementById(`regulation-${regulationId}`);
+    if (!regulationElement) return;
+
+    const textElement = regulationElement.querySelector('.regulation-text');
+    const originalText = textElement.textContent;
+
+    // Créer le formulaire d'édition
+    const editForm = document.createElement('div');
+    editForm.className = 'edit-form';
+    editForm.innerHTML = `
+        <textarea class="input" id="edit-text-${regulationId}">${originalText}</textarea>
+        <div class="button-group mt-2">
+            <button class="button" onclick="saveRegulationEdit('${regulationId}')">Sauvegarder</button>
+            <button class="button secondary" onclick="cancelRegulationEdit('${regulationId}', '${originalText}')">Annuler</button>
+        </div>
+    `;
+
+    textElement.replaceWith(editForm);
+}
+
+// Fonction pour sauvegarder les modifications
+async function saveRegulationEdit(regulationId) {
+    try {
+        showLoading();
+        
+        const textArea = document.getElementById(`edit-text-${regulationId}`);
+        if (!textArea) return;
+
+        const newText = textArea.value.trim();
+        if (!newText) {
+            showNotification('Le texte ne peut pas être vide', 'error');
+            return;
+        }
+
+        // Mettre à jour dans Firestore
+        await db.collection('regulations').doc(regulationId).update({
+            text: newText,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        // Mettre à jour l'affichage
+        const editForm = textArea.closest('.edit-form');
+        const textElement = document.createElement('div');
+        textElement.className = 'regulation-text';
+        textElement.textContent = newText;
+        editForm.replaceWith(textElement);
+
+        showNotification('Modifications sauvegardées', 'success');
+
+    } catch (error) {
+        console.error('Erreur lors de la sauvegarde:', error);
+        showNotification('Erreur lors de la sauvegarde', 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// Fonction pour annuler l'édition
+function cancelRegulationEdit(regulationId, originalText) {
+    const editForm = document.getElementById(`edit-text-${regulationId}`).closest('.edit-form');
+    if (!editForm) return;
+
+    const textElement = document.createElement('div');
+    textElement.className = 'regulation-text';
+    textElement.textContent = originalText;
+    editForm.replaceWith(textElement);
+}
+
+// Mise à jour du statut dans Firestore
+async function updateStatus(regulationId, status) {
+    try {
+        await db.collection('regulations').doc(regulationId).update({
+            status: status === 'Tous' ? 'all' : status,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        showNotification('Statut mis à jour', 'success');
+        
+        // Recharger les données pour mettre à jour le taux de conformité
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour du statut:', error);
+        showNotification('Erreur lors de la mise à jour du statut', 'error');
+        
+        // Réinitialiser les radios en cas d'erreur
+        const radios = document.querySelectorAll(`input[name="status-${regulationId}"]`);
+        radios.forEach(radio => {
+            radio.checked = radio.defaultChecked;
+        });
+    }
+}
+
+// Mise à jour du RACI dans Firestore
+async function updateRACI(regulationId, raciType, value) {
+    try {
+        const updates = {
+            [raciType]: value,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        await db.collection('regulations').doc(regulationId).update(updates);
+        showNotification('RACI mis à jour', 'success');
+
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour du RACI:', error);
+        showNotification('Erreur lors de la mise à jour du RACI', 'error');
+    }
+}
+
+// Styles pour le formulaire d'édition
+const editStyles = `
+    .edit-form {
+        margin: 10px 0;
+    }
+
+    .edit-form textarea {
+        width: 100%;
+        min-height: 100px;
+        padding: 8px;
+        margin-bottom: 8px;
+        border: 1px solid var(--gray-200);
+        border-radius: var(--radius-md);
+    }
+
+    .edit-form .button-group {
+        display: flex;
+        gap: 8px;
+    }
+
+    .mt-2 {
+        margin-top: 8px;
+    }
+`;
+
+// Ajouter les styles au document
+function addEditStyles() {
+    const styleElement = document.createElement('style');
+    styleElement.textContent = editStyles;
+    document.head.appendChild(styleElement);
+}
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', () => {
+    addEditStyles();
+});
+
+
+// Fonction de suppression corrigée
+async function deleteRegulation(regulationId) {
+    try {
+        if (!regulationId) {
+            console.error('ID de régulation manquant');
+            showNotification('Erreur: ID manquant', 'error');
+            return;
+        }
+
+        // Confirmation de suppression
+        if (!confirm('⚠️ Êtes-vous sûr de vouloir supprimer cette exigence ? Cette action est irréversible.')) {
+            return;
+        }
+
+        showLoading();
+        console.log('Tentative de suppression de:', regulationId);
+
+        // Récupérer une référence au document
+        const docRef = db.collection('regulations').doc(regulationId);
+
+        // Vérifier que le document existe
+        const doc = await docRef.get();
+        if (!doc.exists) {
+            throw new Error('Document non trouvé dans Firestore');
+        }
+
+        // Supprimer le document
+        await docRef.delete();
+        console.log('Document supprimé de Firestore:', regulationId);
+
+        // Supprimer l'élément du DOM
+        const element = document.getElementById(`regulation-${regulationId}`);
+        if (element) {
+            element.remove();
+            console.log('Élément supprimé du DOM');
+        }
+
+        showNotification('Exigence supprimée avec succès', 'success');
+
+        // Recharger les données pour mettre à jour l'affichage
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur lors de la suppression:', error);
+        showNotification(`Erreur lors de la suppression: ${error.message}`, 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// Fonction utilitaire pour vérifier la connexion Firestore
+async function checkFirestoreConnection() {
+    try {
+        const testDoc = await db.collection('regulations').doc('test').get();
+        return true;
+    } catch (error) {
+        console.error('Erreur de connexion Firestore:', error);
+        return false;
+    }
+}
+
+// Fonction pour afficher une notification plus visible
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 25px;
+        background: ${type === 'error' ? '#fee2e2' : '#ecfdf5'};
+        color: ${type === 'error' ? '#dc2626' : '#059669'};
+        border-radius: 6px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        font-weight: 500;
+        animation: slideIn 0.3s ease;
+    `;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    console.log(`${type.toUpperCase()}: ${message}`);
+    
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    }, 5000);
+}
+
+// Animation pour les notifications
+const notificationStyles = `
+    @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+    
+    @keyframes slideOut {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+    }
+    
+    .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+`;
+
+// Fonction pour montrer l'indicateur de chargement
+function showLoading() {
+    const overlay = document.createElement('div');
+    overlay.className = 'loading-overlay';
+    overlay.innerHTML = `
+        <div style="
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        ">
+            <div class="spinner"></div>
+            <span>Traitement en cours...</span>
+        </div>
+    `;
+    document.body.appendChild(overlay);
+}
+
+// Fonction pour cacher l'indicateur de chargement
+function hideLoading() {
+    const overlay = document.querySelector('.loading-overlay');
+    if (overlay) {
+        overlay.remove();
+    }
+}
+
+// Ajouter les styles au document
+function addStyles() {
+    const style = document.createElement('style');
+    style.textContent = notificationStyles;
+    document.head.appendChild(style);
+}
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', () => {
+    addStyles();
+    
+    // Vérifier la connexion à Firestore
+    checkFirestoreConnection().then(isConnected => {
+        if (!isConnected) {
+            showNotification('Problème de connexion à la base de données', 'error');
+        }
+    });
+});
+
+// Fonction de suppression corrigée
+async function deleteRegulation(regulationId) {
+    try {
+        if (!regulationId) {
+            console.error('ID de régulation manquant');
+            showNotification('Erreur: ID manquant', 'error');
+            return;
+        }
+
+        // Debug log
+        console.log('Tentative de suppression du document:', regulationId);
+
+        // Confirmation de suppression
+        if (!confirm('⚠️ Êtes-vous sûr de vouloir supprimer cette exigence ? Cette action est irréversible.')) {
+            return;
+        }
+
+        showLoading();
+
+        // Récupérer tous les documents qui correspondent à l'ID
+        const querySnapshot = await db.collection('regulations')
+            .where('id', '==', regulationId)
+            .get();
+
+        console.log('Documents trouvés:', querySnapshot.size);
+
+        if (querySnapshot.empty) {
+            // Essayer de supprimer directement avec l'ID comme identifiant du document
+            const docRef = db.collection('regulations').doc(regulationId);
+            const doc = await docRef.get();
+            
+            if (!doc.exists) {
+                throw new Error('Document non trouvé dans Firestore');
+            }
+            
+            await docRef.delete();
+        } else {
+            // Supprimer tous les documents trouvés
+            const batch = db.batch();
+            querySnapshot.forEach((doc) => {
+                console.log('Suppression du document:', doc.id);
+                batch.delete(doc.ref);
+            });
+            await batch.commit();
+        }
+
+        // Supprimer l'élément du DOM
+        const element = document.getElementById(`regulation-${regulationId}`);
+        if (element) {
+            element.remove();
+            console.log('Élément supprimé du DOM');
+        }
+
+        showNotification('Exigence supprimée avec succès', 'success');
+
+        // Recharger les données pour mettre à jour l'affichage
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur détaillée:', error);
+        showNotification(`Erreur lors de la suppression: ${error.message}`, 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// Fonction modifiée pour ajouter un nouvel article
+async function addNewArticle() {
+    try {
+        const category = document.getElementById('articleCategory').value;
+        const reference = document.getElementById('articleReference').value;
+        const text = document.getElementById('articleText').value;
+        
+        if (!category || !reference || !text) {
+            showNotification('Tous les champs sont obligatoires', 'error');
+            return;
+        }
+
+        showLoading();
+        
+        const parsedRequirements = parseRequirementsFromText(text);
+        const batch = db.batch();
+
+        for (const req of parsedRequirements) {
+            const articleId = `${reference}-${req.id}`;
+            // Utiliser articleId comme ID du document Firestore
+            const docRef = db.collection('regulations').doc(articleId);
+            
+            const articleData = {
+                id: articleId, // Garder l'ID dans les données aussi
+                category: category,
+                text: req.originalText,
+                fullPath: req.id,
+                parentChain: req.parentChain,
+                status: 'all',
+                actions: [],
+                justification: '',
+                proofLinks: [],
+                justifications: [],
+                responsible: '',
+                accountable: '',
+                consulted: '',
+                informed: '',
+                raciCollapsed: false,
+                actionsCollapsed: false,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            // Ajouter les liens spécifiques selon la catégorie
+            if (category === 'Level 1') {
+                articleData.rtsLinks = document.getElementById('rtsLink').value
+                    .split(',').map(s => s.trim()).filter(Boolean);
+                articleData.itsLinks = document.getElementById('itsLink').value
+                    .split(',').map(s => s.trim()).filter(Boolean);
+            } else if (category === 'RTS' || category === 'ITS') {
+                articleData.level1Link = document.getElementById('level1Link').value.trim();
+            }
+
+            console.log('Ajout du document:', articleId, articleData);
+            batch.set(docRef, articleData);
+        }
+
+        await batch.commit();
+        console.log('Batch commité avec succès');
+        
+        showNotification('Articles ajoutés avec succès', 'success');
+        resetArticleForm();
+        await loadRegulations(true);
+        
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout:', error);
+        showNotification('Erreur lors de l\'ajout des articles', 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// Fonction de chargement modifiée
+async function loadRegulations(reset = false) {
+    if (isLoading) return;
+    isLoading = true;
+
+    try {
+        showLoading();
+
+        if (reset) {
+            document.getElementById('wallItems').innerHTML = '';
+            lastDoc = null;
+        }
+
+        let query = db.collection('regulations')
+            .orderBy('createdAt', 'desc')
+            .limit(BATCH_SIZE);
+
+        if (lastDoc && !reset) {
+            query = query.startAfter(lastDoc);
+        }
+
+        const snapshot = await query.get();
+        console.log('Documents chargés:', snapshot.size);
+        
+        if (!snapshot.empty) {
+            lastDoc = snapshot.docs[snapshot.docs.length - 1];
+            const regulations = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+            
+            console.log('Données chargées:', regulations);
+            renderRegulations(regulations, reset);
+        } else {
+            if (reset) {
+                document.getElementById('wallItems').innerHTML = 
+                    '<div class="no-data">Aucune donnée trouvée</div>';
+            }
+        }
+
+    } catch (error) {
+        console.error('Erreur de chargement:', error);
+        showNotification('Erreur lors du chargement des données', 'error');
+    } finally {
+        isLoading = false;
+        hideLoading();
+    }
+}
+
+// Fonction pour générer un ID valide pour Firestore
+function generateFirestoreId(reference, reqId) {
+    // Remplacer les caractères non valides et les points par des tirets
+    const cleanId = `${reference}-${reqId}`.replace(/[.]/g, '-');
+    // Assurer un ID valide pour Firestore
+    return `reg-${cleanId}`;
+}
+
+// Fonction pour ajouter un nouvel article modifiée
+async function addNewArticle() {
+    try {
+        const category = document.getElementById('articleCategory').value;
+        const reference = document.getElementById('articleReference').value;
+        const text = document.getElementById('articleText').value;
+        
+        if (!category || !reference || !text) {
+            showNotification('Tous les champs sont obligatoires', 'error');
+            return;
+        }
+
+        showLoading();
+        
+        const parsedRequirements = parseRequirementsFromText(text);
+        const batch = db.batch();
+
+        for (const req of parsedRequirements) {
+            // Générer un ID valide pour Firestore
+            const displayId = `${reference}-${req.id}`;
+            const firestoreId = generateFirestoreId(reference, req.id);
+            
+            console.log('Création document avec ID:', firestoreId);
+            const docRef = db.collection('regulations').doc(firestoreId);
+            
+            const articleData = {
+                id: displayId, // ID pour l'affichage
+                firestoreId: firestoreId, // ID Firestore pour référence
+                category: category,
+                text: req.originalText,
+                fullPath: req.id,
+                parentChain: req.parentChain,
+                status: 'all',
+                actions: [],
+                justification: '',
+                proofLinks: [],
+                justifications: [],
+                responsible: '',
+                accountable: '',
+                consulted: '',
+                informed: '',
+                raciCollapsed: false,
+                actionsCollapsed: false,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            if (category === 'Level 1') {
+                articleData.rtsLinks = document.getElementById('rtsLink').value
+                    .split(',').map(s => s.trim()).filter(Boolean);
+                articleData.itsLinks = document.getElementById('itsLink').value
+                    .split(',').map(s => s.trim()).filter(Boolean);
+            } else if (category === 'RTS' || category === 'ITS') {
+                articleData.level1Link = document.getElementById('level1Link').value.trim();
+            }
+
+            batch.set(docRef, articleData);
+        }
+
+        await batch.commit();
+        showNotification('Articles ajoutés avec succès', 'success');
+        resetArticleForm();
+        await loadRegulations(true);
+        
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout:', error);
+        showNotification('Erreur lors de l\'ajout des articles', 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// Fonction de suppression modifiée
+async function deleteRegulation(regulationId) {
+    try {
+        if (!regulationId) {
+            console.error('ID de régulation manquant');
+            showNotification('Erreur: ID manquant', 'error');
+            return;
+        }
+
+        console.log('Tentative de suppression:', regulationId);
+
+        if (!confirm('⚠️ Êtes-vous sûr de vouloir supprimer cette exigence ? Cette action est irréversible.')) {
+            return;
+        }
+
+        showLoading();
+
+        // Rechercher le document par son ID d'affichage
+        const querySnapshot = await db.collection('regulations')
+            .where('id', '==', regulationId)
+            .get();
+
+        if (querySnapshot.empty) {
+            throw new Error('Document non trouvé dans Firestore');
+        }
+
+        // Supprimer le document
+        const docToDelete = querySnapshot.docs[0];
+        await docToDelete.ref.delete();
+        console.log('Document supprimé:', docToDelete.id);
+
+        // Supprimer l'élément du DOM
+        const element = document.getElementById(`regulation-${regulationId}`);
+        if (element) {
+            element.remove();
+        }
+
+        showNotification('Exigence supprimée avec succès', 'success');
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur détaillée:', error);
+        showNotification(`Erreur lors de la suppression: ${error.message}`, 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// Fonction de rendu modifiée pour utiliser le bon ID
+function renderRegulations(regulations, reset = false) {
+    const container = document.getElementById('wallItems');
+    
+    if (reset) {
+        container.innerHTML = '';
+    }
+
+    regulations.forEach(reg => {
+        const regulationElement = document.createElement('div');
+        regulationElement.className = 'regulation-item fade-in';
+        regulationElement.id = `regulation-${reg.id}`; // Utiliser l'ID d'affichage
+        
+        regulationElement.innerHTML = `
+            <div class="regulation-header">
+                <div class="status-controls">
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            class="checkbox" 
+                            value="Compliant" 
+                            ${reg.status === 'Compliant' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Compliant')"> Compliant
+                    </label>
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            value="Non Applicable" 
+                            ${reg.status === 'Non Applicable' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Non Applicable')"> Non Applicable
+                    </label>
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            value="Documentation" 
+                            ${reg.status === 'Documentation' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Documentation')"> Documentation
+                    </label>
+                </div>
+            </div>
+            <div class="regulation-content">
+                <div class="regulation-text">${reg.text}</div>
+                <div class="regulation-id"><i>${reg.id}</i></div>
+                ${renderLinks(reg)}
+                ${renderRACI(reg)}
+                ${renderActions(reg)}
+                ${renderJustification(reg)}
+                ${renderProofLinks(reg)}
+                
+                <div class="action-buttons">
+                    <button class="button secondary" onclick="editRegulation('${reg.id}')">Éditer</button>
+                    <button class="button secondary" onclick="deleteRegulation('${reg.id}')">Supprimer</button>
+                </div>
+            </div>
+        `;
+        
+        container.appendChild(regulationElement);
+    });
+}
+
+// Structure modifiée pour avoir un nombre pair de segments
+// dora/regulations/[regulationId]
+
+// Initialisation de la référence à la collection
+const COLLECTION_PATH = 'dora/v1/regulations';
+
+// Fonction pour ajouter un nouvel article modifiée
+async function addNewArticle() {
+    try {
+        const category = document.getElementById('articleCategory').value;
+        const reference = document.getElementById('articleReference').value;
+        const text = document.getElementById('articleText').value;
+        
+        if (!category || !reference || !text) {
+            showNotification('Tous les champs sont obligatoires', 'error');
+            return;
+        }
+
+        showLoading();
+        
+        const parsedRequirements = parseRequirementsFromText(text);
+        const batch = db.batch();
+
+        // Utilisez la nouvelle structure de collection
+        for (const req of parsedRequirements) {
+            const displayId = `${reference}-${req.id}`;
+            const docRef = db.collection(COLLECTION_PATH).doc(displayId.replace(/[./]/g, '-'));
+            
+            const articleData = {
+                id: displayId,
+                category: category,
+                text: req.originalText,
+                fullPath: req.id,
+                parentChain: req.parentChain,
+                status: 'all',
+                actions: [],
+                justification: '',
+                proofLinks: [],
+                justifications: [],
+                responsible: '',
+                accountable: '',
+                consulted: '',
+                informed: '',
+                raciCollapsed: false,
+                actionsCollapsed: false,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            if (category === 'Level 1') {
+                articleData.rtsLinks = document.getElementById('rtsLink').value
+                    .split(',').map(s => s.trim()).filter(Boolean);
+                articleData.itsLinks = document.getElementById('itsLink').value
+                    .split(',').map(s => s.trim()).filter(Boolean);
+            } else if (category === 'RTS' || category === 'ITS') {
+                articleData.level1Link = document.getElementById('level1Link').value.trim();
+            }
+
+            batch.set(docRef, articleData);
+        }
+
+        await batch.commit();
+        console.log('Documents ajoutés avec succès');
+        showNotification('Articles ajoutés avec succès', 'success');
+        resetArticleForm();
+        await loadRegulations(true);
+        
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout:', error);
+        showNotification('Erreur lors de l\'ajout des articles', 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// Fonction de suppression modifiée
+async function deleteRegulation(regulationId) {
+    try {
+        if (!regulationId) {
+            console.error('ID de régulation manquant');
+            showNotification('Erreur: ID manquant', 'error');
+            return;
+        }
+
+        if (!confirm('⚠️ Êtes-vous sûr de vouloir supprimer cette exigence ? Cette action est irréversible.')) {
+            return;
+        }
+
+        showLoading();
+
+        // Rechercher le document avec la nouvelle structure
+        const cleanId = regulationId.replace(/[./]/g, '-');
+        const docRef = db.collection(COLLECTION_PATH).doc(cleanId);
+        
+        console.log('Tentative de suppression:', cleanId);
+        
+        const doc = await docRef.get();
+        if (!doc.exists) {
+            throw new Error('Document non trouvé dans Firestore');
+        }
+
+        // Supprimer le document
+        await docRef.delete();
+        console.log('Document supprimé avec succès');
+
+        // Supprimer l'élément du DOM
+        const element = document.getElementById(`regulation-${regulationId}`);
+        if (element) {
+            element.remove();
+        }
+
+        showNotification('Exigence supprimée avec succès', 'success');
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur détaillée:', error);
+        showNotification(`Erreur lors de la suppression: ${error.message}`, 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// Fonction de chargement modifiée
+async function loadRegulations(reset = false) {
+    if (isLoading) return;
+    isLoading = true;
+
+    try {
+        showLoading();
+
+        if (reset) {
+            document.getElementById('wallItems').innerHTML = '';
+            lastDoc = null;
+        }
+
+        let query = db.collection(COLLECTION_PATH)
+            .orderBy('createdAt', 'desc')
+            .limit(BATCH_SIZE);
+
+        if (lastDoc && !reset) {
+            query = query.startAfter(lastDoc);
+        }
+
+        const snapshot = await query.get();
+        
+        if (!snapshot.empty) {
+            lastDoc = snapshot.docs[snapshot.docs.length - 1];
+            const regulations = snapshot.docs.map(doc => ({
+                id: doc.data().id,
+                ...doc.data()
+            }));
+            
+            renderRegulations(regulations, reset);
+        } else {
+            if (reset) {
+                document.getElementById('wallItems').innerHTML = 
+                    '<div class="no-data">Aucune donnée trouvée</div>';
+            }
+        }
+
+    } catch (error) {
+        console.error('Erreur de chargement:', error);
+        showNotification('Erreur lors du chargement des données', 'error');
+    } finally {
+        isLoading = false;
+        hideLoading();
+    }
+}
+
+// Fonction pour mettre à jour le statut
+async function updateStatus(regulationId, status) {
+    try {
+        const cleanId = regulationId.replace(/[./]/g, '-');
+        await db.collection(COLLECTION_PATH).doc(cleanId).update({
+            status: status === 'Tous' ? 'all' : status,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        showNotification('Statut mis à jour', 'success');
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour du statut:', error);
+        showNotification('Erreur lors de la mise à jour du statut', 'error');
+    }
+}
+
+// Fonction updateMetadata corrigée
+function updateMetadata(data) {
+    // S'assurer que data est un tableau
+    let regulations = Array.isArray(data) ? data : [];
+    if (!Array.isArray(data)) {
+        console.warn('Données invalides reçues dans updateMetadata:', data);
+        return;
+    }
+
+    // Calculer les statistiques
+    const stats = regulations.reduce((stats, reg) => {
+        // Compter les éléments par statut
+        if (reg.status === 'Compliant') {
+            stats.compliantCount++;
+        } else if (reg.actions && reg.actions.some(action => action.percentage > 0)) {
+            stats.inProgressCount++;
+        }
+
+        // Calculer le taux de conformité
+        if (reg.status !== 'Non Applicable' && reg.status !== 'Documentation') {
+            stats.applicableCount++;
+            if (reg.status === 'Compliant') {
+                stats.complianceTotal += 100;
+            } else if (reg.actions && reg.actions.length > 0) {
+                const avgProgress = reg.actions.reduce((sum, action) => 
+                    sum + (Number(action.percentage) || 0), 0) / reg.actions.length;
+                stats.complianceTotal += avgProgress;
+            }
+        }
+
+        return stats;
+    }, {
+        compliantCount: 0,
+        inProgressCount: 0,
+        applicableCount: 0,
+        complianceTotal: 0
+    });
+
+    // Mettre à jour l'interface
+    updateUI(stats);
+}
+
+// Fonction updateUI améliorée
+function updateUI(stats) {
+    // Mettre à jour le taux de conformité
+    const complianceRate = stats.applicableCount > 0 
+        ? (stats.complianceTotal / stats.applicableCount).toFixed(1) 
+        : '0.0';
+    
+    const complianceElement = document.querySelector('.compliance-rate');
+    if (complianceElement) {
+        complianceElement.textContent = `Taux de conformité: ${complianceRate}%`;
+    }
+
+    // Mettre à jour les compteurs
+    updateCounters({
+        total: document.querySelectorAll('.regulation-item').length,
+        compliant: stats.compliantCount,
+        inProgress: stats.inProgressCount
+    });
+}
+
+// Fonction pour mettre à jour les compteurs
+function updateCounters(counts) {
+    let badgesContainer = document.querySelector('.status-badges');
+    if (!badgesContainer) {
+        badgesContainer = document.createElement('div');
+        badgesContainer.className = 'status-badges';
+        document.querySelector('.header').appendChild(badgesContainer);
+    }
+
+    badgesContainer.innerHTML = `
+        <div class="badge badge-success">Compliant: ${counts.compliant}</div>
+        <div class="badge badge-warning">En cours: ${counts.inProgress}</div>
+        <div class="badge badge-info">Total: ${counts.total}</div>
+    `;
+}
+
+// Fonction de rendu modifiée
+function renderRegulations(regulations, reset = false) {
+    const container = document.getElementById('wallItems');
+    
+    if (!Array.isArray(regulations)) {
+        console.error('Données de régulations invalides:', regulations);
+        return;
+    }
+    
+    if (reset) {
+        container.innerHTML = '';
+    }
+
+    regulations.forEach(reg => {
+        const regulationElement = document.createElement('div');
+        regulationElement.className = 'regulation-item fade-in';
+        regulationElement.id = `regulation-${reg.id}`;
+        regulationElement.innerHTML = renderRegulationContent(reg);
+        container.appendChild(regulationElement);
+    });
+
+    // Mettre à jour les métadonnées après le rendu
+    updateMetadata(regulations);
+}
+
+// Fonction de chargement modifiée
+async function loadRegulations(reset = false) {
+    if (isLoading) return;
+    isLoading = true;
+
+    try {
+        showLoading();
+
+        if (reset) {
+            document.getElementById('wallItems').innerHTML = '';
+            lastDoc = null;
+        }
+
+        let query = db.collection(COLLECTION_PATH)
+            .orderBy('createdAt', 'desc')
+            .limit(BATCH_SIZE);
+
+        if (lastDoc && !reset) {
+            query = query.startAfter(lastDoc);
+        }
+
+        const snapshot = await query.get();
+        
+        if (!snapshot.empty) {
+            lastDoc = snapshot.docs[snapshot.docs.length - 1];
+            const regulations = snapshot.docs.map(doc => ({
+                id: doc.data().id,
+                ...doc.data()
+            }));
+            
+            renderRegulations(regulations, reset);
+            console.log(`Chargé ${regulations.length} régulations`);
+        } else {
+            if (reset) {
+                document.getElementById('wallItems').innerHTML = 
+                    '<div class="no-data">Aucune donnée trouvée</div>';
+            }
+            updateMetadata([]);
+        }
+
+    } catch (error) {
+        console.error('Erreur de chargement:', error);
+        showNotification('Erreur lors du chargement des données', 'error');
+        updateMetadata([]);
+    } finally {
+        isLoading = false;
+        hideLoading();
+    }
+}
+
+
+
+async function loadRegulations(reset = false) {
+    if (isLoading) return;
+    isLoading = true;
+
+    try {
+        showLoading();
+        console.log('Chargement des régulations...');
+
+        if (reset) {
+            document.getElementById('wallItems').innerHTML = '';
+            lastDoc = null;
+        }
+
+        let query = db.collection(COLLECTION_PATH)
+            .orderBy('createdAt', 'desc')
+            .limit(BATCH_SIZE);
+
+        if (lastDoc && !reset) {
+            query = query.startAfter(lastDoc);
+        }
+
+        const snapshot = await query.get();
+        console.log('Snapshot reçu:', snapshot.size, 'documents');
+        
+        if (!snapshot.empty) {
+            lastDoc = snapshot.docs[snapshot.docs.length - 1];
+            const regulations = [];
+
+            // Extraction des données de manière sécurisée
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                if (data) {
+                    regulations.push({
+                        id: data.id || doc.id,
+                        firestoreId: doc.id,
+                        category: data.category || '',
+                        text: data.text || '',
+                        status: data.status || 'all',
+                        actions: Array.isArray(data.actions) ? data.actions : [],
+                        justification: data.justification || '',
+                        proofLinks: Array.isArray(data.proofLinks) ? data.proofLinks : [],
+                        justifications: Array.isArray(data.justifications) ? data.justifications : [],
+                        responsible: data.responsible || '',
+                        accountable: data.accountable || '',
+                        consulted: data.consulted || '',
+                        informed: data.informed || '',
+                        raciCollapsed: !!data.raciCollapsed,
+                        actionsCollapsed: !!data.actionsCollapsed,
+                        createdAt: data.createdAt || null
+                    });
+                }
+            });
+
+            console.log('Données formatées:', regulations);
+            
+            if (regulations.length > 0) {
+                renderRegulations(regulations, reset);
+                showNotification(`${regulations.length} articles chargés`, 'success');
+            } else {
+                console.warn('Aucune donnée valide trouvée dans le snapshot');
+                if (reset) {
+                    document.getElementById('wallItems').innerHTML = 
+                        '<div class="no-data">Aucune donnée trouvée</div>';
+                }
+                updateMetadata([]);
+            }
+        } else {
+            console.log('Snapshot vide');
+            if (reset) {
+                document.getElementById('wallItems').innerHTML = 
+                    '<div class="no-data">Aucune donnée trouvée</div>';
+            }
+            updateMetadata([]);
+        }
+
+    } catch (error) {
+        console.error('Erreur détaillée de chargement:', error);
+        showNotification('Erreur lors du chargement des données', 'error');
+        document.getElementById('wallItems').innerHTML = 
+            `<div class="error">Erreur de chargement: ${error.message}</div>`;
+        updateMetadata([]);
+    } finally {
+        isLoading = false;
+        hideLoading();
+    }
+}
+
+// Fonction addNewArticle corrigée
+async function addNewArticle() {
+    try {
+        // Validation des entrées
+        const category = document.getElementById('articleCategory').value;
+        const reference = document.getElementById('articleReference').value;
+        const text = document.getElementById('articleText').value;
+        
+        if (!category || !reference || !text) {
+            showNotification('Tous les champs sont obligatoires', 'error');
+            return;
+        }
+
+        showLoading();
+        console.log('Début de l\'ajout d\'article:', { category, reference });
+
+        // Créer la référence à la collection
+        const collectionRef = db.collection(COLLECTION_PATH);
+        if (!collectionRef) {
+            throw new Error('Erreur d\'accès à la collection Firestore');
+        }
+
+        // Parser les exigences
+        const parsedRequirements = parseRequirementsFromText(text);
+        console.log('Exigences parsées:', parsedRequirements);
+
+        if (!parsedRequirements || parsedRequirements.length === 0) {
+            throw new Error('Aucune exigence valide trouvée dans le texte');
+        }
+
+        // Créer un batch pour les opérations multiples
+        const batch = db.batch();
+        let addedDocs = 0;
+
+        // Ajouter chaque exigence au batch
+        for (const req of parsedRequirements) {
+            try {
+                const displayId = `${reference}-${req.id}`;
+                // Nettoyer l'ID pour Firestore
+                const cleanId = displayId.replace(/[./\[\]#]/g, '-');
+                const docRef = collectionRef.doc(cleanId);
+                
+                console.log(`Préparation du document: ${cleanId}`, req);
+
+                const articleData = {
+                    id: displayId,
+                    category: category,
+                    text: req.originalText,
+                    fullPath: req.id,
+                    parentChain: req.parentChain || [],
+                    status: 'all',
+                    actions: [],
+                    justification: '',
+                    proofLinks: [],
+                    justifications: [],
+                    responsible: '',
+                    accountable: '',
+                    consulted: '',
+                    informed: '',
+                    raciCollapsed: false,
+                    actionsCollapsed: false,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                // Ajouter les liens spécifiques selon la catégorie
+                if (category === 'Level 1') {
+                    articleData.rtsLinks = document.getElementById('rtsLink').value
+                        .split(',').map(s => s.trim()).filter(Boolean);
+                    articleData.itsLinks = document.getElementById('itsLink').value
+                        .split(',').map(s => s.trim()).filter(Boolean);
+                } else if (category === 'RTS' || category === 'ITS') {
+                    articleData.level1Link = document.getElementById('level1Link').value.trim();
+                }
+
+                batch.set(docRef, articleData);
+                addedDocs++;
+                console.log(`Document préparé: ${cleanId}`);
+
+            } catch (error) {
+                console.error('Erreur lors de la préparation du document:', error);
+                throw error;
+            }
+        }
+
+        // Vérifier qu'il y a des documents à ajouter
+        if (addedDocs === 0) {
+            throw new Error('Aucun document n\'a pu être préparé');
+        }
+
+        // Exécuter le batch
+        console.log(`Commit du batch avec ${addedDocs} documents`);
+        await batch.commit();
+        
+        console.log('Batch commité avec succès');
+        showNotification(`${addedDocs} articles ajoutés avec succès`, 'success');
+        
+        // Réinitialiser le formulaire et recharger les données
+        resetArticleForm();
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur détaillée lors de l\'ajout:', error);
+        showNotification(`Erreur: ${error.message}`, 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// Variables globales pour la pagination
+let allRegulations = []; // Stocke toutes les régulations chargées
+let displayedRegulations = []; // Régulations actuellement affichées
+const DISPLAY_BATCH_SIZE = 10;
+
+// Fonction de chargement initiale modifiée
+async function loadRegulations(reset = false) {
+    if (isLoading) return;
+    isLoading = true;
+
+    try {
+        showLoading();
+        console.log('Chargement des régulations...');
+
+        if (reset) {
+            document.getElementById('wallItems').innerHTML = '';
+            allRegulations = [];
+            displayedRegulations = [];
+            currentPage = 1;
+        }
+
+        // Charger toutes les régulations
+        const snapshot = await db.collection(COLLECTION_PATH)
+            .orderBy('createdAt', 'desc')
+            .get();
+
+        console.log('Nombre total de documents:', snapshot.size);
+
+        if (!snapshot.empty) {
+            allRegulations = snapshot.docs.map(doc => ({
+                id: doc.data().id,
+                firestoreId: doc.id,
+                ...doc.data()
+            }));
+
+            console.log('Toutes les régulations chargées:', allRegulations.length);
+
+            // Afficher le premier lot
+            renderNextBatch(true);
+        } else {
+            document.getElementById('wallItems').innerHTML = 
+                '<div class="no-data">Aucune donnée trouvée</div>';
+            updateMetadata([]);
+        }
+
+    } catch (error) {
+        console.error('Erreur de chargement:', error);
+        showNotification('Erreur lors du chargement des données', 'error');
+    } finally {
+        isLoading = false;
+        hideLoading();
+    }
+}
+
+// Fonction pour rendre le prochain lot
+function renderNextBatch(reset = false) {
+    const container = document.getElementById('wallItems');
+    
+    if (reset) {
+        container.innerHTML = '';
+        displayedRegulations = [];
+        currentPage = 1;
+    }
+
+    const startIndex = (currentPage - 1) * DISPLAY_BATCH_SIZE;
+    const endIndex = startIndex + DISPLAY_BATCH_SIZE;
+    const newBatch = allRegulations.slice(startIndex, endIndex);
+
+    if (newBatch.length === 0) {
+        if (reset) {
+            container.innerHTML = '<div class="no-data">Aucune donnée trouvée</div>';
+        }
+        return;
+    }
+
+    newBatch.forEach(reg => {
+        const regulationElement = document.createElement('div');
+        regulationElement.className = 'regulation-item fade-in';
+        regulationElement.id = `regulation-${reg.id}`;
+        regulationElement.innerHTML = renderRegulationContent(reg);
+        container.appendChild(regulationElement);
+    });
+
+    displayedRegulations = displayedRegulations.concat(newBatch);
+    updateMetadata(allRegulations);
+    
+    // Mise à jour des compteurs
+    const statsElement = document.createElement('div');
+    statsElement.className = 'loading-stats';
+    statsElement.textContent = `Affichage de ${displayedRegulations.length} sur ${allRegulations.length} articles`;
+    container.appendChild(statsElement);
+
+    // Configuration de l'observer pour le prochain lot
+    setupIntersectionObserver();
+}
+
+// Observer d'intersection modifié
+function setupIntersectionObserver() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !isLoading && 
+                displayedRegulations.length < allRegulations.length) {
+                currentPage++;
+                renderNextBatch(false);
+            }
+        });
+    }, {
+        rootMargin: '100px',
+        threshold: 0.1
+    });
+
+    // Créer ou mettre à jour la sentinelle
+    let sentinel = document.querySelector('.load-sentinel');
+    if (!sentinel) {
+        sentinel = document.createElement('div');
+        sentinel.className = 'load-sentinel';
+        document.getElementById('wallItems').appendChild(sentinel);
+    }
+
+    observer.observe(sentinel);
+}
+
+async function resetAll() {
+    // Double confirmation pour éviter les suppressions accidentelles
+    const confirmMessage = '⚠️ ATTENTION : Vous êtes sur le point de supprimer TOUTES les données de la base. Cette action est irréversible.';
+    const confirmPassword = 'RESET';
+    
+    if (!confirm(confirmMessage)) {
+        return;
+    }
+
+    const userInput = prompt(`Pour confirmer la suppression, tapez "${confirmPassword}" en majuscules:`);
+    if (userInput !== confirmPassword) {
+        showNotification('Suppression annulée', 'info');
+        return;
+    }
+
+    try {
+        showLoading();
+        console.log('Début de la suppression totale...');
+
+        // Récupérer tous les documents
+        const snapshot = await db.collection(COLLECTION_PATH).get();
+        console.log(`${snapshot.size} documents trouvés à supprimer`);
+
+        if (snapshot.empty) {
+            showNotification('Aucune donnée à supprimer', 'info');
+            return;
+        }
+
+        // Supprimer par lots de 500 (limite de Firestore pour les batches)
+        const deleteByBatch = async (documents) => {
+            const batch = db.batch();
+            documents.forEach(doc => {
+                batch.delete(doc.ref);
+            });
+            await batch.commit();
+        };
+
+        // Diviser en lots de 500
+        const batchSize = 500;
+        const docs = snapshot.docs;
+        const totalBatches = Math.ceil(docs.length / batchSize);
+        
+        for (let i = 0; i < totalBatches; i++) {
+            const start = i * batchSize;
+            const end = Math.min((i + 1) * batchSize, docs.length);
+            const batch = docs.slice(start, end);
+            
+            await deleteByBatch(batch);
+            console.log(`Batch ${i + 1}/${totalBatches} supprimé`);
+            
+            // Mettre à jour la progression
+            showProgressNotification(`Suppression en cours : ${Math.round(((i + 1) / totalBatches) * 100)}%`);
+        }
+
+        // Réinitialiser les variables locales
+        allRegulations = [];
+        displayedRegulations = [];
+        currentPage = 1;
+        lastDoc = null;
+
+        // Réinitialiser l'interface
+        resetArticleForm();
+        document.getElementById('wallItems').innerHTML = '<div class="no-data">Aucune donnée</div>';
+        updateMetadata([]);
+
+        showNotification('Toutes les données ont été supprimées', 'success');
+        console.log('Suppression totale terminée avec succès');
+
+    } catch (error) {
+        console.error('Erreur lors de la suppression:', error);
+        showNotification('Erreur lors de la suppression des données', 'error');
+    } finally {
+        hideLoading();
+        hideProgressNotification();
+    }
+}
+
+// Fonction resetAll modifiée
+async function resetAll() {
+    // Double confirmation pour éviter les suppressions accidentelles
+    const confirmMessage = '⚠️ ATTENTION : Vous êtes sur le point de supprimer TOUTES les données de la base. Cette action est irréversible.';
+    const confirmPassword = 'RESET';
+    
+    if (!confirm(confirmMessage)) {
+        return;
+    }
+
+    const userInput = prompt(`Pour confirmer la suppression, tapez "${confirmPassword}" en majuscules:`);
+    if (userInput !== confirmPassword) {
+        showNotification('Suppression annulée', 'info');
+        return;
+    }
+
+    try {
+        showLoading();
+        console.log('Début de la suppression totale...');
+
+        // Récupérer tous les documents
+        const snapshot = await db.collection(COLLECTION_PATH).get();
+        console.log(`${snapshot.size} documents trouvés à supprimer`);
+
+        if (snapshot.empty) {
+            showNotification('Aucune donnée à supprimer', 'info');
+            return;
+        }
+
+        // Supprimer par lots de 500 (limite de Firestore pour les batches)
+        const deleteByBatch = async (documents) => {
+            const batch = db.batch();
+            documents.forEach(doc => {
+                batch.delete(doc.ref);
+            });
+            await batch.commit();
+        };
+
+        // Diviser en lots de 500
+        const batchSize = 500;
+        const docs = snapshot.docs;
+        const totalBatches = Math.ceil(docs.length / batchSize);
+        
+        for (let i = 0; i < totalBatches; i++) {
+            const start = i * batchSize;
+            const end = Math.min((i + 1) * batchSize, docs.length);
+            const batch = docs.slice(start, end);
+            
+            await deleteByBatch(batch);
+            console.log(`Batch ${i + 1}/${totalBatches} supprimé`);
+            
+            // Mettre à jour la progression
+            showProgressNotification(`Suppression en cours : ${Math.round(((i + 1) / totalBatches) * 100)}%`);
+        }
+
+        // Réinitialiser les variables locales
+        allRegulations = [];
+        displayedRegulations = [];
+        currentPage = 1;
+        lastDoc = null;
+
+        // Réinitialiser l'interface
+        resetArticleForm();
+        document.getElementById('wallItems').innerHTML = '<div class="no-data">Aucune donnée</div>';
+        updateMetadata([]);
+
+        showNotification('Toutes les données ont été supprimées', 'success');
+        console.log('Suppression totale terminée avec succès');
+
+    } catch (error) {
+        console.error('Erreur lors de la suppression:', error);
+        showNotification('Erreur lors de la suppression des données', 'error');
+    } finally {
+        hideLoading();
+        hideProgressNotification();
+    }
+}
+
+// Fonction pour afficher une notification de progression
+function showProgressNotification(message) {
+    let progressElement = document.getElementById('progressNotification');
+    
+    if (!progressElement) {
+        progressElement = document.createElement('div');
+        progressElement.id = 'progressNotification';
+        progressElement.className = 'progress-notification';
+        document.body.appendChild(progressElement);
+    }
+    
+    progressElement.textContent = message;
+}
+
+// Fonction pour cacher la notification de progression
+function hideProgressNotification() {
+    const progressElement = document.getElementById('progressNotification');
+    if (progressElement) {
+        progressElement.remove();
+    }
+}
+
+// Styles pour la notification de progression
+const resetStyles = `
+    .progress-notification {
+        position: fixed;
+        bottom: var(--space-4);
+        right: var(--space-4);
+        background-color: var(--primary-600);
+        color: white;
+        padding: var(--space-3) var(--space-4);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-lg);
+        z-index: 1000;
+        animation: slideIn 0.3s ease;
+    }
+
+    .confirmation-dialog {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: var(--space-6);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+        max-width: 90%;
+        width: 400px;
+        z-index: 1001;
+    }
+
+    .confirmation-dialog h3 {
+        color: var(--danger-600);
+        margin-bottom: var(--space-4);
+    }
+
+    .confirmation-dialog .warning-text {
+        color: var(--warning-600);
+        margin-bottom: var(--space-4);
+    }
+
+    .confirmation-dialog .button-group {
+        display: flex;
+        gap: var(--space-2);
+        justify-content: flex-end;
+        margin-top: var(--space-4);
+    }
+
+    .confirmation-dialog .button.danger {
+        background-color: var(--danger-600);
+    }
+
+    .confirmation-dialog .button.danger:hover {
+        background-color: var(--danger-500);
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+`;
+
+// Ajouter les styles
+function addResetStyles() {
+    const style = document.createElement('style');
+    style.textContent = resetStyles;
+    document.head.appendChild(style);
+}
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', () => {
+    addResetStyles();
+});
+
+// Fonction pour ajouter une action
+async function addAction(regulationId, actionText) {
+    if (!actionText.trim()) {
+        showNotification('Le texte de l\'action ne peut pas être vide', 'error');
+        return;
+    }
+
+    try {
+        // Récupérer la référence du document
+        const docRef = db.collection(COLLECTION_PATH).doc(regulationId);
+        
+        const newAction = {
+            id: Date.now(),
+            text: actionText.trim(),
+            percentage: 0,
+            isEditing: false,
+            isCollapsed: false,
+            risks: [],
+            assignedTo: '',
+            raci: {
+                responsible: '',
+                accountable: '',
+                consulted: '',
+                informed: ''
+            },
+            startDate: '',
+            endDate: '',
+            newDeadline: ''
+        };
+
+        // Mettre à jour le document avec la nouvelle action
+        await docRef.update({
+            actions: firebase.firestore.FieldValue.arrayUnion(newAction)
+        });
+
+        showNotification('Action ajoutée avec succès', 'success');
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout de l\'action:', error);
+        showNotification('Erreur lors de l\'ajout de l\'action', 'error');
+    }
+}
+
+// Fonction pour ajouter un risque
+async function addRisk(regulationId, actionId, description, severity, likelihood) {
+    try {
+        const docRef = db.collection(COLLECTION_PATH).doc(regulationId);
+        const doc = await docRef.get();
+        
+        if (!doc.exists) {
+            throw new Error('Document non trouvé');
+        }
+
+        const data = doc.data();
+        const actions = data.actions || [];
+        const actionIndex = actions.findIndex(a => a.id === actionId);
+
+        if (actionIndex === -1) {
+            throw new Error('Action non trouvée');
+        }
+
+        const newRisk = {
+            id: Date.now(),
+            description,
+            severity,
+            likelihood,
+            level: severity * likelihood,
+            remediationActions: [],
+            remediated: false
+        };
+
+        const updatedActions = actions.map((action, index) => {
+            if (index === actionIndex) {
+                return {
+                    ...action,
+                    risks: [...(action.risks || []), newRisk]
+                };
+            }
+            return action;
+        });
+
+        await docRef.update({ actions: updatedActions });
+        showNotification('Risque ajouté avec succès', 'success');
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout du risque:', error);
+        showNotification('Erreur lors de l\'ajout du risque', 'error');
+    }
+}
+
+// Fonction pour mettre à jour le pourcentage d'une action
+async function updateActionPercentage(regulationId, actionId, value) {
+    try {
+        const percentage = Math.min(Math.max(parseInt(value), 0), 100);
+        const docRef = db.collection(COLLECTION_PATH).doc(regulationId);
+        const doc = await docRef.get();
+        
+        if (!doc.exists) {
+            throw new Error('Document non trouvé');
+        }
+
+        const data = doc.data();
+        const actions = data.actions.map(action => 
+            action.id === actionId 
+                ? { ...action, percentage } 
+                : action
+        );
+
+        await docRef.update({ actions });
+        showNotification('Pourcentage mis à jour', 'success');
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour du pourcentage:', error);
+        showNotification('Erreur lors de la mise à jour', 'error');
+    }
+}
+
+// Fonction pour ajouter une remédiation
+async function addRemediation(regulationId, actionId, riskId, remediationText) {
+    try {
+        const docRef = db.collection(COLLECTION_PATH).doc(regulationId);
+        const doc = await docRef.get();
+        
+        if (!doc.exists) {
+            throw new Error('Document non trouvé');
+        }
+
+        const data = doc.data();
+        const actions = data.actions.map(action => {
+            if (action.id === actionId) {
+                const updatedRisks = action.risks.map(risk => {
+                    if (risk.id === riskId) {
+                        return {
+                            ...risk,
+                            remediationActions: [...(risk.remediationActions || []), remediationText]
+                        };
+                    }
+                    return risk;
+                });
+                return { ...action, risks: updatedRisks };
+            }
+            return action;
+        });
+
+        await docRef.update({ actions });
+        showNotification('Remédiation ajoutée avec succès', 'success');
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout de la remédiation:', error);
+        showNotification('Erreur lors de l\'ajout de la remédiation', 'error');
+    }
+}
+
+// Fonction pour mettre à jour le RACI d'une action
+async function updateActionRACI(regulationId, actionId, raciType, value) {
+    try {
+        const docRef = db.collection(COLLECTION_PATH).doc(regulationId);
+        const doc = await docRef.get();
+        
+        if (!doc.exists) {
+            throw new Error('Document non trouvé');
+        }
+
+        const data = doc.data();
+        const actions = data.actions.map(action => {
+            if (action.id === actionId) {
+                return {
+                    ...action,
+                    raci: {
+                        ...action.raci,
+                        [raciType]: value
+                    }
+                };
+            }
+            return action;
+        });
+
+        await docRef.update({ actions });
+        showNotification('RACI mis à jour', 'success');
+
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour du RACI:', error);
+        showNotification('Erreur lors de la mise à jour du RACI', 'error');
+    }
+}
+
+// Fonction pour supprimer une action
+async function removeAction(regulationId, actionId) {
+    try {
+        if (!confirm('Êtes-vous sûr de vouloir supprimer cette action ?')) {
+            return;
+        }
+
+        const docRef = db.collection(COLLECTION_PATH).doc(regulationId);
+        const doc = await docRef.get();
+        
+        if (!doc.exists) {
+            throw new Error('Document non trouvé');
+        }
+
+        const data = doc.data();
+        const actions = data.actions.filter(action => action.id !== actionId);
+
+        await docRef.update({ actions });
+        showNotification('Action supprimée avec succès', 'success');
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur lors de la suppression de l\'action:', error);
+        showNotification('Erreur lors de la suppression de l\'action', 'error');
+    }
+}
+
+// Fonction pour marquer un risque comme remédié
+async function markRiskAsRemediated(regulationId, actionId, riskId) {
+    try {
+        const docRef = db.collection(COLLECTION_PATH).doc(regulationId);
+        const doc = await docRef.get();
+        
+        if (!doc.exists) {
+            throw new Error('Document non trouvé');
+        }
+
+        const data = doc.data();
+        const actions = data.actions.map(action => {
+            if (action.id === actionId) {
+                const updatedRisks = action.risks.map(risk => {
+                    if (risk.id === riskId) {
+                        return { ...risk, remediated: true };
+                    }
+                    return risk;
+                });
+                return { ...action, risks: updatedRisks };
+            }
+            return action;
+        });
+
+        await docRef.update({ actions });
+        showNotification('Risque marqué comme remédié', 'success');
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour du risque:', error);
+        showNotification('Erreur lors de la mise à jour du risque', 'error');
+    }
+}
+
 </script>
+
 </body>
-</html>
+</html>v
