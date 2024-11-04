@@ -56,6 +56,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+
 .container {
   width: 100%;
   padding: var(--space-4);
@@ -68,7 +69,8 @@ body {
   }
 }
 
-.card {
+.card,
+.regulation-item {
   background-color: white;
   border-radius: var(--radius-lg);
   padding: var(--space-4);
@@ -78,7 +80,8 @@ body {
   transition: box-shadow 0.2s ease;
 }
 
-.card:hover {
+.card:hover,
+.regulation-item:hover {
   box-shadow: var(--shadow-md);
 }
 
@@ -129,7 +132,8 @@ body {
   box-shadow: 0 0 0 2px var(--primary-100);
 }
 
-.button {
+.button,
+.action-buttons .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -145,20 +149,19 @@ body {
   gap: var(--space-2);
 }
 
-.button:hover {
+.button:hover,
+.action-buttons .button:hover {
   background-color: var(--primary-700);
 }
 
-.button.secondary {
+.button.secondary,
+.button.secondary:hover {
   background-color: var(--gray-100);
   color: var(--gray-700);
 }
 
-.button.secondary:hover {
-  background-color: var(--gray-200);
-}
-
-.tabs {
+.tabs,
+.raci-grid {
   display: flex;
   overflow-x: auto;
   gap: var(--space-2);
@@ -189,7 +192,8 @@ body {
   color: white;
 }
 
-.add-article-container {
+.add-article-container,
+.section-container {
   background-color: white;
   border-radius: var(--radius-lg);
   margin-bottom: var(--space-4);
@@ -197,7 +201,8 @@ body {
   border: 1px solid var(--gray-200);
 }
 
-.form-header {
+.form-header,
+.section-header {
   background-color: var(--primary-600);
   color: white;
   padding: var(--space-4);
@@ -208,156 +213,50 @@ body {
   font-weight: 500;
 }
 
-.form-content {
+.form-content,
+.section-content {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s ease-out;
 }
 
-.form-content.visible {
+.form-content.visible,
+.section-content {
   max-height: 2000px;
   padding: var(--space-4);
 }
 
-.form-group {
+.form-group,
+.remediation-actions {
   margin-bottom: var(--space-4);
 }
 
-.form-group label {
+.form-group label,
+.raci-label {
   display: block;
   margin-bottom: var(--space-2);
   font-weight: 500;
   color: var(--gray-700);
 }
 
-.regulation-item {
-  background-color: white;
-  border-radius: var(--radius-lg);
-  padding: var(--space-4);
-  margin-bottom: var(--space-4);
-  border: 1px solid var(--gray-200);
-}
-
-.regulation-header {
+.regulation-header,
+.action-header,
+.actions-header {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-  margin-bottom: var(--space-4);
-  padding-bottom: var(--space-3);
-  border-bottom: 1px solid var(--gray-200);
-}
-
-.action-item {
-  background-color: var(--gray-50);
-  border-radius: var(--radius-md);
-  padding: var(--space-3);
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: var(--space-3);
 }
 
-.action-text {
-  color: var(--gray-700);
-  margin-bottom: var(--space-2);
-}
-
-.progress-container {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  margin: var(--space-2) 0;
-}
-
-.progress-bar {
-  flex: 1;
-  height: 0.5rem;
-  background-color: var(--gray-200);
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background-color: var(--success-500);
-  transition: width 0.3s ease;
-}
-
+.action-item,
+.remediation-item,
 .risk-item {
   background-color: var(--gray-50);
   border-radius: var(--radius-md);
   padding: var(--space-3);
-  margin-top: var(--space-3);
+  margin-bottom: var(--space-3);
   border: 1px solid var(--gray-200);
-}
-
-@media (min-width: 768px) {
-  .regulation-header {
-    flex-wrap: nowrap;
-  }
-  
-  .action-item {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: var(--space-4);
-    align-items: center;
-  }
-  
-  .progress-container {
-    min-width: 200px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .import-export-bar {
-    flex-wrap: nowrap;
-  }
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  padding: var(--space-1) var(--space-2);
-  border-radius: var(--radius-sm);
-  font-size: 0.75rem;
-  font-weight: 500;
-}
-
-.badge-success {
-  background-color: var(--success-50);
-  color: var(--success-600);
-}
-
-.badge-warning {
-  background-color: var(--warning-50);
-  color: var(--warning-600);
-}
-
-.badge-danger {
-  background-color: var(--danger-50);
-  color: var(--danger-600);
-}
-
-.skeleton {
-  background: linear-gradient(
-    90deg,
-    var(--gray-100) 0%,
-    var(--gray-200) 50%,
-    var(--gray-100) 100%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
+  overflow: hidden;
 }
 
 .save-status {
@@ -380,600 +279,22 @@ body {
   transform: translateY(0);
 }
 
-.button-group {
+.button-group,
+.category-controls,
+.header-content {
   display: flex;
   gap: var(--space-2);
-  margin-top: var(--space-3);
-  flex-wrap: wrap;
-}
-
-.risks-container {
-  margin-top: var(--space-3);
-}
-
-.remediation-actions {
-  margin-left: var(--space-4);
-}
-
-.remediation-actions ul {
-  padding-left: var(--space-4);
-}
-
-.remediation-actions li {
-  margin-bottom: var(--space-2);
-}
-
-.action-item, .remediation-item {
-  transition: all 0.3s ease-out;
-}
-
-.action-item.removing, .remediation-item.removing {
-  opacity: 0;
-  transform: translateX(-20px);
-}
-
-.action-item.adding {
-  opacity: 0;
-  transform: translateY(-20px);
-  animation: slideIn 0.3s ease-out forwards;
-}
-
-@keyframes slideIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.remediation-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.remediation-item {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: var(--space-2);
-  margin-bottom: var(--space-2);
-  background-color: var(--gray-50);
-  border-radius: var(--radius-md);
-  transition: opacity 0.3s ease-out;
 }
 
-.remediation-item.removing {
-  opacity: 0;
-}
-
-.remediation-text {
-  flex: 1;
-  margin-right: var(--space-2);
-}
-
-.remediation-buttons {
+.config-label {
   display: flex;
-  gap: var(--space-2);
+  flex-direction: column;
+  gap: var(--space-1);
 }
 
-.raci-container {
-    margin: var(--space-4) 0;
-    padding: var(--space-4);
-    background-color: var(--gray-50);
-    border-radius: var(--radius-md);
-    border: 1px solid var(--gray-200);
-}
-
-.raci-container h4 {
-    margin-bottom: var(--space-3);
-    color: var(--gray-700);
-}
-
-.raci-grid {
-    display: grid;
-    gap: var(--space-3);
-}
-
-.raci-row {
-    display: grid;
-    grid-template-columns: 150px 1fr;
-    align-items: center;
-    gap: var(--space-3);
-}
-
-.raci-label {
-    font-weight: 500;
-    color: var(--gray-700);
-}
-
-.raci-input {
-    flex: 1;
-}
-
-.raci-input input {
-    width: 100%;
-}
-
-@media (max-width: 640px) {
-    .raci-row {
-        grid-template-columns: 1fr;
-        gap: var(--space-2);
-    }
-}
-.raci-container {
-    margin: var(--space-4) 0;
-    padding: var(--space-4);
-    background-color: var(--gray-50);
-    border-radius: var(--radius-md);
-    border: 1px solid var(--gray-200);
-    box-shadow: var(--shadow-sm);
-}
-
-.raci-container h4 {
-    margin-bottom: var(--space-3);
-    color: var(--gray-700);
-    font-size: 1rem;
-    font-weight: 600;
-}
-
-.raci-grid {
-    display: grid;
-    gap: var(--space-3);
-}
-
-.raci-row {
-    display: grid;
-    grid-template-columns: 150px 1fr;
-    align-items: center;
-    gap: var(--space-3);
-    padding: var(--space-2) 0;
-}
-
-.raci-label {
-    font-weight: 500;
-    color: var(--gray-700);
-    font-size: 0.875rem;
-}
-
-.raci-input {
-    flex: 1;
-}
-
-.raci-input input {
-    width: 100%;
-    transition: all 0.2s ease;
-}
-
-.raci-input input:focus {
-    border-color: var(--primary-500);
-    box-shadow: 0 0 0 2px var(--primary-100);
-}
-
-@media (max-width: 640px) {
-    .raci-row {
-        grid-template-columns: 1fr;
-        gap: var(--space-2);
-    }
-}
-
-.action-item {
-    background-color: var(--gray-50);
-    border-radius: var(--radius-md);
-    margin-bottom: var(--space-3);
-    overflow: hidden;
-    transition: all 0.3s ease;
-}
-
-.action-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--space-3);
-    background-color: var(--gray-100);
-    border-bottom: 1px solid var(--gray-200);
-}
-
-.action-title {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-}
-
-.toggle-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.2rem;
-    padding: var(--space-1);
-    color: var(--gray-700);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s ease;
-}
-
-.action-content {
-    max-height: 2000px;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    padding: var(--space-3);
-}
-
-.action-item.collapsed .action-content {
-    max-height: 0;
-    padding: 0;
-}
-
-.action-item.collapsed .toggle-button {
-    transform: rotate(-90deg);
-}
-
-.actions-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--space-3);
-}
-
-/* Styles pour les sections principales */
-.regulation-item {
-    background-color: white;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-    margin-bottom: var(--space-6);
-    border: 1px solid var(--gray-200);
-    transition: box-shadow 0.2s ease;
-}
-
-.regulation-item:hover {
-    box-shadow: var(--shadow-md);
-}
-
-.regulation-header {
-    background-color: var(--gray-50);
-    border-top-left-radius: var(--radius-lg);
-    border-top-right-radius: var(--radius-lg);
-    padding: var(--space-4);
-    border-bottom: 2px solid var(--primary-100);
-    gap: var(--space-4);
-}
-
-.regulation-content {
-    padding: var(--space-4);
-}
-
-/* Style pour le texte de l'exigence */
-.regulation-text {
-    font-size: 1.1rem;
-    color: var(--gray-800);
-    padding: var(--space-4);
-    background-color: var(--primary-50);
-    border-radius: var(--radius-md);
-    margin-bottom: var(--space-4);
-    border-left: 4px solid var(--primary-500);
-}
-
-.regulation-id {
-    color: var(--gray-500);
-    margin-bottom: var(--space-4);
-    font-size: 0.9rem;
-}
-
-/* Style pour la section RACI */
-.raci-container {
-    background-color: var(--gray-50);
-    border-radius: var(--radius-md);
-    padding: var(--space-4);
-    margin: var(--space-4) 0;
-    border: 1px solid var(--gray-200);
-}
-
-.raci-container h4 {
-    color: var(--gray-700);
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: var(--space-4);
-    padding-bottom: var(--space-2);
-    border-bottom: 2px solid var(--primary-200);
-}
-
-/* Style pour les actions */
-.actions-container {
-    background-color: white;
-    border-radius: var(--radius-md);
-    padding: var(--space-4);
-    margin-top: var(--space-4);
-    border: 1px solid var(--gray-200);
-}
-
-.actions-container h4 {
-    color: var(--gray-700);
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: var(--space-4);
-    padding-bottom: var(--space-2);
-    border-bottom: 2px solid var(--primary-200);
-}
-
-.action-item {
-    background-color: var(--gray-50);
-    border-radius: var(--radius-md);
-    margin-bottom: var(--space-3);
-    border: 1px solid var(--gray-200);
-    overflow: hidden;
-}
-
-.action-header {
-    background-color: white;
-    padding: var(--space-3);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--gray-200);
-}
-
-.action-content {
-    padding: var(--space-3);
-}
-
-/* Style pour les risques */
-.risk-item {
-    background-color: white;
-    border-radius: var(--radius-md);
-    padding: var(--space-3);
-    margin-bottom: var(--space-3);
-    border: 1px solid var(--warning-200);
-    border-left: 4px solid var(--warning-500);
-}
-
-/* Style pour les remédiations */
-.remediation-actions {
-    margin-left: var(--space-4);
-    margin-top: var(--space-3);
-}
-
-.remediation-item {
-    background-color: var(--success-50);
-    border-radius: var(--radius-md);
-    padding: var(--space-3);
-    margin-bottom: var(--space-2);
-    border: 1px solid var(--success-200);
-    border-left: 4px solid var(--success-500);
-}
-
-/* Buttons améliorés */
-.button {
-    font-weight: 500;
-    padding: var(--space-2) var(--space-4);
-    border-radius: var(--radius-md);
-    transition: all 0.2s ease;
-}
-
-.button.secondary {
-    border: 1px solid var(--gray-200);
-    background-color: white;
-}
-
-.button.secondary:hover {
-    background-color: var(--gray-50);
-    border-color: var(--gray-300);
-}
-
-/* Status badges pour les risques */
-.risk-level {
-    display: inline-flex;
-    align-items: center;
-    padding: var(--space-1) var(--space-2);
-    border-radius: var(--radius-sm);
-    font-size: 0.875rem;
-    font-weight: 500;
-    margin-left: var(--space-2);
-}
-
-.risk-level.high {
-    background-color: var(--danger-50);
-    color: var(--danger-600);
-}
-
-.risk-level.medium {
-    background-color: var(--warning-50);
-    color: var(--warning-600);
-}
-
-.risk-level.low {
-    background-color: var(--success-50);
-    color: var(--success-600);
-}
-
-/* Animation pour le collapse */
-.action-content {
-    transition: all 0.3s ease-in-out;
-}
-
-.action-item.collapsed .action-content {
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
-/* Séparateurs visuels */
-.section-divider {
-    height: 1px;
-    background-color: var(--gray-200);
-    margin: var(--space-4) 0;
-}
-
-/* Input groups */
-.action-input-container {
-    display: flex;
-    gap: var(--space-2);
-    margin-top: var(--space-4);
-    padding: var(--space-3);
-    background-color: var(--gray-50);
-    border-radius: var(--radius-md);
-    border: 1px dashed var(--gray-300);
-}
-
-.action-input-container .input {
-    flex: 1;
-}
-
-/* Styles pour la boîte de dialogue de confirmation */
-.confirm-dialog {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.confirm-dialog.visible {
-    opacity: 1;
-}
-
-.confirm-dialog-content {
-    background: white;
-    padding: var(--space-6);
-    border-radius: var(--radius-lg);
-    max-width: 400px;
-    width: 90%;
-    box-shadow: var(--shadow-lg);
-    transform: translateY(20px);
-    transition: transform 0.3s ease;
-}
-
-.confirm-dialog.visible .confirm-dialog-content {
-    transform: translateY(0);
-}
-
-.confirm-dialog h3 {
-    color: var(--gray-900);
-    font-size: 1.25rem;
-    margin-bottom: var(--space-4);
-}
-
-.confirm-dialog p {
-    color: var(--gray-600);
-    margin-bottom: var(--space-4);
-}
-
-.confirm-dialog .warning-text {
-    color: var(--danger-600);
-    font-size: 0.875rem;
-}
-
-.confirm-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: var(--space-3);
-    margin-top: var(--space-6);
-}
-
-.button.danger {
-    background-color: var(--danger-500);
-    color: white;
-}
-
-.button.danger:hover {
-    background-color: var(--danger-600);
-}
-
-/* Animation pour la suppression */
-.action-item.removing {
-    opacity: 0;
-    transform: translateX(-20px);
-    transition: all 0.3s ease;
-}
-
-/* Styles pour les sections pliables */
-.section-container {
-    margin: var(--space-4) 0;
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-}
-
-.section-header {
-    background-color: var(--gray-50);
-    padding: var(--space-3) var(--space-4);
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.2s ease;
-}
-
-.section-header:hover {
-    background-color: var(--gray-100);
-}
-
-.section-header h4 {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    margin: 0;
-    color: var(--gray-700);
-    font-size: 1rem;
-    font-weight: 600;
-}
-
-.toggle-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    transition: transform 0.2s ease;
-    color: var(--gray-600);
-}
-
-.section-content {
-    padding: var(--space-4);
-    background-color: white;
-    transition: all 0.3s ease;
-}
-
-/* État replié */
-.section-container.collapsed .section-content {
-    height: 0;
-    padding: 0;
-    overflow: hidden;
-}
-
-.section-container.collapsed .toggle-icon {
-    transform: rotate(-90deg);
-}
-
-/* Animation pour le collapse */
-.section-content {
-    transition: height 0.3s ease, padding 0.3s ease;
-}
-
-.category-controls {
-    display: flex;
-    gap: var(--space-4);
-    margin-top: var(--space-3);
-}
-
-.category-controls label {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    font-weight: 500;
-    color: var(--gray-700);
-}
-
-.category-controls input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-    accent-color: var(--primary-500);
-}
 
+</style>
 
 </style>
 </head>
@@ -1060,11 +381,237 @@ body {
     </div>
     <div id="wallItems"></div>
     <div id="regulationsList"></div>
+
+</div>
 </div>
 
 <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/shim.min.js"></script>
 <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+
+
+
+<!-- Ajouter dans le head de votre HTML, avant vos autres scripts -->
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+
+
+
+
+
+
 <script>
+
+
+// Variables pour le lazy loading
+let lastDoc = null;
+let isLoading = false;
+const BATCH_SIZE = 10;
+
+
+// Recherche et filtrage
+async function searchAndFilter(searchTerm, filter, status) {
+    let query = db.collection('regulations');
+
+    if (filter !== 'all') {
+        query = query.where('category', '==', filter);
+    }
+    if (status !== 'all') {
+        query = query.where('status', '==', status);
+    }
+
+    query = query.limit(BATCH_SIZE);
+
+    try {
+        const snapshot = await query.get();
+        const regulations = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        // Filtrage texte côté client
+        const filtered = searchTerm ? regulations.filter(reg => 
+            reg.text.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            reg.id.toLowerCase().includes(searchTerm.toLowerCase())
+        ) : regulations;
+
+        renderBatch(filtered, true);
+    } catch (error) {
+        console.error("Erreur de recherche:", error);
+    }
+}
+
+// Fonction principale de rendu des lots
+function renderBatch(data) {
+    const { items, total, hasMore, startIndex } = data;
+    const container = document.getElementById('wallItems');
+    
+    // Si c'est le premier lot, nettoyer le conteneur
+    if (startIndex === 0) {
+        container.innerHTML = '';
+    }
+
+    // Vérifier si items est un tableau
+    if (!Array.isArray(items)) {
+        console.error('Items n\'est pas un tableau:', items);
+        return;
+    }
+
+    // Rendre chaque élément
+    items.forEach(reg => {
+        const articleElement = document.createElement('div');
+        articleElement.className = 'regulation-item fade-in';
+        articleElement.id = `regulation-${reg.id}`;
+        articleElement.innerHTML = renderRegulationContent(reg);
+        container.appendChild(articleElement);
+    });
+
+    // Gérer le bouton "Charger plus"
+    if (hasMore) {
+        appendLoadMoreButton(container);
+    }
+
+    // Mettre à jour les statistiques
+    updateStats(total);
+}
+
+function updateStats(total) {
+    const statsElement = document.querySelector('.compliance-rate');
+    if (statsElement) {
+        const visibleItems = document.querySelectorAll('.regulation-item').length;
+        statsElement.textContent = `Affichage de ${visibleItems} sur ${total} éléments`;
+    }
+}
+
+function appendLoadMoreButton(container) {
+    let button = container.querySelector('.load-more');
+    if (!button) {
+        button = document.createElement('button');
+        button.className = 'button load-more';
+        button.textContent = 'Charger plus';
+        button.onclick = () => loadRegulations(false);
+        container.appendChild(button);
+    }
+}
+
+// Configuration de l'Intersection Observer
+function setupIntersectionObserver() {
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !isLoading && lastDoc) {
+                loadRegulations(false);
+            }
+        });
+    }, {
+        rootMargin: '100px'
+    });
+
+    let sentinel = document.querySelector('.load-sentinel');
+    if (!sentinel) {
+        sentinel = document.createElement('div');
+        sentinel.className = 'load-sentinel';
+        document.getElementById('wallItems').appendChild(sentinel);
+    }
+
+    observer.observe(sentinel);
+}
+
+// CRUD Operations
+async function addRegulation(regulation) {
+    try {
+        await db.collection('regulations').add(regulation);
+        loadRegulations(true);
+    } catch (error) {
+        console.error("Erreur d'ajout:", error);
+    }
+}
+
+async function updateRegulation(id, updates) {
+    try {
+        await db.collection('regulations').doc(id).update(updates);
+    } catch (error) {
+        console.error("Erreur de mise à jour:", error);
+    }
+}
+
+async function deleteRegulation(id) {
+    try {
+        await db.collection('regulations').doc(id).delete();
+        loadRegulations(true);
+    } catch (error) {
+        console.error("Erreur de suppression:", error);
+    }
+}
+
+// Migration des données existantes
+async function migrateToFirebase() {
+    if (!confirm('Voulez-vous migrer les données vers Firebase ?')) return;
+
+    try {
+        const batch = db.batch();
+        let count = 0;
+
+        for (const reg of regulations) {
+            const docRef = db.collection('regulations').doc();
+            batch.set(docRef, reg);
+            count++;
+
+            // Firebase limite les batches à 500 opérations
+            if (count === 499) {
+                await batch.commit();
+                count = 0;
+            }
+        }
+
+        if (count > 0) {
+            await batch.commit();
+        }
+
+        alert('Migration terminée');
+    } catch (error) {
+        console.error('Erreur de migration:', error);
+        alert('Erreur pendant la migration');
+    }
+}
+
+// Modification des gestionnaires d'événements existants
+function handleSearchInput(event) {
+    searchAndFilter(event.target.value, activeFilter, activeStatus);
+}
+
+function handleCategoryFilter(event) {
+    if (event.target.classList.contains('category-filter')) {
+        document.querySelectorAll('.category-filter')
+            .forEach(filter => filter.classList.remove('active'));
+        event.target.classList.add('active');
+        activeFilter = event.target.dataset.category;
+        searchAndFilter(
+            document.getElementById('searchInput').value,
+            activeFilter,
+            activeStatus
+        );
+    }
+}
+
+function handleStatusTabClick(event) {
+    if (event.target.classList.contains('tab')) {
+        document.querySelectorAll('.tab')
+            .forEach(tab => tab.classList.remove('active'));
+        event.target.classList.add('active');
+        activeStatus = event.target.dataset.status;
+        searchAndFilter(
+            document.getElementById('searchInput').value,
+            activeFilter,
+            activeStatus
+        );
+    }
+}
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', () => {
+    loadRegulations(true);
+});
+
+
 let regulations = [];
 let activeFilter = 'all';
 let activeStatus = 'all';
@@ -1694,27 +1241,6 @@ function renderRegulations(reset = false) {
     }
 }
 
-// Nouvelle fonction pour charger plus de réglementations
-function loadMoreRegulations() {
-    if (isLoading || !hasMore) return;
-    
-    isLoading = true;
-    currentPage++;
-    
-    // Ajouter un indicateur de chargement
-    const regulationsList = document.getElementById('wallItems');
-    const loadingIndicator = document.createElement('div');
-    loadingIndicator.className = 'loading-indicator';
-    loadingIndicator.innerHTML = 'Chargement...';
-    regulationsList.appendChild(loadingIndicator);
-
-    // Simuler un délai pour un chargement plus fluide
-    setTimeout(() => {
-        loadingIndicator.remove();
-        renderRegulations();
-        isLoading = false;
-    }, 200);
-}
 
 // Mise à jour des gestionnaires d'événements pour réinitialiser le lazy loading
 function handleSearchInput(event) {
@@ -3116,51 +2642,211 @@ function resetAll() {
     }
 }
 
-function addNewArticle() {
+// Fonction pour ajouter un nouvel article
+async function addNewArticle() {
     const category = document.getElementById('articleCategory').value;
     const reference = document.getElementById('articleReference').value;
     const text = document.getElementById('articleText').value;
-    const parsedRequirements = parseRequirementsFromText(text);
-    parsedRequirements.forEach(req => {
-        const articleId = `${reference}-${req.id}`;
-        const article = {
-            id: articleId,
-            category: category,
-            text: req.originalText,
-            fullPath: req.id,
-            parentChain: req.parentChain,
-            rtsLinks: [],
-            itsLinks: [],
-            level1Link: '',
-            actions: [],
-            status: 'all',
-            justification: '',
-            proofLinks: [],
-            justifications: [],
-            // Nouveaux champs RACI
-            responsible: '',
-            accountable: '',
-            consulted: '',
-            informed: '',
-            raciCollapsed: false,
-            actionsCollapsed: false
-        };
-        if (category === 'Level 1') {
-            article.rtsLinks = document.getElementById('rtsLink').value.split(',').map(s => s.trim()).filter(Boolean);
-            article.itsLinks = document.getElementById('itsLink').value.split(',').map(s => s.trim()).filter(Boolean);
-        } else if (category === 'RTS' || category === 'ITS') {
-            article.level1Link = document.getElementById('level1Link').value.trim();
+    
+    if (!category || !reference || !text) {
+        showError('Tous les champs sont obligatoires');
+        return;
+    }
+
+    showLoading();
+    
+    try {
+        const parsedRequirements = parseRequirementsFromText(text);
+        const batch = db.batch();
+
+        // Création des articles dans Firestore
+        for (const req of parsedRequirements) {
+            const articleId = `${reference}-${req.id}`;
+            const docRef = db.collection('regulations').doc(articleId);
+            
+            const articleData = {
+                id: articleId,
+                category: category,
+                text: req.originalText,
+                fullPath: req.id,
+                parentChain: req.parentChain,
+                status: 'all',
+                actions: [],
+                justification: '',
+                proofLinks: [],
+                justifications: [],
+                responsible: '',
+                accountable: '',
+                consulted: '',
+                informed: '',
+                raciCollapsed: false,
+                actionsCollapsed: false,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            // Ajout des liens spécifiques selon la catégorie
+            if (category === 'Level 1') {
+                articleData.rtsLinks = document.getElementById('rtsLink').value
+                    .split(',').map(s => s.trim()).filter(Boolean);
+                articleData.itsLinks = document.getElementById('itsLink').value
+                    .split(',').map(s => s.trim()).filter(Boolean);
+            } else if (category === 'RTS' || category === 'ITS') {
+                articleData.level1Link = document.getElementById('level1Link').value.trim();
+            }
+
+            batch.set(docRef, articleData);
         }
-        const existingIndex = regulations.findIndex(reg => reg.id === articleId);
-        if (existingIndex !== -1) {
-            regulations[existingIndex] = article;
-        } else {
-            regulations.push(article);
+
+        await batch.commit();
+        
+        resetArticleForm();
+        showNotification('Articles ajoutés avec succès', 'success');
+        
+        // Recharger les données
+        await resetAndReload();
+        
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout:', error);
+        showNotification('Erreur lors de l\'ajout des articles', 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+
+// Fonctions de gestion du chargement progressif
+let lastLoadedDoc = null;
+
+async function loadMoreRegulations() {
+    if (isLoading) return;
+    
+    isLoading = true;
+    showLoading();
+
+    try {
+        let query = db.collection('regulations')
+            .orderBy('createdAt', 'desc')
+            .limit(BATCH_SIZE);
+
+        if (lastLoadedDoc) {
+            query = query.startAfter(lastLoadedDoc);
         }
+
+        const snapshot = await query.get();
+        const regulations = [];
+
+        snapshot.forEach(doc => {
+            regulations.push(doc.data());
+        });
+
+        if (regulations.length > 0) {
+            lastLoadedDoc = snapshot.docs[snapshot.docs.length - 1];
+            renderRegulationsBatch(regulations);
+            
+            // Configurer l'observation pour le prochain lot
+            setupIntersectionObserver();
+        }
+
+        if (snapshot.empty) {
+            hideLoadMoreButton();
+        }
+
+    } catch (error) {
+        console.error('Erreur de chargement:', error);
+        showNotification('Erreur lors du chargement des articles', 'error');
+    } finally {
+        isLoading = false;
+        hideLoading();
+    }
+}
+function loadMoreRegulations() {
+    if (db) {
+        db.collection('moreRegulations').get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    console.log(doc.id, " => ", doc.data());
+                });
+            })
+            .catch((error) => {
+                console.error("Erreur lors du chargement des réglementations supplémentaires:", error);
+            });
+    } else {
+        console.error("Firestore is not initialized.");
+    }
+}
+function renderRegulationsBatch(regulations) {
+    const container = document.getElementById('wallItems');
+    
+    regulations.forEach(reg => {
+        const regulationElement = document.createElement('div');
+        regulationElement.className = 'regulation-item fade-in';
+        regulationElement.id = `regulation-${reg.id}`;
+        regulationElement.innerHTML = `
+            <div class="regulation-header">
+                <!-- Votre code HTML existant pour l'en-tête -->
+            </div>
+            <div class="regulation-content">
+                <div class="regulation-text">${reg.text}</div>
+                <div class="regulation-id"><i>${reg.id}</i></div>
+                ${renderLinks(reg)}
+                ${renderRACI(reg)}
+                ${renderActions(reg)}
+                ${renderJustification(reg)}
+                ${renderProofLinks(reg)}
+            </div>
+        `;
+        
+        container.appendChild(regulationElement);
     });
-    renderRegulations();
-    autoSave();
-    resetArticleForm();
+}
+
+function setupIntersectionObserver() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !isLoading) {
+                loadMoreRegulations();
+            }
+        });
+    }, {
+        rootMargin: '100px',
+        threshold: 0.1
+    });
+
+    // Créer ou mettre à jour la sentinelle
+    let sentinel = document.querySelector('.load-sentinel');
+    if (!sentinel) {
+        sentinel = document.createElement('div');
+        sentinel.className = 'load-sentinel';
+        document.getElementById('wallItems').appendChild(sentinel);
+    }
+
+    observer.observe(sentinel);
+}
+
+// Fonction pour réinitialiser et recharger
+function resetAndReload() {
+    lastDoc = null;
+    return loadRegulations(true);
+}
+
+
+// Fonctions utilitaires
+function showLoading() {
+    let loader = document.querySelector('.global-loader');
+    if (!loader) {
+        loader = document.createElement('div');
+        loader.className = 'global-loader';
+        loader.innerHTML = '<div class="loader-spinner"></div>';
+        document.body.appendChild(loader);
+    }
+    loader.style.display = 'flex';
+}
+
+function hideLoading() {
+    const loader = document.querySelector('.global-loader');
+    if (loader) {
+        loader.style.display = 'none';
+    }
 }
 
 function parseRequirementsFromText(text) {
@@ -3464,7 +3150,6 @@ const workerBlob = new Blob([workerScript], { type: 'application/javascript' });
 const workerUrl = URL.createObjectURL(workerBlob);
 
 // Variables globales pour la pagination
-let isLoading = false;
 let hasMoreItems = true;
 let dataWorker = null;
 
@@ -3551,111 +3236,6 @@ function handleStatusTabClick(event) {
     });
 }
 
-// Fonction pour configurer l'observateur d'intersection
-function setupIntersectionObserver() {
-    // Supprimer l'ancien observateur si existant
-    const oldTarget = document.querySelector('.observer-target');
-    if (oldTarget) {
-        oldTarget.remove();
-    }
-
-    // Créer la cible de l'observateur
-    const observerTarget = document.createElement('div');
-    observerTarget.className = 'observer-target';
-    observerTarget.innerHTML = `
-        <div class="loading-spinner" style="display: none;">
-            <div class="loading-content">
-                Chargement...
-            </div>
-        </div>
-    `;
-    
-    // Ajouter la cible au conteneur
-    const wallContainer = document.getElementById('wallItems');
-    wallContainer.appendChild(observerTarget);
-
-    // Configuration de l'observateur
-    const observerOptions = {
-        root: null, // utilise le viewport
-        rootMargin: '100px', // déclenche 100px avant d'atteindre la cible
-        threshold: 0.1 // déclenche quand 10% de la cible est visible
-    };
-
-    // Créer l'observateur
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && !isLoading && hasMoreItems) {
-                // Montrer le spinner
-                const spinner = observerTarget.querySelector('.loading-spinner');
-                if (spinner) {
-                    spinner.style.display = 'flex';
-                }
-
-                // Charger le prochain lot
-                loadNextBatch();
-            }
-        });
-    }, observerOptions);
-
-    // Observer la cible
-    observer.observe(observerTarget);
-
-    // Ajouter le style nécessaire si pas déjà présent
-    if (!document.querySelector('#lazy-load-styles')) {
-        const style = document.createElement('style');
-        style.id = 'lazy-load-styles';
-        style.textContent = `
-            .observer-target {
-                width: 100%;
-                height: 20px;
-                margin: 20px 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .loading-spinner {
-                display: none;
-                justify-content: center;
-                align-items: center;
-                padding: 10px;
-            }
-
-            .loading-content {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                color: var(--gray-600);
-            }
-
-            .loading-content::before {
-                content: '';
-                width: 20px;
-                height: 20px;
-                border: 2px solid var(--gray-200);
-                border-top-color: var(--primary-500);
-                border-radius: 50%;
-                animation: spin 1s linear infinite;
-            }
-
-            @keyframes spin {
-                to {
-                    transform: rotate(360deg);
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-
-    // Retourner une fonction de nettoyage
-    return function cleanup() {
-        observer.disconnect();
-        if (oldTarget) {
-            oldTarget.remove();
-        }
-    };
-}
-
 // Fonction pour charger le prochain lot
 function loadNextBatch() {
     if (isLoading || !hasMoreItems) return;
@@ -3672,43 +3252,25 @@ function loadNextBatch() {
 }
 
 // Fonction pour rendre un lot
-function renderBatch({ items, total, hasMore, startIndex }) {
+// Fonction pour rendre un lot d'articles
+function renderBatch(regulations, reset) {
     const container = document.getElementById('wallItems');
     
-    // Si c'est le premier lot (startIndex === 0), nettoyer le conteneur
-    if (startIndex === 0) {
-        const observerTarget = container.querySelector('.observer-target');
+    if (reset) {
         container.innerHTML = '';
-        if (observerTarget) {
-            container.appendChild(observerTarget);
-        }
     }
 
-    // Cacher le spinner de chargement
-    const spinner = document.querySelector('.loading-spinner');
-    if (spinner) {
-        spinner.style.display = 'none';
-    }
-
-    // Rendre les éléments
-    items.forEach(regulation => {
-        const articleElement = createRegulationElement(regulation);
-        container.insertBefore(articleElement, container.querySelector('.observer-target'));
+    regulations.forEach(reg => {
+        const regulationElement = document.createElement('div');
+        regulationElement.className = 'regulation-item fade-in';
+        regulationElement.id = `regulation-${reg.id}`;
+        regulationElement.innerHTML = renderRegulationContent(reg);
+        container.appendChild(regulationElement);
     });
 
-    // Mettre à jour l'état
-    hasMoreItems = hasMore;
-    isLoading = false;
-    currentPage = Math.floor(startIndex / 10) + 1;
-
-    // Réinitialiser l'observateur si nécessaire
-    if (!hasMore) {
-        const observerTarget = container.querySelector('.observer-target');
-        if (observerTarget) {
-            observerTarget.remove();
-        }
-    }
+    setupIntersectionObserver();
 }
+
 
 // Helper fonction pour créer l'élément de régulation
 function createRegulationElement(regulation) {
@@ -3867,6 +3429,1139 @@ function addMetadataStyles() {
 // Initialisation
 document.addEventListener('DOMContentLoaded', addMetadataStyles);
 
+
+// Variables globales
+let isOffline = false;
+
+
+// Fonction de chargement des régulations
+async function loadRegulations(reset = false) {
+    if (isLoading) return;
+    isLoading = true;
+
+    try {
+        showLoadingIndicator();
+
+        if (reset) {
+            document.getElementById('wallItems').innerHTML = '';
+            lastDoc = null;
+        }
+
+        // Construire la requête
+        let query = db.collection('regulations')
+            .orderBy('createdAt', 'desc')
+            .limit(BATCH_SIZE);
+
+        if (lastDoc && !reset) {
+            query = query.startAfter(lastDoc);
+        }
+
+        const snapshot = await query.get();
+        
+        if (!snapshot.empty) {
+            lastDoc = snapshot.docs[snapshot.docs.length - 1];
+            const regulations = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+
+            // Envoyer les données au worker
+            if (dataWorker) {
+                dataWorker.postMessage({
+                    type: 'BATCH_READY',
+                    data: {
+                        items: regulations,
+                        total: snapshot.size,
+                        hasMore: regulations.length === BATCH_SIZE,
+                        startIndex: reset ? 0 : document.querySelectorAll('.regulation-item').length
+                    }
+                });
+            } else {
+                // Fallback si le worker n'est pas disponible
+                renderBatch({
+                    items: regulations,
+                    total: snapshot.size,
+                    hasMore: regulations.length === BATCH_SIZE,
+                    startIndex: reset ? 0 : document.querySelectorAll('.regulation-item').length
+                });
+            }
+        } else {
+            if (reset) {
+                document.getElementById('wallItems').innerHTML = 
+                    '<div class="no-data">Aucune donnée trouvée</div>';
+            }
+            hideLoadMoreButton();
+        }
+
+    } catch (error) {
+        console.error('Erreur de chargement:', error);
+        showNotification('Erreur lors du chargement des données', 'error');
+    } finally {
+        isLoading = false;
+        hideLoadingIndicator();
+    }
+}
+
+// Fonctions utilitaires pour l'interface
+function showLoadingIndicator() {
+    const indicator = document.createElement('div');
+    indicator.className = 'loading-indicator';
+    indicator.innerHTML = '<div class="spinner"></div>';
+    document.getElementById('wallItems').appendChild(indicator);
+}
+
+function hideLoadingIndicator() {
+    const indicator = document.querySelector('.loading-indicator');
+    if (indicator) {
+        indicator.remove();
+    }
+}
+
+// Gestion de l'interface de chargement
+function hideLoadMoreButton() {
+    const button = document.querySelector('.load-more');
+    if (button) {
+        button.remove();
+    }
+}
+
+// Gestion de l'état offline
+function updateOfflineStatus(offline) {
+    isOffline = offline;
+    const statusBadge = document.getElementById('connection-status') || 
+                       document.createElement('div');
+    statusBadge.id = 'connection-status';
+    statusBadge.className = `status-badge ${offline ? 'offline' : 'online'}`;
+    statusBadge.textContent = offline ? 'Hors ligne' : 'En ligne';
+    
+    document.querySelector('.header').appendChild(statusBadge);
+}
+
+// Gestion des erreurs
+function handleLoadError(error) {
+    let message = 'Une erreur est survenue';
+    
+    if (error.code === 'unavailable') {
+        message = 'La connexion au serveur est impossible. Mode hors ligne activé.';
+    } else if (error.code === 'permission-denied') {
+        message = 'Accès non autorisé. Vérifiez les règles de sécurité.';
+    }
+
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.textContent = message;
+    
+    const container = document.getElementById('wallItems');
+    container.insertBefore(errorDiv, container.firstChild);
+}
+
+// Indicateurs de chargement
+function addLoadingIndicator() {
+    const indicator = document.createElement('div');
+    indicator.className = 'loading-indicator';
+    indicator.innerHTML = `
+        <div class="spinner"></div>
+        <div class="loading-text">Chargement...</div>
+    `;
+    document.getElementById('wallItems').appendChild(indicator);
+    return indicator;
+}
+
+function removeLoadingIndicator() {
+    const indicator = document.querySelector('.loading-indicator');
+    if (indicator) indicator.remove();
+}
+
+// Styles pour les indicateurs
+const styles = `
+    .status-badge {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-weight: 500;
+        z-index: 1000;
+    }
+    
+    .status-badge.online {
+        background-color: var(--success-50);
+        color: var(--success-600);
+    }
+    
+    .status-badge.offline {
+        background-color: var(--danger-50);
+        color: var(--danger-600);
+    }
+
+    .loading-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        gap: 10px;
+    }
+
+    .spinner {
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--gray-200);
+        border-top-color: var(--primary-500);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    .error-message {
+        background-color: var(--danger-50);
+        color: var(--danger-600);
+        padding: 12px;
+        border-radius: 4px;
+        margin: 12px 0;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+    .global-loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    .loader-spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid var(--gray-200);
+        border-top-color: var(--primary-500);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    .load-sentinel {
+        height: 20px;
+        margin: 20px 0;
+    }
+
+    .fade-in {
+        opacity: 0;
+        animation: fadeIn 0.3s ease forwards;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeIn {
+        to { opacity: 1; }
+    }
+`;
+
+// Ajouter les styles
+const styleSheet = document.createElement('style');
+styleSheet.textContent = styles;
+document.head.appendChild(styleSheet);
+
+// Initialisation au chargement de la page
+document.addEventListener('DOMContentLoaded', () => {
+    resetAndReload();
+});
+
+        // Configuration Firebase en dur
+        const firebaseConfig = {
+          apiKey: "AIzaSyCTkHkB4fwTYaid1ly_Wv50_VE9dyTVGEg",
+          authDomain: "mydora-5767a.firebaseapp.com",
+          projectId: "mydora-5767a",
+          storageBucket: "mydora-5767a.firebasestorage.app",
+          messagingSenderId: "716389188012",
+          appId: "1:716389188012:web:e72fbdf6931b56a55d3a09"
+        };
+
+        // Initialisation automatique de Firebase
+        (function initializeFirebase() {
+            try {
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(firebaseConfig);
+                    db = firebase.firestore(); // Initialise Firestore
+                } else {
+                    console.log("Firebase est déjà initialisé");
+                }
+            } catch (error) {
+                console.error("Erreur d'initialisation de Firebase :", error);
+            }
+        })();
+
+// Utilitaires pour la gestion des erreurs et notifications
+function showError(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-notification';
+    errorDiv.textContent = message;
+    document.body.appendChild(errorDiv);
+    setTimeout(() => errorDiv.remove(), 3000);
+}
+
+function showNotification(message, type) {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    setTimeout(() => notification.remove(), 3000);
+}
+        
+async function publishArticle(article) {
+    const db = firebase.firestore();
+    try {
+        // Ajoute un article à la collection "articles"
+        await db.collection("articles").add({
+            title: article.title,
+            content: article.content,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        console.log("Article publié avec succès");
+    } catch (error) {
+        console.error("Erreur lors de la publication de l'article :", error);
+    }
+}
+
+// Styles globaux pour l'application
+const globalStyles = `
+    .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 12px 20px;
+        border-radius: 4px;
+        z-index: 1000;
+        animation: slideIn 0.3s ease;
+    }
+
+    .notification.success {
+        background-color: var(--success-50);
+        color: var(--success-600);
+    }
+
+    .notification.error {
+        background-color: var(--danger-50);
+        color: var(--danger-600);
+    }
+
+    .loading-indicator {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .spinner {
+        width: 30px;
+        height: 30px;
+        border: 3px solid var(--gray-200);
+        border-top-color: var(--primary-500);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    @keyframes slideIn {
+        from { transform: translateX(100%); }
+        to { transform: translateX(0); }
+    }
+
+    .load-more {
+        display: block;
+        margin: 20px auto;
+        padding: 8px 16px;
+    }
+
+    .load-sentinel {
+        height: 20px;
+        margin: 20px 0;
+    }
+`;
+
+// Fonction pour ajouter les styles
+function addStyles() {
+    const styleElement = document.createElement('style');
+    styleElement.textContent = globalStyles;
+    document.head.appendChild(styleElement);
+}
+
+// Code du Worker
+const workerCode = `
+    let regulations = [];
+    let filteredRegs = [];
+    
+    self.onmessage = function(e) {
+        const { type, data } = e.data;
+        
+        switch (type) {
+            case 'INIT_DATA':
+                regulations = data.regulations || [];
+                filterAndSendBatch(0);
+                break;
+                
+            case 'FILTER_UPDATE':
+                const { searchTerm, activeFilter, activeStatus } = data;
+                filterRegulations(searchTerm, activeFilter, activeStatus);
+                break;
+                
+            case 'REQUEST_BATCH':
+                const { startIndex } = data;
+                filterAndSendBatch(startIndex);
+                break;
+                
+            case 'BATCH_READY':
+                // Traiter directement les données reçues de Firestore
+                self.postMessage({
+                    type: 'RENDER_BATCH',
+                    data: data
+                });
+                break;
+        }
+    };
+
+    function filterRegulations(searchTerm, activeFilter, activeStatus) {
+        filteredRegs = regulations.filter(reg => {
+            if (searchTerm) {
+                const searchLower = searchTerm.toLowerCase();
+                const inText = reg.text.toLowerCase().includes(searchLower);
+                const inId = reg.id.toLowerCase().includes(searchLower);
+                return inText || inId;
+            }
+            return true;
+        });
+
+        if (activeFilter !== 'all') {
+            filteredRegs = filteredRegs.filter(reg => reg.category === activeFilter);
+        }
+
+        if (activeStatus !== 'all') {
+            filteredRegs = filteredRegs.filter(reg => reg.status === activeStatus);
+        }
+
+        filterAndSendBatch(0);
+    }
+
+    function filterAndSendBatch(startIndex) {
+        const batchSize = 10;
+        const endIndex = startIndex + batchSize;
+        const batch = filteredRegs.slice(startIndex, endIndex);
+        
+        self.postMessage({
+            type: 'RENDER_BATCH',
+            data: {
+                items: batch,
+                total: filteredRegs.length,
+                hasMore: endIndex < filteredRegs.length,
+                startIndex: startIndex
+            }
+        });
+    }
+`;
+
+// Création et initialisation du Worker
+function initializeWorker() {
+    const blob = new Blob([workerCode], { type: 'application/javascript' });
+    const workerUrl = URL.createObjectURL(blob);
+    const worker = new Worker(workerUrl);
+    
+    worker.onmessage = function(e) {
+        const { type, data } = e.data;
+        if (type === 'RENDER_BATCH') {
+            renderBatch(data);
+        }
+    };
+    
+    return worker;
+}
+
+// Fonction de rendu modifiée
+function renderBatch(data) {
+    if (!data || !data.items || !Array.isArray(data.items)) {
+        console.error('Invalid data received:', data);
+        return;
+    }
+
+    const container = document.getElementById('wallItems');
+    
+    if (data.startIndex === 0) {
+        container.innerHTML = '';
+    }
+
+    data.items.forEach(reg => {
+        const articleElement = document.createElement('div');
+        articleElement.className = 'regulation-item fade-in';
+        articleElement.id = `regulation-${reg.id}`;
+        articleElement.innerHTML = renderRegulationContent(reg);
+        container.appendChild(articleElement);
+    });
+
+    if (data.hasMore) {
+        setupIntersectionObserver();
+    }
+
+    updateStats(data.total);
+}
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', () => {
+    addStyles();
+    const dataWorker = initializeWorker();
+    loadRegulations(true);
+    setupIntersectionObserver();
+    
+    // Event listeners pour la recherche et les filtres
+    document.getElementById('searchInput')?.addEventListener('input', e => {
+        dataWorker.postMessage({
+            type: 'FILTER_UPDATE',
+            data: {
+                searchTerm: e.target.value,
+                activeFilter,
+                activeStatus
+            }
+        });
+    });
+});
+
+// Fonction pour initialiser Firebase et vérifier/créer la collection
+async function initializeFirebase() {
+    try {
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+            console.log("Firebase initialisé avec succès");
+            
+            // Vérifier si la collection existe
+            const regulations = await db.collection('regulations').get();
+            console.log("Collection vérifiée ou créée");
+        }
+    } catch (error) {
+        console.error("Erreur d'initialisation:", error);
+        showNotification('Erreur de connexion à Firebase', 'error');
+    }
+}
+
+// Fonction modifiée pour ajouter un nouvel article avec vérification
+async function addNewArticle() {
+    try {
+        showLoading();
+
+        // Récupérer les valeurs du formulaire
+        const category = document.getElementById('articleCategory').value;
+        const reference = document.getElementById('articleReference').value;
+        const text = document.getElementById('articleText').value;
+        
+        // Validation
+        if (!category || !reference || !text) {
+            showNotification('Tous les champs sont obligatoires', 'error');
+            return;
+        }
+
+        // Créer l'article de test
+        const testDoc = {
+            id: `${reference}-test`,
+            category: category,
+            text: text,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        // Test d'écriture
+        console.log("Tentative d'écriture:", testDoc);
+        const docRef = await db.collection('regulations').add(testDoc);
+        console.log("Document écrit avec ID:", docRef.id);
+
+        // Si le test réussit, procéder avec les vrais articles
+        const parsedRequirements = parseRequirementsFromText(text);
+        const batch = db.batch();
+
+        for (const req of parsedRequirements) {
+            const articleId = `${reference}-${req.id}`;
+            const articleRef = db.collection('regulations').doc(articleId);
+            
+            const articleData = {
+                id: articleId,
+                category: category,
+                text: req.originalText,
+                fullPath: req.id,
+                parentChain: req.parentChain,
+                status: 'all',
+                actions: [],
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                // Autres champs RACI
+                responsible: '',
+                accountable: '',
+                consulted: '',
+                informed: ''
+            };
+
+            if (category === 'Level 1') {
+                articleData.rtsLinks = document.getElementById('rtsLink').value
+                    .split(',').map(s => s.trim()).filter(Boolean);
+                articleData.itsLinks = document.getElementById('itsLink').value
+                    .split(',').map(s => s.trim()).filter(Boolean);
+            } else if (category === 'RTS' || category === 'ITS') {
+                articleData.level1Link = document.getElementById('level1Link').value.trim();
+            }
+
+            batch.set(articleRef, articleData);
+            console.log("Article préparé:", articleData);
+        }
+
+        // Exécuter le batch
+        await batch.commit();
+        console.log("Batch commité avec succès");
+
+        showNotification('Articles ajoutés avec succès', 'success');
+        resetArticleForm();
+        
+        // Recharger les articles
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout:', error);
+        showNotification(`Erreur: ${error.message}`, 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// Fonction de vérification de la connexion Firestore
+async function checkFirestoreConnection() {
+    try {
+        const timestamp = await db.collection('regulations')
+            .add({
+                test: true,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        await timestamp.delete();
+        console.log("Connexion Firestore OK");
+        return true;
+    } catch (error) {
+        console.error("Erreur de connexion Firestore:", error);
+        return false;
+    }
+}
+
+// Initialisation avec vérifications
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        await initializeFirebase();
+        const isConnected = await checkFirestoreConnection();
+        
+        if (!isConnected) {
+            showNotification('Erreur de connexion à la base de données', 'error');
+            return;
+        }
+
+        showNotification('Connecté à la base de données', 'success');
+        await loadRegulations(true);
+        
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', handleSearchInput);
+        document.getElementById('categoryFilters').addEventListener('click', handleCategoryFilter);
+        document.getElementById('statusTabs').addEventListener('click', handleStatusTabClick);
+        
+    } catch (error) {
+        console.error("Erreur d'initialisation:", error);
+        showNotification('Erreur de démarrage de l\'application', 'error');
+    }
+});
+
+// Fonction pour afficher les notifications plus visibles
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 25px;
+        background: ${type === 'error' ? '#fee2e2' : '#ecfdf5'};
+        color: ${type === 'error' ? '#dc2626' : '#059669'};
+        border-radius: 6px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        font-weight: 500;
+    `;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    console.log(type === 'error' ? `Erreur: ${message}` : message);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 5000);
+}
+
+// Fonctions d'aide pour l'interface
+function showLoading() {
+    const loader = document.createElement('div');
+    loader.className = 'global-loader';
+    loader.innerHTML = `
+        <div style="
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        ">
+            <div class="spinner"></div>
+            <span>Chargement...</span>
+        </div>
+    `;
+    document.body.appendChild(loader);
+}
+
+function hideLoading() {
+    const loader = document.querySelector('.global-loader');
+    if (loader) {
+        loader.remove();
+    }
+}
+
+
+// Fonction de lecture des données avec pagination
+async function loadRegulations(reset = false) {
+    if (isLoading) return;
+    isLoading = true;
+    showLoading();
+
+    try {
+        if (reset) {
+            document.getElementById('wallItems').innerHTML = '';
+            lastDoc = null;
+        }
+
+        // Construire la requête de base
+        let query = db.collection('regulations')
+            .orderBy('createdAt', 'desc')
+            .limit(BATCH_SIZE);
+
+        // Ajouter le startAfter si ce n'est pas un reset
+        if (!reset && lastDoc) {
+            query = query.startAfter(lastDoc);
+        }
+
+        const snapshot = await query.get();
+        
+        if (!snapshot.empty) {
+            // Sauvegarder le dernier document pour la pagination
+            lastDoc = snapshot.docs[snapshot.docs.length - 1];
+            
+            // Convertir les documents en données
+            const regulations = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+
+            // Rendre les données
+            renderRegulations(regulations, reset);
+            
+            // Configurer l'observateur pour le chargement infini
+            setupIntersectionObserver();
+
+            showNotification(`${regulations.length} articles chargés`, 'success');
+        } else {
+            if (reset) {
+                document.getElementById('wallItems').innerHTML = 
+                    '<div class="no-data">Aucune donnée trouvée</div>';
+            }
+        }
+
+    } catch (error) {
+        console.error('Erreur de chargement:', error);
+        showNotification('Erreur lors du chargement des données', 'error');
+    } finally {
+        isLoading = false;
+        hideLoading();
+    }
+}
+
+// Fonction de rendu des régulations
+function renderRegulations(regulations, reset = false) {
+    const container = document.getElementById('wallItems');
+    
+    // Si reset, vider le conteneur
+    if (reset) {
+        container.innerHTML = '';
+    }
+
+    // Calculer le taux de conformité
+    let complianceRate = calculateCompliance(regulations);
+    updateComplianceRate(complianceRate);
+
+    // Rendre chaque régulation
+    regulations.forEach(reg => {
+        const regulationElement = document.createElement('div');
+        regulationElement.className = 'regulation-item fade-in';
+        regulationElement.id = `regulation-${reg.id}`;
+        regulationElement.innerHTML = `
+            <div class="regulation-header">
+                <div class="status-controls">
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            class="checkbox" 
+                            value="Compliant" 
+                            ${reg.status === 'Compliant' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Compliant')"> Compliant
+                    </label>
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            value="Non Applicable" 
+                            ${reg.status === 'Non Applicable' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Non Applicable')"> Non Applicable
+                    </label>
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            value="Documentation" 
+                            ${reg.status === 'Documentation' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Documentation')"> Documentation
+                    </label>
+                </div>
+            </div>
+            <div class="regulation-content">
+                <div class="regulation-text">${reg.text}</div>
+                <div class="regulation-id"><i>${reg.id}</i></div>
+                ${renderLinks(reg)}
+                ${renderRACI(reg)}
+                ${renderActions(reg)}
+                ${renderJustification(reg)}
+                ${renderProofLinks(reg)}
+                
+                <div class="action-buttons">
+                    <button class="button secondary" onclick="editRegulation('${reg.id}')">Éditer</button>
+                    <button class="button secondary" onclick="deleteRegulation('${reg.id}')">Supprimer</button>
+                </div>
+            </div>
+        `;
+        
+        container.appendChild(regulationElement);
+    });
+}
+
+// Fonction de recherche et filtrage
+async function searchAndFilter(searchTerm, filter, status) {
+    showLoading();
+    try {
+        // Construire la requête de base
+        let query = db.collection('regulations');
+
+        // Appliquer les filtres
+        if (filter !== 'all') {
+            query = query.where('category', '==', filter);
+        }
+        if (status !== 'all' && status !== 'Exigences with Risks') {
+            query = query.where('status', '==', status);
+        }
+
+        // Exécuter la requête
+        const snapshot = await query.get();
+        let results = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        // Filtrage côté client pour la recherche textuelle
+        if (searchTerm) {
+            results = results.filter(reg => 
+                reg.text.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                reg.id.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+        }
+
+        // Filtrage spécial pour "Exigences with Risks"
+        if (status === 'Exigences with Risks') {
+            results = results.filter(reg => 
+                reg.actions && reg.actions.some(action => 
+                    action.risks && action.risks.length > 0
+                )
+            );
+        }
+
+        // Rendre les résultats
+        renderRegulations(results, true);
+
+    } catch (error) {
+        console.error('Erreur de recherche:', error);
+        showNotification('Erreur lors de la recherche', 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// Configuration de l'Intersection Observer pour le lazy loading
+function setupIntersectionObserver() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !isLoading && lastDoc) {
+                loadRegulations(false);
+            }
+        });
+    }, {
+        rootMargin: '100px'
+    });
+
+    let sentinel = document.querySelector('.load-sentinel');
+    if (!sentinel) {
+        sentinel = document.createElement('div');
+        sentinel.className = 'load-sentinel';
+        document.getElementById('wallItems').appendChild(sentinel);
+    }
+
+    observer.observe(sentinel);
+}
+
+// Mise à jour d'une régulation dans Firestore
+async function updateRegulation(id, updates) {
+    try {
+        await db.collection('regulations').doc(id).update(updates);
+        showNotification('Mise à jour réussie', 'success');
+    } catch (error) {
+        console.error('Erreur de mise à jour:', error);
+        showNotification('Erreur lors de la mise à jour', 'error');
+    }
+}
+
+// Fonction de mise à jour du taux de conformité
+function updateComplianceRate(rate) {
+    const element = document.querySelector('.compliance-rate');
+    if (element) {
+        element.textContent = `Taux de conformité: ${rate}%`;
+    }
+}
+
+
+// Utilitaire pour debounce
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            timeout = null;
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', () => {
+    // Charger les données initiales
+    loadRegulations(true);
+
+    // Gestionnaires d'événements pour les filtres
+    document.getElementById('searchInput').addEventListener('input', debounce((e) => {
+        searchAndFilter(
+            e.target.value,
+            activeFilter,
+            activeStatus
+        );
+    }, 300));
+
+    document.getElementById('categoryFilters').addEventListener('click', (e) => {
+        if (e.target.classList.contains('category-filter')) {
+            activeFilter = e.target.dataset.category;
+            searchAndFilter(
+                document.getElementById('searchInput').value,
+                activeFilter,
+                activeStatus
+            );
+        }
+    });
+
+    document.getElementById('statusTabs').addEventListener('click', (e) => {
+        if (e.target.classList.contains('tab')) {
+            activeStatus = e.target.dataset.status;
+            searchAndFilter(
+                document.getElementById('searchInput').value,
+                activeFilter,
+                activeStatus
+            );
+        }
+    });
+});
+
+// Fonction de calcul de conformité corrigée
+function calculateCompliance(regList) {
+    // Vérifier que regList est un tableau
+    if (!Array.isArray(regList)) {
+        console.error('Liste de régulations invalide:', regList);
+        return '0.0';
+    }
+
+    let totalCompliance = 0;
+    let totalApplicable = 0;
+
+    regList.forEach(reg => {
+        // Vérifier que reg est un objet valide
+        if (!reg || typeof reg !== 'object') return;
+
+        if (reg.status === 'Non Applicable' || reg.status === 'Documentation') return;
+        
+        totalApplicable++;
+        if (reg.status === 'Compliant') {
+            totalCompliance += 100;
+        } else {
+            if (Array.isArray(reg.actions) && reg.actions.length > 0) {
+                const totalActionProgress = reg.actions.reduce((sum, action) => {
+                    return sum + (Number(action.percentage) || 0);
+                }, 0);
+                const averageProgress = totalActionProgress / reg.actions.length;
+                totalCompliance += averageProgress;
+            }
+        }
+    });
+
+    return totalApplicable ? (totalCompliance / totalApplicable).toFixed(1) : '0.0';
+}
+
+// Fonction de rendu modifiée
+function renderRegulations(regulations, reset = false) {
+    const container = document.getElementById('wallItems');
+    
+    // Vérifier que regulations est un tableau
+    if (!Array.isArray(regulations)) {
+        console.error('Données de régulations invalides:', regulations);
+        container.innerHTML = '<div class="error">Erreur de chargement des données</div>';
+        return;
+    }
+    
+    if (reset) {
+        container.innerHTML = '';
+    }
+
+    // Calculer et mettre à jour le taux de conformité
+    const complianceRate = calculateCompliance(regulations);
+    const complianceElement = document.querySelector('.compliance-rate');
+    if (complianceElement) {
+        complianceElement.textContent = `Taux de conformité: ${complianceRate}%`;
+    }
+
+    // Rendre chaque régulation
+    regulations.forEach(reg => {
+        if (!reg || typeof reg !== 'object') return;
+
+        const regulationElement = document.createElement('div');
+        regulationElement.className = 'regulation-item fade-in';
+        regulationElement.id = `regulation-${reg.id}`;
+        regulationElement.innerHTML = `
+            <div class="regulation-header">
+                <div class="status-controls">
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            class="checkbox" 
+                            value="Compliant" 
+                            ${reg.status === 'Compliant' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Compliant')"> Compliant
+                    </label>
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            value="Non Applicable" 
+                            ${reg.status === 'Non Applicable' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Non Applicable')"> Non Applicable
+                    </label>
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            value="Documentation" 
+                            ${reg.status === 'Documentation' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Documentation')"> Documentation
+                    </label>
+                </div>
+            </div>
+            <div class="regulation-content">
+                <div class="regulation-text">${reg.text || ''}</div>
+                <div class="regulation-id"><i>${reg.id || ''}</i></div>
+                ${renderLinks(reg)}
+                ${renderRACI(reg)}
+                ${renderActions(reg)}
+                ${renderJustification(reg)}
+                ${renderProofLinks(reg)}
+                
+                <div class="action-buttons">
+                    <button class="button secondary" onclick="editRegulation('${reg.id}')">Éditer</button>
+                    <button class="button secondary" onclick="deleteRegulation('${reg.id}')">Supprimer</button>
+                </div>
+            </div>
+        `;
+        
+        container.appendChild(regulationElement);
+    });
+
+    // Configurer l'observateur pour le lazy loading
+    setupIntersectionObserver();
+}
+
+// Fonction de chargement des données modifiée
+async function loadRegulations(reset = false) {
+    if (isLoading) return;
+    isLoading = true;
+    showLoading();
+
+    try {
+        if (reset) {
+            document.getElementById('wallItems').innerHTML = '';
+            lastDoc = null;
+        }
+
+        let query = db.collection('regulations')
+            .orderBy('createdAt', 'desc')
+            .limit(BATCH_SIZE);
+
+        if (lastDoc && !reset) {
+            query = query.startAfter(lastDoc);
+        }
+
+        const snapshot = await query.get();
+        
+        if (!snapshot.empty) {
+            lastDoc = snapshot.docs[snapshot.docs.length - 1];
+            const regulations = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+
+            renderRegulations(regulations, reset);
+            console.log(`${regulations.length} articles chargés`);
+        } else {
+            if (reset) {
+                document.getElementById('wallItems').innerHTML = 
+                    '<div class="no-data">Aucune donnée trouvée</div>';
+            }
+        }
+
+    } catch (error) {
+        console.error('Erreur de chargement:', error);
+        showNotification('Erreur lors du chargement des données', 'error');
+    } finally {
+        isLoading = false;
+        hideLoading();
+    }
+}
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', () => {
+    addStyles();
+    loadRegulations(true);
+    setupIntersectionObserver();
+});
+
 </script>
+
 </body>
-</html>
+</html>v
