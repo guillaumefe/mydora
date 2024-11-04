@@ -293,6 +293,978 @@ body {
   gap: var(--space-1);
 }
 
+:root {
+  --primary-50: #eff6ff;
+  --primary-100: #dbeafe;
+  --primary-200: #bfdbfe;
+  --primary-500: #3b82f6;
+  --primary-600: #2563eb;
+  --primary-700: #1d4ed8;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-900: #111827;
+  --success-50: #ecfdf5;
+  --success-500: #10b981;
+  --success-600: #059669;
+  --warning-50: #fffbeb;
+  --warning-500: #f59e0b;
+  --warning-600: #d97706;
+  --danger-50: #fef2f2;
+  --danger-500: #ef4444;
+  --danger-600: #dc2626;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  background-color: var(--gray-50);
+  color: var(--gray-900);
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  width: 100%;
+  padding: var(--space-4);
+  margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding: var(--space-6);
+  }
+}
+
+.card {
+  background-color: white;
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  margin-bottom: var(--space-4);
+  border: 1px solid var(--gray-200);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.header {
+  margin-bottom: var(--space-6);
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin-bottom: var(--space-2);
+}
+
+.compliance-rate {
+  font-size: 1.125rem;
+  color: var(--primary-600);
+  font-weight: 500;
+  margin-bottom: var(--space-4);
+}
+
+.import-export-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  background-color: var(--primary-50);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-4);
+}
+
+.search-container {
+  margin-bottom: var(--space-4);
+}
+
+.input {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 2px var(--primary-100);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  background-color: var(--primary-600);
+  color: white;
+  gap: var(--space-2);
+}
+
+.button:hover {
+  background-color: var(--primary-700);
+}
+
+.button.secondary {
+  background-color: var(--gray-100);
+  color: var(--gray-700);
+}
+
+.button.secondary:hover {
+  background-color: var(--gray-200);
+}
+
+.tabs {
+  display: flex;
+  overflow-x: auto;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: var(--space-2);
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  padding: var(--space-2) var(--space-4);
+  background-color: var(--gray-100);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--gray-700);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab.active {
+  background-color: var(--primary-600);
+  color: white;
+}
+
+.add-article-container {
+  background-color: white;
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-4);
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+}
+
+.form-header {
+  background-color: var(--primary-600);
+  color: white;
+  padding: var(--space-4);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+}
+
+.form-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.form-content.visible {
+  max-height: 2000px;
+  padding: var(--space-4);
+}
+
+.form-group {
+  margin-bottom: var(--space-4);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-weight: 500;
+  color: var(--gray-700);
+}
+
+.regulation-item {
+  background-color: white;
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  margin-bottom: var(--space-4);
+  border: 1px solid var(--gray-200);
+}
+
+.regulation-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.action-item {
+  background-color: var(--gray-50);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.action-text {
+  color: var(--gray-700);
+  margin-bottom: var(--space-2);
+}
+
+.progress-container {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: var(--space-2) 0;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 0.5rem;
+  background-color: var(--gray-200);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--success-500);
+  transition: width 0.3s ease;
+}
+
+.risk-item {
+  background-color: var(--gray-50);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  margin-top: var(--space-3);
+  border: 1px solid var(--gray-200);
+}
+
+@media (min-width: 768px) {
+  .regulation-header {
+    flex-wrap: nowrap;
+  }
+  
+  .action-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-4);
+    align-items: center;
+  }
+  
+  .progress-container {
+    min-width: 200px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .import-export-bar {
+    flex-wrap: nowrap;
+  }
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.badge-success {
+  background-color: var(--success-50);
+  color: var(--success-600);
+}
+
+.badge-warning {
+  background-color: var(--warning-50);
+  color: var(--warning-600);
+}
+
+.badge-danger {
+  background-color: var(--danger-50);
+  color: var(--danger-600);
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--gray-100) 0%,
+    var(--gray-200) 50%,
+    var(--gray-100) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.save-status {
+  position: fixed;
+  bottom: var(--space-4);
+  right: var(--space-4);
+  background-color: var(--success-500);
+  color: white;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-lg);
+}
+
+.save-status.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.button-group {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.risks-container {
+  margin-top: var(--space-3);
+}
+
+.remediation-actions {
+  margin-left: var(--space-4);
+}
+
+.remediation-actions ul {
+  padding-left: var(--space-4);
+}
+
+.remediation-actions li {
+  margin-bottom: var(--space-2);
+}
+
+.action-item, .remediation-item {
+  transition: all 0.3s ease-out;
+}
+
+.action-item.removing, .remediation-item.removing {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.action-item.adding {
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.remediation-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.remediation-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-2);
+  margin-bottom: var(--space-2);
+  background-color: var(--gray-50);
+  border-radius: var(--radius-md);
+  transition: opacity 0.3s ease-out;
+}
+
+.remediation-item.removing {
+  opacity: 0;
+}
+
+.remediation-text {
+  flex: 1;
+  margin-right: var(--space-2);
+}
+
+.remediation-buttons {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.raci-container {
+    margin: var(--space-4) 0;
+    padding: var(--space-4);
+    background-color: var(--gray-50);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--gray-200);
+}
+
+.raci-container h4 {
+    margin-bottom: var(--space-3);
+    color: var(--gray-700);
+}
+
+.raci-grid {
+    display: grid;
+    gap: var(--space-3);
+}
+
+.raci-row {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.raci-label {
+    font-weight: 500;
+    color: var(--gray-700);
+}
+
+.raci-input {
+    flex: 1;
+}
+
+.raci-input input {
+    width: 100%;
+}
+
+@media (max-width: 640px) {
+    .raci-row {
+        grid-template-columns: 1fr;
+        gap: var(--space-2);
+    }
+}
+.raci-container {
+    margin: var(--space-4) 0;
+    padding: var(--space-4);
+    background-color: var(--gray-50);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--gray-200);
+    box-shadow: var(--shadow-sm);
+}
+
+.raci-container h4 {
+    margin-bottom: var(--space-3);
+    color: var(--gray-700);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.raci-grid {
+    display: grid;
+    gap: var(--space-3);
+}
+
+.raci-row {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) 0;
+}
+
+.raci-label {
+    font-weight: 500;
+    color: var(--gray-700);
+    font-size: 0.875rem;
+}
+
+.raci-input {
+    flex: 1;
+}
+
+.raci-input input {
+    width: 100%;
+    transition: all 0.2s ease;
+}
+
+.raci-input input:focus {
+    border-color: var(--primary-500);
+    box-shadow: 0 0 0 2px var(--primary-100);
+}
+
+@media (max-width: 640px) {
+    .raci-row {
+        grid-template-columns: 1fr;
+        gap: var(--space-2);
+    }
+}
+
+.action-item {
+    background-color: var(--gray-50);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-3);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.action-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-3);
+    background-color: var(--gray-100);
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.action-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.toggle-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: var(--space-1);
+    color: var(--gray-700);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.action-content {
+    max-height: 2000px;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: var(--space-3);
+}
+
+.action-item.collapsed .action-content {
+    max-height: 0;
+    padding: 0;
+}
+
+.action-item.collapsed .toggle-button {
+    transform: rotate(-90deg);
+}
+
+.actions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-3);
+}
+
+/* Styles pour les sections principales */
+.regulation-item {
+    background-color: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--space-6);
+    border: 1px solid var(--gray-200);
+    transition: box-shadow 0.2s ease;
+}
+
+.regulation-item:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.regulation-header {
+    background-color: var(--gray-50);
+    border-top-left-radius: var(--radius-lg);
+    border-top-right-radius: var(--radius-lg);
+    padding: var(--space-4);
+    border-bottom: 2px solid var(--primary-100);
+    gap: var(--space-4);
+}
+
+.regulation-content {
+    padding: var(--space-4);
+}
+
+/* Style pour le texte de l'exigence */
+.regulation-text {
+    font-size: 1.1rem;
+    color: var(--gray-800);
+    padding: var(--space-4);
+    background-color: var(--primary-50);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-4);
+    border-left: 4px solid var(--primary-500);
+}
+
+.regulation-id {
+    color: var(--gray-500);
+    margin-bottom: var(--space-4);
+    font-size: 0.9rem;
+}
+
+/* Style pour la section RACI */
+.raci-container {
+    background-color: var(--gray-50);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    margin: var(--space-4) 0;
+    border: 1px solid var(--gray-200);
+}
+
+.raci-container h4 {
+    color: var(--gray-700);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-2);
+    border-bottom: 2px solid var(--primary-200);
+}
+
+/* Style pour les actions */
+.actions-container {
+    background-color: white;
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    margin-top: var(--space-4);
+    border: 1px solid var(--gray-200);
+}
+
+.actions-container h4 {
+    color: var(--gray-700);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-2);
+    border-bottom: 2px solid var(--primary-200);
+}
+
+.action-item {
+    background-color: var(--gray-50);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-3);
+    border: 1px solid var(--gray-200);
+    overflow: hidden;
+}
+
+.action-header {
+    background-color: white;
+    padding: var(--space-3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.action-content {
+    padding: var(--space-3);
+}
+
+/* Style pour les risques */
+.risk-item {
+    background-color: white;
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    margin-bottom: var(--space-3);
+    border: 1px solid var(--warning-200);
+    border-left: 4px solid var(--warning-500);
+}
+
+/* Style pour les remédiations */
+.remediation-actions {
+    margin-left: var(--space-4);
+    margin-top: var(--space-3);
+}
+
+.remediation-item {
+    background-color: var(--success-50);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    margin-bottom: var(--space-2);
+    border: 1px solid var(--success-200);
+    border-left: 4px solid var(--success-500);
+}
+
+/* Buttons améliorés */
+.button {
+    font-weight: 500;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
+}
+
+.button.secondary {
+    border: 1px solid var(--gray-200);
+    background-color: white;
+}
+
+.button.secondary:hover {
+    background-color: var(--gray-50);
+    border-color: var(--gray-300);
+}
+
+/* Status badges pour les risques */
+.risk-level {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-left: var(--space-2);
+}
+
+.risk-level.high {
+    background-color: var(--danger-50);
+    color: var(--danger-600);
+}
+
+.risk-level.medium {
+    background-color: var(--warning-50);
+    color: var(--warning-600);
+}
+
+.risk-level.low {
+    background-color: var(--success-50);
+    color: var(--success-600);
+}
+
+/* Animation pour le collapse */
+.action-content {
+    transition: all 0.3s ease-in-out;
+}
+
+.action-item.collapsed .action-content {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* Séparateurs visuels */
+.section-divider {
+    height: 1px;
+    background-color: var(--gray-200);
+    margin: var(--space-4) 0;
+}
+
+/* Input groups */
+.action-input-container {
+    display: flex;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+    padding: var(--space-3);
+    background-color: var(--gray-50);
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--gray-300);
+}
+
+.action-input-container .input {
+    flex: 1;
+}
+
+/* Styles pour la boîte de dialogue de confirmation */
+.confirm-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.confirm-dialog.visible {
+    opacity: 1;
+}
+
+.confirm-dialog-content {
+    background: white;
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    max-width: 400px;
+    width: 90%;
+    box-shadow: var(--shadow-lg);
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.confirm-dialog.visible .confirm-dialog-content {
+    transform: translateY(0);
+}
+
+.confirm-dialog h3 {
+    color: var(--gray-900);
+    font-size: 1.25rem;
+    margin-bottom: var(--space-4);
+}
+
+.confirm-dialog p {
+    color: var(--gray-600);
+    margin-bottom: var(--space-4);
+}
+
+.confirm-dialog .warning-text {
+    color: var(--danger-600);
+    font-size: 0.875rem;
+}
+
+.confirm-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+}
+
+.button.danger {
+    background-color: var(--danger-500);
+    color: white;
+}
+
+.button.danger:hover {
+    background-color: var(--danger-600);
+}
+
+/* Animation pour la suppression */
+.action-item.removing {
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.3s ease;
+}
+
+/* Styles pour les sections pliables */
+.section-container {
+    margin: var(--space-4) 0;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.section-header {
+    background-color: var(--gray-50);
+    padding: var(--space-3) var(--space-4);
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s ease;
+}
+
+.section-header:hover {
+    background-color: var(--gray-100);
+}
+
+.section-header h4 {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    color: var(--gray-700);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.toggle-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    transition: transform 0.2s ease;
+    color: var(--gray-600);
+}
+
+.section-content {
+    padding: var(--space-4);
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+/* État replié */
+.section-container.collapsed .section-content {
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.section-container.collapsed .toggle-icon {
+    transform: rotate(-90deg);
+}
+
+/* Animation pour le collapse */
+.section-content {
+    transition: height 0.3s ease, padding 0.3s ease;
+}
+
+.category-controls {
+    display: flex;
+    gap: var(--space-4);
+    margin-top: var(--space-3);
+}
+
+.category-controls label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-weight: 500;
+    color: var(--gray-700);
+}
+
+.category-controls input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: var(--primary-500);
+}
+
+
 
 </style>
 
@@ -6190,6 +7162,257 @@ function addResetStyles() {
 document.addEventListener('DOMContentLoaded', () => {
     addResetStyles();
 });
+
+// Fonction pour ajouter une action
+async function addAction(regulationId, actionText) {
+    if (!actionText.trim()) {
+        showNotification('Le texte de l\'action ne peut pas être vide', 'error');
+        return;
+    }
+
+    try {
+        // Récupérer la référence du document
+        const docRef = db.collection(COLLECTION_PATH).doc(regulationId);
+        
+        const newAction = {
+            id: Date.now(),
+            text: actionText.trim(),
+            percentage: 0,
+            isEditing: false,
+            isCollapsed: false,
+            risks: [],
+            assignedTo: '',
+            raci: {
+                responsible: '',
+                accountable: '',
+                consulted: '',
+                informed: ''
+            },
+            startDate: '',
+            endDate: '',
+            newDeadline: ''
+        };
+
+        // Mettre à jour le document avec la nouvelle action
+        await docRef.update({
+            actions: firebase.firestore.FieldValue.arrayUnion(newAction)
+        });
+
+        showNotification('Action ajoutée avec succès', 'success');
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout de l\'action:', error);
+        showNotification('Erreur lors de l\'ajout de l\'action', 'error');
+    }
+}
+
+// Fonction pour ajouter un risque
+async function addRisk(regulationId, actionId, description, severity, likelihood) {
+    try {
+        const docRef = db.collection(COLLECTION_PATH).doc(regulationId);
+        const doc = await docRef.get();
+        
+        if (!doc.exists) {
+            throw new Error('Document non trouvé');
+        }
+
+        const data = doc.data();
+        const actions = data.actions || [];
+        const actionIndex = actions.findIndex(a => a.id === actionId);
+
+        if (actionIndex === -1) {
+            throw new Error('Action non trouvée');
+        }
+
+        const newRisk = {
+            id: Date.now(),
+            description,
+            severity,
+            likelihood,
+            level: severity * likelihood,
+            remediationActions: [],
+            remediated: false
+        };
+
+        const updatedActions = actions.map((action, index) => {
+            if (index === actionIndex) {
+                return {
+                    ...action,
+                    risks: [...(action.risks || []), newRisk]
+                };
+            }
+            return action;
+        });
+
+        await docRef.update({ actions: updatedActions });
+        showNotification('Risque ajouté avec succès', 'success');
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout du risque:', error);
+        showNotification('Erreur lors de l\'ajout du risque', 'error');
+    }
+}
+
+// Fonction pour mettre à jour le pourcentage d'une action
+async function updateActionPercentage(regulationId, actionId, value) {
+    try {
+        const percentage = Math.min(Math.max(parseInt(value), 0), 100);
+        const docRef = db.collection(COLLECTION_PATH).doc(regulationId);
+        const doc = await docRef.get();
+        
+        if (!doc.exists) {
+            throw new Error('Document non trouvé');
+        }
+
+        const data = doc.data();
+        const actions = data.actions.map(action => 
+            action.id === actionId 
+                ? { ...action, percentage } 
+                : action
+        );
+
+        await docRef.update({ actions });
+        showNotification('Pourcentage mis à jour', 'success');
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour du pourcentage:', error);
+        showNotification('Erreur lors de la mise à jour', 'error');
+    }
+}
+
+// Fonction pour ajouter une remédiation
+async function addRemediation(regulationId, actionId, riskId, remediationText) {
+    try {
+        const docRef = db.collection(COLLECTION_PATH).doc(regulationId);
+        const doc = await docRef.get();
+        
+        if (!doc.exists) {
+            throw new Error('Document non trouvé');
+        }
+
+        const data = doc.data();
+        const actions = data.actions.map(action => {
+            if (action.id === actionId) {
+                const updatedRisks = action.risks.map(risk => {
+                    if (risk.id === riskId) {
+                        return {
+                            ...risk,
+                            remediationActions: [...(risk.remediationActions || []), remediationText]
+                        };
+                    }
+                    return risk;
+                });
+                return { ...action, risks: updatedRisks };
+            }
+            return action;
+        });
+
+        await docRef.update({ actions });
+        showNotification('Remédiation ajoutée avec succès', 'success');
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout de la remédiation:', error);
+        showNotification('Erreur lors de l\'ajout de la remédiation', 'error');
+    }
+}
+
+// Fonction pour mettre à jour le RACI d'une action
+async function updateActionRACI(regulationId, actionId, raciType, value) {
+    try {
+        const docRef = db.collection(COLLECTION_PATH).doc(regulationId);
+        const doc = await docRef.get();
+        
+        if (!doc.exists) {
+            throw new Error('Document non trouvé');
+        }
+
+        const data = doc.data();
+        const actions = data.actions.map(action => {
+            if (action.id === actionId) {
+                return {
+                    ...action,
+                    raci: {
+                        ...action.raci,
+                        [raciType]: value
+                    }
+                };
+            }
+            return action;
+        });
+
+        await docRef.update({ actions });
+        showNotification('RACI mis à jour', 'success');
+
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour du RACI:', error);
+        showNotification('Erreur lors de la mise à jour du RACI', 'error');
+    }
+}
+
+// Fonction pour supprimer une action
+async function removeAction(regulationId, actionId) {
+    try {
+        if (!confirm('Êtes-vous sûr de vouloir supprimer cette action ?')) {
+            return;
+        }
+
+        const docRef = db.collection(COLLECTION_PATH).doc(regulationId);
+        const doc = await docRef.get();
+        
+        if (!doc.exists) {
+            throw new Error('Document non trouvé');
+        }
+
+        const data = doc.data();
+        const actions = data.actions.filter(action => action.id !== actionId);
+
+        await docRef.update({ actions });
+        showNotification('Action supprimée avec succès', 'success');
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur lors de la suppression de l\'action:', error);
+        showNotification('Erreur lors de la suppression de l\'action', 'error');
+    }
+}
+
+// Fonction pour marquer un risque comme remédié
+async function markRiskAsRemediated(regulationId, actionId, riskId) {
+    try {
+        const docRef = db.collection(COLLECTION_PATH).doc(regulationId);
+        const doc = await docRef.get();
+        
+        if (!doc.exists) {
+            throw new Error('Document non trouvé');
+        }
+
+        const data = doc.data();
+        const actions = data.actions.map(action => {
+            if (action.id === actionId) {
+                const updatedRisks = action.risks.map(risk => {
+                    if (risk.id === riskId) {
+                        return { ...risk, remediated: true };
+                    }
+                    return risk;
+                });
+                return { ...action, risks: updatedRisks };
+            }
+            return action;
+        });
+
+        await docRef.update({ actions });
+        showNotification('Risque marqué comme remédié', 'success');
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour du risque:', error);
+        showNotification('Erreur lors de la mise à jour du risque', 'error');
+    }
+}
 
 </script>
 
