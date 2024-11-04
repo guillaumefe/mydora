@@ -1484,6 +1484,181 @@ function calculateCompliance(regList) {
 
 
 
+
+// Ajout des variables pour le lazy loading
+let currentPage = 1;
+const ITEMS_PER_PAGE = 20;
+let isLoading = false;
+let hasMore = true;
+
+// Modification de la fonction renderRegulations pour supporter le lazy loading
+function renderRegulations(reset = false) {
+    const regulationsList = document.getElementById('wallItems');
+    const complianceRate = document.querySelector('.compliance-rate');
+    
+    // Réinitialisation si demandée
+    if (reset) {
+        regulationsList.innerHTML = '';
+        currentPage = 1;
+        hasMore = true;
+    }
+
+    // Filtrer les réglementations
+    let filteredRegs = regulations.filter(filterRegulation);
+    
+    // Calculer le taux de conformité
+    let compliancePercentage = calculateCompliance(filteredRegs);
+    complianceRate.textContent = `Taux de conformité: ${compliancePercentage}%`;
+
+    if (filteredRegs.length === 0) {
+        regulationsList.innerHTML = '<div>Aucune exigence trouvée</div>';
+        return;
+    }
+
+    // Calculer la plage d'éléments à afficher
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    const end = start + ITEMS_PER_PAGE;
+    const regsToRender = filteredRegs.slice(start, end);
+    hasMore = end < filteredRegs.length;
+
+    // Rendre les éléments
+    regsToRender.forEach(reg => {
+        regulationsList.innerHTML += `
+            <div class="regulation-item" id="regulation-${reg.id}">
+                <!-- Code HTML existant pour regulation-item -->
+                ${renderRegulationContent(reg)}
+            </div>
+        `;
+    });
+
+    // Ajouter un élément observateur pour l'infinite scroll
+    if (hasMore) {
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && !isLoading) {
+                loadMoreRegulations();
+            }
+        }, {
+            rootMargin: '100px',
+        });
+
+        const sentinel = document.createElement('div');
+        sentinel.className = 'loading-sentinel';
+        regulationsList.appendChild(sentinel);
+        observer.observe(sentinel);
+    }
+}
+
+// Nouvelle fonction pour charger plus de réglementations
+function loadMoreRegulations() {
+    if (isLoading || !hasMore) return;
+    
+    isLoading = true;
+    currentPage++;
+    
+    // Ajouter un indicateur de chargement
+    const regulationsList = document.getElementById('wallItems');
+    const loadingIndicator = document.createElement('div');
+    loadingIndicator.className = 'loading-indicator';
+    loadingIndicator.innerHTML = 'Chargement...';
+    regulationsList.appendChild(loadingIndicator);
+
+    // Simuler un délai pour un chargement plus fluide
+    setTimeout(() => {
+        loadingIndicator.remove();
+        renderRegulations();
+        isLoading = false;
+    }, 200);
+}
+
+// Helper function pour isoler le rendu du contenu d'une régulation
+function renderRegulationContent(reg) {
+    return `
+        <div class="regulation-header">
+            <!-- Code HTML existant pour regulation-header -->
+            <label>
+                <input type="radio" 
+                    name="status-${reg.id}" 
+                    class="checkbox" 
+                    value="Compliant" 
+                    ${reg.status === 'Compliant' ? 'checked' : ''} 
+                    onchange="updateStatus('${reg.id}', 'Compliant')"> Compliant
+            </label>
+            <!-- Autres radios... -->
+        </div>
+        <div class="regulation-content">
+            <div class="regulation-text">${reg.text}</div>
+            <div class="regulation-id"><i>${reg.id}</i></div>
+            ${renderLinks(reg)}
+            ${renderRACI(reg)}
+            ${renderActions(reg)}
+            ${renderJustification(reg)}
+            ${renderProofLinks(reg)}
+            
+            <div class="action-buttons">
+                <button class="button secondary" onclick="editRegulation('${reg.id}')">Éditer</button>
+                <button class="button secondary" onclick="deleteRegulation('${reg.id}')">Supprimer</button>
+            </div>
+        </div>
+    `;
+}
+
+// Mise à jour des gestionnaires d'événements pour réinitialiser le lazy loading
+function handleSearchInput(event) {
+    renderRegulations(true); // true pour reset
+}
+
+function handleCategoryFilter(event) {
+    if (event.target.classList.contains('category-filter')) {
+        document.querySelectorAll('.category-filter').forEach(filter => filter.classList.remove('active'));
+        event.target.classList.add('active');
+        activeFilter = event.target.dataset.category;
+        renderRegulations(true); // true pour reset
+    }
+}
+
+function handleStatusTabClick(event) {
+    if (event.target.classList.contains('tab')) {
+        document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+        event.target.classList.add('active');
+        activeStatus = event.target.dataset.status;
+        renderRegulations(true); // true pour reset
+    }
+}
+
+// Ajouter les styles nécessaires
+const lazyLoadStyles = `
+    .loading-sentinel {
+        height: 20px;
+        margin: 20px 0;
+    }
+
+    .loading-indicator {
+        text-align: center;
+        padding: 20px;
+        color: var(--gray-600);
+    }
+
+    /* Animation de chargement */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .regulation-item {
+        animation: fadeIn 0.3s ease-in;
+    }
+`;
+
+// Ajouter les styles au document
+function addLazyLoadStyles() {
+    const styleElement = document.createElement('style');
+    styleElement.textContent = lazyLoadStyles;
+    document.head.appendChild(styleElement);
+}
+
+
+
+
 function renderRegulations() {
     const regulationsList = document.getElementById('wallItems');
     const complianceRate = document.querySelector('.compliance-rate');
@@ -3022,6 +3197,7 @@ function updateRACI(regulationId, raciType, value) {
 document.addEventListener('DOMContentLoaded', () => {
     autoLoad();
     initializeWall();
+    renderRegulations(true);
     document.getElementById('searchInput').addEventListener('input', handleSearchInput);
     document.getElementById('categoryFilters').addEventListener('click', handleCategoryFilter);
     document.getElementById('statusTabs').addEventListener('click', handleStatusTabClick);
