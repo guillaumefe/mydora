@@ -2877,29 +2877,66 @@ function addNewArticle() {
 function parseRequirementsFromText(text) {
     const lines = text.split(/\r?\n/);
     const requirements = [];
-    let parentChain = [];
-    lines.forEach((line, index) => {
+    const stack = [];
+    
+    // Première passe : construire l'arbre avec les niveaux d'indentation
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
         const content = line.trim();
-        if (!content) return;
+        if (!content) continue;
+        
         const indentation = line.search(/\S|$/);
         const level = Math.floor(indentation / 2);
-        parentChain = parentChain.slice(0, level);
-        parentChain[level] = content;
-        const nextLine = lines[index + 1];
+        
+        // Ajuster la pile au niveau actuel
+        stack.length = level;
+        stack[level] = content;
+        
+        // Vérifier si c'est une feuille en regardant la ligne suivante
+        const nextLine = lines[i + 1];
+        const isLastLine = i === lines.length - 1;
         const nextIndentation = nextLine ? nextLine.search(/\S|$/) : -1;
         const nextLevel = Math.floor(nextIndentation / 2);
-        const isLeaf = index === lines.length - 1 || nextLevel <= level;
+        
+        // C'est une feuille si :
+        // 1. C'est la dernière ligne OU
+        // 2. La prochaine ligne a un niveau d'indentation inférieur ou égal
+        const isLeaf = isLastLine || nextIndentation === -1 || nextLevel <= level;
+        
         if (isLeaf) {
-            const fullPath = parentChain.slice(0, level + 1).join('.');
+            // Construire le contexte complet pour cette feuille
+            const fullContext = stack.slice(0, level + 1);
             const requirement = {
-                id: fullPath,
-                originalText: content,
+                id: `${level + 1}.${requirements.length + 1}`, // Identifiant unique
+                originalText: content, // Le texte de la feuille
+                context: fullContext.slice(0, -1), // Tout sauf la feuille elle-même
+                fullText: fullContext.join(' → '), // Texte complet avec contexte
                 level: level,
-                parentChain: parentChain.slice(0, level)
+                parentChain: stack.slice(0, level) // Chaîne des parents
             };
+            
             requirements.push(requirement);
         }
+    }
+    
+    return requirements;
+}
+
+  // Fonction helper pour vérifier la validité du parsing
+function validateRequirementsParsing(text) {
+    const requirements = parseRequirementsFromText(text);
+    console.log("Requirements parsed:", requirements);
+    
+    requirements.forEach((req, index) => {
+        console.log(`\nRequirement #${index + 1}:`);
+        console.log("ID:", req.id);
+        console.log("Original Text:", req.originalText);
+        console.log("Context:", req.context);
+        console.log("Full Text:", req.fullText);
+        console.log("Level:", req.level);
+        console.log("Parent Chain:", req.parentChain);
     });
+    
     return requirements;
 }
 
