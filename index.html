@@ -1488,7 +1488,6 @@ function calculateCompliance(regList) {
 // Ajout des variables pour le lazy loading
 let currentPage = 1;
 const ITEMS_PER_PAGE = 20;
-let isLoading = false;
 let hasMore = true;
 
 // Modification de la fonction renderRegulations pour supporter le lazy loading
@@ -3227,10 +3226,389 @@ function updateCategory(regulationId, selectedCategory) {
 }
 
 
+// Ajouter au début du script existant dans l'index.html
 
+// Création du Web Worker inline
+const workerScript = `
+    let regulations = [];
+    let filteredRegs = [];
+    const BATCH_SIZE = 10;
 
+    self.onmessage = function(e) {
+        const { type, data } = e.data;
+        
+        switch (type) {
+            case 'INIT_DATA':
+                regulations = data.regulations;
+                filterAndSendBatch(0);
+                break;
+                
+            case 'FILTER_UPDATE':
+                const { searchTerm, activeFilter, activeStatus } = data;
+                filterRegulations(searchTerm, activeFilter, activeStatus);
+                break;
+                
+            case 'REQUEST_BATCH':
+                const { startIndex } = data;
+                filterAndSendBatch(startIndex);
+                break;
+        }
+    };
+
+    function filterRegulations(searchTerm, activeFilter, activeStatus) {
+        filteredRegs = regulations.filter(reg => {
+            // Filtrage par recherche
+            if (searchTerm) {
+                const searchLower = searchTerm.toLowerCase();
+                const inText = reg.text.toLowerCase().includes(searchLower);
+                const inId = reg.id.toLowerCase().includes(searchLower);
+                const inActions = reg.actions.some(action => {
+                    return action.text.toLowerCase().includes(searchLower) ||
+                           (action.assignedTo && action.assignedTo.toLowerCase().includes(searchLower)) ||
+                           (action.raci?.responsible && action.raci.responsible.toLowerCase().includes(searchLower));
+                });
+                
+                if (!inText && !inId && !inActions) return false;
+            }
+
+            // Filtrage par catégorie
+            if (activeFilter !== 'all' && reg.category !== activeFilter) {
+                return false;
+            }
+
+            // Filtrage par statut
+            if (activeStatus === 'A faire') {
+                const totalProgress = reg.actions.reduce((sum, action) => sum + (action.percentage || 0), 0);
+                if (totalProgress > 0) return false;
+            } else if (activeStatus === 'En cours') {
+                const totalProgress = reg.actions.reduce((sum, action) => sum + (action.percentage || 0), 0);
+                if (totalProgress === 0) return false;
+            } else if (activeStatus !== 'all' && reg.status !== activeStatus) {
+                return false;
+            }
+
+            return true;
+        });
+
+        // Calculer la conformité
+        const complianceRate = calculateCompliance(filteredRegs);
+        
+        // Envoyer les métadonnées
+        self.postMessage({
+            type: 'METADATA_UPDATE',
+            data: {
+                total: filteredRegs.length,
+                complianceRate
+            }
+        });
+
+        // Envoyer le premier lot
+        filterAndSendBatch(0);
+    }
+
+    function calculateCompliance(regList) {
+        let totalCompliance = 0;
+        let totalApplicable = 0;
+        
+        regList.forEach(reg => {
+            if (reg.status === 'Non Applicable' || reg.status === 'Documentation') return;
+            totalApplicable++;
+            
+            if (reg.status === 'Compliant') {
+                totalCompliance += 100;
+            } else if (reg.actions.length > 0) {
+                const totalActionProgress = reg.actions.reduce((sum, action) => 
+                    sum + (action.percentage || 0), 0);
+                const averageProgress = totalActionProgress / reg.actions.length;
+                totalCompliance += averageProgress;
+            }
+        });
+        
+        return totalApplicable ? (totalCompliance / totalApplicable).toFixed(1) : '0.0';
+    }
+
+    function filterAndSendBatch(startIndex) {
+        const endIndex = startIndex + BATCH_SIZE;
+        const batch = filteredRegs.slice(startIndex, endIndex);
+        const hasMore = endIndex < filteredRegs.length;
+
+        self.postMessage({
+            type: 'BATCH_READY',
+            data: {
+                items: batch,
+                total: filteredRegs.length,
+                hasMore: hasMore,
+                startIndex: startIndex
+            }
+        });
+    }
+`;
+
+// Créer le Worker à partir du script
+const workerBlob = new Blob([workerScript], { type: 'application/javascript' });
+const workerUrl = URL.createObjectURL(workerBlob);
+
+// Variables globales pour la pagination
+let isLoading = false;
+let hasMoreItems = true;
+let dataWorker = null;
+
+// Initialisation du worker et du système de chargement progressif
 function initializeWall() {
-    renderWallItems();
+    // Créer et configurer le worker
+    dataWorker = new Worker(workerUrl);
+    
+    // Gestionnaire des messages du worker
+    dataWorker.onmessage = function(e) {
+        const { type, data } = e.data;
+        if (type === 'BATCH_READY') {
+            renderBatch(data);
+        } else if (type === 'METADATA_UPDATE') {
+            updateMetadata(data);
+        }
+    };
+
+    // Initialiser avec les données actuelles
+    dataWorker.postMessage({
+        type: 'INIT_DATA',
+        data: { regulations }
+    });
+
+    // Configurer l'observateur d'intersection
+    setupIntersectionObserver();
+}
+
+// Nettoyage à la fermeture
+window.addEventListener('beforeunload', () => {
+    if (dataWorker) {
+        dataWorker.terminate();
+    }
+    URL.revokeObjectURL(workerUrl);
+});
+
+// Modification des gestionnaires d'événements existants
+function handleSearchInput(event) {
+    if (!dataWorker) return;
+    
+    dataWorker.postMessage({
+        type: 'FILTER_UPDATE',
+        data: {
+            searchTerm: event.target.value,
+            activeFilter,
+            activeStatus
+        }
+    });
+}
+
+function handleCategoryFilter(event) {
+    if (!event.target.classList.contains('category-filter') || !dataWorker) return;
+    
+    document.querySelectorAll('.category-filter').forEach(filter => 
+        filter.classList.remove('active'));
+    event.target.classList.add('active');
+    activeFilter = event.target.dataset.category;
+    
+    dataWorker.postMessage({
+        type: 'FILTER_UPDATE',
+        data: {
+            searchTerm: document.getElementById('searchInput').value,
+            activeFilter,
+            activeStatus
+        }
+    });
+}
+
+function handleStatusTabClick(event) {
+    if (!event.target.classList.contains('tab') || !dataWorker) return;
+    
+    document.querySelectorAll('.tab').forEach(tab => 
+        tab.classList.remove('active'));
+    event.target.classList.add('active');
+    activeStatus = event.target.dataset.status;
+    
+    dataWorker.postMessage({
+        type: 'FILTER_UPDATE',
+        data: {
+            searchTerm: document.getElementById('searchInput').value,
+            activeFilter,
+            activeStatus
+        }
+    });
+}
+
+// Fonction pour configurer l'observateur d'intersection
+function setupIntersectionObserver() {
+    // Supprimer l'ancien observateur si existant
+    const oldTarget = document.querySelector('.observer-target');
+    if (oldTarget) {
+        oldTarget.remove();
+    }
+
+    // Créer la cible de l'observateur
+    const observerTarget = document.createElement('div');
+    observerTarget.className = 'observer-target';
+    observerTarget.innerHTML = `
+        <div class="loading-spinner" style="display: none;">
+            <div class="loading-content">
+                Chargement...
+            </div>
+        </div>
+    `;
+    
+    // Ajouter la cible au conteneur
+    const wallContainer = document.getElementById('wallItems');
+    wallContainer.appendChild(observerTarget);
+
+    // Configuration de l'observateur
+    const observerOptions = {
+        root: null, // utilise le viewport
+        rootMargin: '100px', // déclenche 100px avant d'atteindre la cible
+        threshold: 0.1 // déclenche quand 10% de la cible est visible
+    };
+
+    // Créer l'observateur
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !isLoading && hasMoreItems) {
+                // Montrer le spinner
+                const spinner = observerTarget.querySelector('.loading-spinner');
+                if (spinner) {
+                    spinner.style.display = 'flex';
+                }
+
+                // Charger le prochain lot
+                loadNextBatch();
+            }
+        });
+    }, observerOptions);
+
+    // Observer la cible
+    observer.observe(observerTarget);
+
+    // Ajouter le style nécessaire si pas déjà présent
+    if (!document.querySelector('#lazy-load-styles')) {
+        const style = document.createElement('style');
+        style.id = 'lazy-load-styles';
+        style.textContent = `
+            .observer-target {
+                width: 100%;
+                height: 20px;
+                margin: 20px 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .loading-spinner {
+                display: none;
+                justify-content: center;
+                align-items: center;
+                padding: 10px;
+            }
+
+            .loading-content {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                color: var(--gray-600);
+            }
+
+            .loading-content::before {
+                content: '';
+                width: 20px;
+                height: 20px;
+                border: 2px solid var(--gray-200);
+                border-top-color: var(--primary-500);
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+            }
+
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // Retourner une fonction de nettoyage
+    return function cleanup() {
+        observer.disconnect();
+        if (oldTarget) {
+            oldTarget.remove();
+        }
+    };
+}
+
+// Fonction pour charger le prochain lot
+function loadNextBatch() {
+    if (isLoading || !hasMoreItems) return;
+    
+    isLoading = true;
+    
+    // Demander le prochain lot au worker
+    dataWorker.postMessage({
+        type: 'REQUEST_BATCH',
+        data: { 
+            startIndex: currentPage * 10 // 10 éléments par lot
+        }
+    });
+}
+
+// Fonction pour rendre un lot
+function renderBatch({ items, total, hasMore, startIndex }) {
+    const container = document.getElementById('wallItems');
+    
+    // Si c'est le premier lot (startIndex === 0), nettoyer le conteneur
+    if (startIndex === 0) {
+        const observerTarget = container.querySelector('.observer-target');
+        container.innerHTML = '';
+        if (observerTarget) {
+            container.appendChild(observerTarget);
+        }
+    }
+
+    // Cacher le spinner de chargement
+    const spinner = document.querySelector('.loading-spinner');
+    if (spinner) {
+        spinner.style.display = 'none';
+    }
+
+    // Rendre les éléments
+    items.forEach(regulation => {
+        const articleElement = createRegulationElement(regulation);
+        container.insertBefore(articleElement, container.querySelector('.observer-target'));
+    });
+
+    // Mettre à jour l'état
+    hasMoreItems = hasMore;
+    isLoading = false;
+    currentPage = Math.floor(startIndex / 10) + 1;
+
+    // Réinitialiser l'observateur si nécessaire
+    if (!hasMore) {
+        const observerTarget = container.querySelector('.observer-target');
+        if (observerTarget) {
+            observerTarget.remove();
+        }
+    }
+}
+
+// Helper fonction pour créer l'élément de régulation
+function createRegulationElement(regulation) {
+    const element = document.createElement('div');
+    element.className = 'regulation-item';
+    element.id = `regulation-${regulation.id}`;
+    
+    // Réutiliser votre code HTML existant pour la structure de l'élément
+    element.innerHTML = `
+        <div class="regulation-header">
+            ${renderRegulationContent(regulation)}
+        </div>
+    `;
+
+    return element;
 }
 </script>
 </body>
