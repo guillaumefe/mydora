@@ -5463,6 +5463,247 @@ async function updateStatus(regulationId, status) {
         showNotification('Erreur lors de la mise à jour du statut', 'error');
     }
 }
+
+// Fonction updateMetadata corrigée
+function updateMetadata(data) {
+    // S'assurer que data est un tableau
+    let regulations = Array.isArray(data) ? data : [];
+    if (!Array.isArray(data)) {
+        console.warn('Données invalides reçues dans updateMetadata:', data);
+        return;
+    }
+
+    // Calculer les statistiques
+    const stats = regulations.reduce((stats, reg) => {
+        // Compter les éléments par statut
+        if (reg.status === 'Compliant') {
+            stats.compliantCount++;
+        } else if (reg.actions && reg.actions.some(action => action.percentage > 0)) {
+            stats.inProgressCount++;
+        }
+
+        // Calculer le taux de conformité
+        if (reg.status !== 'Non Applicable' && reg.status !== 'Documentation') {
+            stats.applicableCount++;
+            if (reg.status === 'Compliant') {
+                stats.complianceTotal += 100;
+            } else if (reg.actions && reg.actions.length > 0) {
+                const avgProgress = reg.actions.reduce((sum, action) => 
+                    sum + (Number(action.percentage) || 0), 0) / reg.actions.length;
+                stats.complianceTotal += avgProgress;
+            }
+        }
+
+        return stats;
+    }, {
+        compliantCount: 0,
+        inProgressCount: 0,
+        applicableCount: 0,
+        complianceTotal: 0
+    });
+
+    // Mettre à jour l'interface
+    updateUI(stats);
+}
+
+// Fonction updateUI améliorée
+function updateUI(stats) {
+    // Mettre à jour le taux de conformité
+    const complianceRate = stats.applicableCount > 0 
+        ? (stats.complianceTotal / stats.applicableCount).toFixed(1) 
+        : '0.0';
+    
+    const complianceElement = document.querySelector('.compliance-rate');
+    if (complianceElement) {
+        complianceElement.textContent = `Taux de conformité: ${complianceRate}%`;
+    }
+
+    // Mettre à jour les compteurs
+    updateCounters({
+        total: document.querySelectorAll('.regulation-item').length,
+        compliant: stats.compliantCount,
+        inProgress: stats.inProgressCount
+    });
+}
+
+// Fonction pour mettre à jour les compteurs
+function updateCounters(counts) {
+    let badgesContainer = document.querySelector('.status-badges');
+    if (!badgesContainer) {
+        badgesContainer = document.createElement('div');
+        badgesContainer.className = 'status-badges';
+        document.querySelector('.header').appendChild(badgesContainer);
+    }
+
+    badgesContainer.innerHTML = `
+        <div class="badge badge-success">Compliant: ${counts.compliant}</div>
+        <div class="badge badge-warning">En cours: ${counts.inProgress}</div>
+        <div class="badge badge-info">Total: ${counts.total}</div>
+    `;
+}
+
+// Fonction de rendu modifiée
+function renderRegulations(regulations, reset = false) {
+    const container = document.getElementById('wallItems');
+    
+    if (!Array.isArray(regulations)) {
+        console.error('Données de régulations invalides:', regulations);
+        return;
+    }
+    
+    if (reset) {
+        container.innerHTML = '';
+    }
+
+    regulations.forEach(reg => {
+        const regulationElement = document.createElement('div');
+        regulationElement.className = 'regulation-item fade-in';
+        regulationElement.id = `regulation-${reg.id}`;
+        regulationElement.innerHTML = renderRegulationContent(reg);
+        container.appendChild(regulationElement);
+    });
+
+    // Mettre à jour les métadonnées après le rendu
+    updateMetadata(regulations);
+}
+
+// Fonction de chargement modifiée
+async function loadRegulations(reset = false) {
+    if (isLoading) return;
+    isLoading = true;
+
+    try {
+        showLoading();
+
+        if (reset) {
+            document.getElementById('wallItems').innerHTML = '';
+            lastDoc = null;
+        }
+
+        let query = db.collection(COLLECTION_PATH)
+            .orderBy('createdAt', 'desc')
+            .limit(BATCH_SIZE);
+
+        if (lastDoc && !reset) {
+            query = query.startAfter(lastDoc);
+        }
+
+        const snapshot = await query.get();
+        
+        if (!snapshot.empty) {
+            lastDoc = snapshot.docs[snapshot.docs.length - 1];
+            const regulations = snapshot.docs.map(doc => ({
+                id: doc.data().id,
+                ...doc.data()
+            }));
+            
+            renderRegulations(regulations, reset);
+            console.log(`Chargé ${regulations.length} régulations`);
+        } else {
+            if (reset) {
+                document.getElementById('wallItems').innerHTML = 
+                    '<div class="no-data">Aucune donnée trouvée</div>';
+            }
+            updateMetadata([]);
+        }
+
+    } catch (error) {
+        console.error('Erreur de chargement:', error);
+        showNotification('Erreur lors du chargement des données', 'error');
+        updateMetadata([]);
+    } finally {
+        isLoading = false;
+        hideLoading();
+    }
+}
+
+async function loadRegulations(reset = false) {
+    if (isLoading) return;
+    isLoading = true;
+
+    try {
+        showLoading();
+        console.log('Chargement des régulations...');
+
+        if (reset) {
+            document.getElementById('wallItems').innerHTML = '';
+            lastDoc = null;
+        }
+
+        let query = db.collection(COLLECTION_PATH)
+            .orderBy('createdAt', 'desc')
+            .limit(BATCH_SIZE);
+
+        if (lastDoc && !reset) {
+            query = query.startAfter(lastDoc);
+        }
+
+        const snapshot = await query.get();
+        console.log('Snapshot reçu:', snapshot.size, 'documents');
+        
+        if (!snapshot.empty) {
+            lastDoc = snapshot.docs[snapshot.docs.length - 1];
+            const regulations = [];
+
+            // Extraction des données de manière sécurisée
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                if (data) {
+                    regulations.push({
+                        id: data.id || doc.id,
+                        firestoreId: doc.id,
+                        category: data.category || '',
+                        text: data.text || '',
+                        status: data.status || 'all',
+                        actions: Array.isArray(data.actions) ? data.actions : [],
+                        justification: data.justification || '',
+                        proofLinks: Array.isArray(data.proofLinks) ? data.proofLinks : [],
+                        justifications: Array.isArray(data.justifications) ? data.justifications : [],
+                        responsible: data.responsible || '',
+                        accountable: data.accountable || '',
+                        consulted: data.consulted || '',
+                        informed: data.informed || '',
+                        raciCollapsed: !!data.raciCollapsed,
+                        actionsCollapsed: !!data.actionsCollapsed,
+                        createdAt: data.createdAt || null
+                    });
+                }
+            });
+
+            console.log('Données formatées:', regulations);
+            
+            if (regulations.length > 0) {
+                renderRegulations(regulations, reset);
+                showNotification(`${regulations.length} articles chargés`, 'success');
+            } else {
+                console.warn('Aucune donnée valide trouvée dans le snapshot');
+                if (reset) {
+                    document.getElementById('wallItems').innerHTML = 
+                        '<div class="no-data">Aucune donnée trouvée</div>';
+                }
+                updateMetadata([]);
+            }
+        } else {
+            console.log('Snapshot vide');
+            if (reset) {
+                document.getElementById('wallItems').innerHTML = 
+                    '<div class="no-data">Aucune donnée trouvée</div>';
+            }
+            updateMetadata([]);
+        }
+
+    } catch (error) {
+        console.error('Erreur détaillée de chargement:', error);
+        showNotification('Erreur lors du chargement des données', 'error');
+        document.getElementById('wallItems').innerHTML = 
+            `<div class="error">Erreur de chargement: ${error.message}</div>`;
+        updateMetadata([]);
+    } finally {
+        isLoading = false;
+        hideLoading();
+    }
+}
+
 </script>
 
 </body>
