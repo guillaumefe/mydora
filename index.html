@@ -953,6 +953,26 @@ body {
     transition: height 0.3s ease, padding 0.3s ease;
 }
 
+.category-controls {
+    display: flex;
+    gap: var(--space-4);
+    margin-top: var(--space-3);
+}
+
+.category-controls label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-weight: 500;
+    color: var(--gray-700);
+}
+
+.category-controls input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: var(--primary-500);
+}
 
 
 </style>
@@ -1402,6 +1422,7 @@ function getProgressBarColor(percentage) {
 function filterRegulation(reg) {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
 
+    // Filtrage basé sur la recherche
     if (searchTerm) {
         const inRegText = reg.text.toLowerCase().includes(searchTerm);
         const inRegId = reg.id.toLowerCase().includes(searchTerm);
@@ -1409,7 +1430,7 @@ function filterRegulation(reg) {
         const inActions = reg.actions.some(action => {
             const inActionText = action.text.toLowerCase().includes(searchTerm);
             const inAssignedTo = action.assignedTo && action.assignedTo.toLowerCase().includes(searchTerm);
-            const inResponsible = action.responsible && action.responsible.toLowerCase().includes(searchTerm);
+            const inResponsible = action.raci && action.raci.responsible && action.raci.responsible.toLowerCase().includes(searchTerm);
             const inRiskDescription = action.risks && action.risks.some(risk => risk.description && risk.description.toLowerCase().includes(searchTerm));
             return inActionText || inAssignedTo || inResponsible || inRiskDescription;
         });
@@ -1419,10 +1440,12 @@ function filterRegulation(reg) {
         }
     }
 
-    if (activeFilter !== 'all' && reg.category !== activeFilter) {
-        return false;
+    // Filtrage basé sur les filtres de catégorie
+    if (activeFilter !== 'all') {
+        return reg[activeFilter];
     }
 
+    // Filtrage basé sur les filtres de statut existants
     if (activeStatus === 'A faire') {
         const totalProgress = reg.actions.reduce((sum, action) => sum + (action.percentage || 0), 0);
         if (totalProgress > 0) return false;
@@ -1439,16 +1462,18 @@ function filterRegulation(reg) {
             return false;
         }
     } else if (activeStatus !== 'all' && reg.status !== activeStatus) {
-        return false
+        return false;
     }
 
     return true;
 }
 
-function calculateCompliance() {
+
+
+function calculateCompliance(regList) {
     let totalCompliance = 0;
     let totalApplicable = 0;
-    regulations.forEach(reg => {
+    regList.forEach(reg => {
         if (reg.status === 'Non Applicable' || reg.status === 'Documentation') return;
         totalApplicable++;
         if (reg.status === 'Compliant') {
@@ -1465,200 +1490,112 @@ function calculateCompliance() {
 }
 
 
+
 function renderRegulations() {
     const regulationsList = document.getElementById('wallItems');
     const complianceRate = document.querySelector('.compliance-rate');
-    complianceRate.textContent = `Taux de conformité: ${calculateCompliance()}%`;
     regulationsList.innerHTML = '';
 
+    // Filtrer les réglementations en fonction des critères actuels
     let filteredRegs = regulations.filter(filterRegulation);
+
+    // Calculer le taux de conformité basé sur les réglementations filtrées
+    let compliancePercentage = calculateCompliance(filteredRegs);
+    complianceRate.textContent = `Taux de conformité: ${compliancePercentage}%`;
+
     if (filteredRegs.length === 0) {
         regulationsList.innerHTML = '<div>Aucune exigence trouvée</div>';
-        return;
+    } else {
+        filteredRegs.forEach(reg => {
+            regulationsList.innerHTML += `
+                <div class="regulation-item" id="regulation-${reg.id}">
+                    <div class="regulation-header">
+                        <!-- Radios de statut existants -->
+                        <label>
+                            <input type="radio" 
+                                name="status-${reg.id}" 
+                                class="checkbox" 
+                                value="Compliant" 
+                                ${reg.status === 'Compliant' ? 'checked' : ''} 
+                                onchange="updateStatus('${reg.id}', 'Compliant')"> Compliant
+                        </label>
+                        <label>
+                            <input type="radio" 
+                                name="status-${reg.id}" 
+                                class="checkbox" 
+                                value="Non Applicable" 
+                                ${reg.status === 'Non Applicable' ? 'checked' : ''} 
+                                onchange="updateStatus('${reg.id}', 'Non Applicable')"> Non Applicable
+                        </label>
+                        <label>
+                            <input type="radio" 
+                                name="status-${reg.id}" 
+                                class="checkbox" 
+                                value="Documentation" 
+                                ${reg.status === 'Documentation' ? 'checked' : ''} 
+                                onchange="updateStatus('${reg.id}', 'Documentation')"> Documentation
+                        </label>
+                        <label>
+                            <input type="radio" 
+                                name="status-${reg.id}" 
+                                class="checkbox" 
+                                value="Tous" 
+                                ${reg.status === 'all' ? 'checked' : ''} 
+                                onchange="updateStatus('${reg.id}', 'Tous')"> Remettre dans Tous
+                        </label>
+                    </div>
+                    <div class="regulation-content">
+                        <div class="regulation-text">${reg.text}</div>
+                        <div class="regulation-id"><i>${reg.id}</i></div>
+                        ${renderLinks(reg)}
+                        
+                        <!-- Sections RACI et Actions avec toggle -->
+                        <div class="section-container ${reg.raciCollapsed ? 'collapsed' : ''}" data-section="raci">
+                            <div class="section-header" onclick="toggleSection('${reg.id}', 'raci')">
+                                <h4>
+                                    <span class="toggle-icon">${reg.raciCollapsed ? '▸' : '▾'}</span>
+                                    RACI
+                                </h4>
+                            </div>
+                            <div class="section-content">
+                                ${renderRACI(reg)}
+                            </div>
+                        </div>
+
+                        <div class="section-container ${reg.actionsCollapsed ? 'collapsed' : ''}" data-section="actions">
+                            <div class="section-header" onclick="toggleSection('${reg.id}', 'actions')">
+                                <h4>
+                                    <span class="toggle-icon">${reg.actionsCollapsed ? '▸' : '▾'}</span>
+                                    Actions associées
+                                </h4>
+                            </div>
+                            <div class="section-content">
+                                <div>${renderActions(reg)}</div>
+                                <div class="action-input-container">
+                                    <input type="text" class="input" id="action-input-${reg.id}" placeholder="Nouvelle action...">
+                                    <button class="button" onclick="addAction('${reg.id}', document.getElementById('action-input-${reg.id}').value)">
+                                        Ajouter
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        ${renderJustification(reg)}
+                        ${renderProofLinks(reg)}
+
+                        <div class="action-buttons">
+                            <button class="button secondary" onclick="editRegulation('${reg.id}')">Éditer</button>
+                            <button class="button secondary" onclick="deleteRegulation('${reg.id}')">Supprimer</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
     }
-
-    filteredRegs.forEach(reg => {
-        regulationsList.innerHTML += `
-            <div class="regulation-item" id="regulation-${reg.id}">
-                <div class="regulation-header">
-                    <label>
-                        <input type="radio" 
-                            name="status-${reg.id}" 
-                            class="checkbox" 
-                            value="Compliant" 
-                            ${reg.status === 'Compliant' ? 'checked' : ''} 
-                            onchange="updateStatus('${reg.id}', 'Compliant')"> Compliant
-                    </label>
-                    <label>
-                        <input type="radio" 
-                            name="status-${reg.id}" 
-                            class="checkbox" 
-                            value="Non Applicable" 
-                            ${reg.status === 'Non Applicable' ? 'checked' : ''} 
-                            onchange="updateStatus('${reg.id}', 'Non Applicable')"> Non Applicable
-                    </label>
-                    <label>
-                        <input type="radio" 
-                            name="status-${reg.id}" 
-                            class="checkbox" 
-                            value="Documentation" 
-                            ${reg.status === 'Documentation' ? 'checked' : ''} 
-                            onchange="updateStatus('${reg.id}', 'Documentation')"> Documentation
-                    </label>
-                    <label>
-                        <input type="radio" 
-                            name="status-${reg.id}" 
-                            class="checkbox" 
-                            value="Tous" 
-                            ${reg.status === 'all' ? 'checked' : ''} 
-                            onchange="updateStatus('${reg.id}', 'Tous')"> Remettre dans Tous
-                    </label>
-                </div>
-                <div class="regulation-content">
-                    <div class="regulation-text">${reg.text}</div>
-                    <div class="regulation-id"><i>${reg.id}</i></div>
-                    ${renderLinks(reg)}
-                    
-                    <!-- Section RACI -->
-                    <div class="raci-container">
-                        <h4>RACI</h4>
-                        <div class="raci-grid">
-                            <div class="raci-row">
-                                <div class="raci-label">Responsables (R):</div>
-                                <div class="raci-input">
-                                    <input type="text" 
-                                        class="input" 
-                                        id="responsible-${reg.id}" 
-                                        value="${reg.responsible || ''}" 
-                                        placeholder="Noms des responsables (séparés par des virgules)"
-                                        onchange="updateRACI('${reg.id}', 'responsible', this.value)">
-                                </div>
-                            </div>
-                            <div class="raci-row">
-                                <div class="raci-label">Autorité (A):</div>
-                                <div class="raci-input">
-                                    <input type="text" 
-                                        class="input" 
-                                        id="accountable-${reg.id}" 
-                                        value="${reg.accountable || ''}" 
-                                        placeholder="Nom de la personne ayant autorité"
-                                        onchange="updateRACI('${reg.id}', 'accountable', this.value)">
-                                </div>
-                            </div>
-                            <div class="raci-row">
-                                <div class="raci-label">Consultés (C):</div>
-                                <div class="raci-input">
-                                    <input type="text" 
-                                        class="input" 
-                                        id="consulted-${reg.id}" 
-                                        value="${reg.consulted || ''}" 
-                                        placeholder="Noms des personnes consultées (séparés par des virgules)"
-                                        onchange="updateRACI('${reg.id}', 'consulted', this.value)">
-                                </div>
-                            </div>
-                            <div class="raci-row">
-                                <div class="raci-label">Informés (I):</div>
-                                <div class="raci-input">
-                                    <input type="text" 
-                                        class="input" 
-                                        id="informed-${reg.id}" 
-                                        value="${reg.informed || ''}" 
-                                        placeholder="Noms des personnes informées (séparés par des virgules)"
-                                        onchange="updateRACI('${reg.id}', 'informed', this.value)">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="actions-container">
-                        <h4>Actions associées:</h4>
-                        <div>${renderActions(reg)}</div>
-                        <div class="action-input-container">
-                            <input type="text" 
-                                class="input" 
-                                id="action-input-${reg.id}" 
-                                placeholder="Nouvelle action...">
-                            <button class="button" 
-                                onclick="addAction('${reg.id}', document.getElementById('action-input-${reg.id}').value)">
-                                Ajouter
-                            </button>
-                        </div>
-                    </div>
-
-                    ${renderJustification(reg)}
-                    ${renderProofLinks(reg)}
-
-                    <div class="action-buttons">
-                        <button class="button secondary" onclick="editRegulation('${reg.id}')">Éditer</button>
-                        <button class="button secondary" onclick="deleteRegulation('${reg.id}')">Supprimer</button>
-                    </div>
-                </div>
-            </div>
-        `;
-    });
 }
-function renderRegulations() {
-    const regulationsList = document.getElementById('wallItems');
-    const complianceRate = document.querySelector('.compliance-rate');
-    complianceRate.textContent = `Taux de conformité: ${calculateCompliance()}%`;
-    regulationsList.innerHTML = '';
 
-    let filteredRegs = regulations.filter(filterRegulation);
-    if (filteredRegs.length === 0) {
-        regulationsList.innerHTML = '<div>Aucune exigence trouvée</div>';
-        return;
-    }
 
-    filteredRegs.forEach(reg => {
-        regulationsList.innerHTML += `
-            <div class="regulation-item" id="regulation-${reg.id}">
-                <div class="regulation-header">
-                    <!-- ... status radios inchangés ... -->
-                </div>
-                <div class="regulation-content">
-                    <div class="regulation-text">${reg.text}</div>
-                    <div class="regulation-id"><i>${reg.id}</i></div>
-                    ${renderLinks(reg)}
-                    
-                    <!-- Section RACI avec toggle -->
-                    <div class="section-container ${reg.raciCollapsed ? 'collapsed' : ''}" data-section="raci">
-                        <div class="section-header" onclick="toggleSection('${reg.id}', 'raci')">
-                            <h4>
-                                <span class="toggle-icon">${reg.raciCollapsed ? '▸' : '▾'}</span>
-                                RACI
-                            </h4>
-                        </div>
-                        <div class="section-content">
-                            ${renderRACI(reg)}
-                        </div>
-                    </div>
 
-                    <!-- Section Actions avec toggle -->
-                    <div class="section-container ${reg.actionsCollapsed ? 'collapsed' : ''}" data-section="actions">
-                        <div class="section-header" onclick="toggleSection('${reg.id}', 'actions')">
-                            <h4>
-                                <span class="toggle-icon">${reg.actionsCollapsed ? '▸' : '▾'}</span>
-                                Actions associées
-                            </h4>
-                        </div>
-                        <div class="section-content">
-                            <div>${renderActions(reg)}</div>
-                            <div class="action-input-container">
-                                <input type="text" class="input" id="action-input-${reg.id}" placeholder="Nouvelle action...">
-                                <button class="button" onclick="addAction('${reg.id}', document.getElementById('action-input-${reg.id}').value)">
-                                    Ajouter
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    ${renderJustification(reg)}
-                    ${renderProofLinks(reg)}
-                </div>
-            </div>
-        `;
-    });
-}
 
 // Ajouter la fonction toggleSection
 function toggleSection(regulationId, sectionType) {
@@ -2343,8 +2280,13 @@ function autoLoad() {
     const savedState = localStorage.getItem('doraCompliance');
     if (savedState) {
         regulations = JSON.parse(savedState);
-        // Initialiser raci pour chaque action si non défini
+        // Initialiser les champs de catégorie pour chaque régulation si non définis
         regulations.forEach(reg => {
+            reg.isCompliant = reg.isCompliant || false;
+            reg.isApplicable = reg.isApplicable !== undefined ? reg.isApplicable : true; // Par défaut, applicable
+            reg.isDocumentation = reg.isDocumentation || false;
+            
+            // Initialiser raci pour chaque action si non défini
             if (Array.isArray(reg.actions)) {
                 reg.actions.forEach(action => {
                     if (!action.raci) {
@@ -2362,6 +2304,7 @@ function autoLoad() {
         regulations = initializeRegulations();
     }
 }
+
 
 
 
@@ -3045,6 +2988,25 @@ function getRiskLevelClass(level) {
     if (level >= 8) return 'medium';
     return 'low';
 }
+
+function updateCategory(regulationId, selectedCategory) {
+    regulations = regulations.map(reg => {
+        if (reg.id === regulationId) {
+            return {
+                ...reg,
+                isCompliant: selectedCategory === 'Compliant',
+                isApplicable: selectedCategory === 'Applicable',
+                isDocumentation: selectedCategory === 'Documentation'
+            };
+        }
+        return reg;
+    });
+    renderRegulations();
+    autoSave();
+}
+
+
+
 
 function initializeWall() {
     renderWallItems();
