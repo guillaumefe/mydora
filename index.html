@@ -2875,41 +2875,59 @@ function addNewArticle() {
 }
 
 function parseRequirementsFromText(text) {
-    const lines = text.split(/\r?\n/).filter(line => line.trim());
+    // Nettoyer les lignes
+    const lines = text.split(/\r?\n/)
+        .map(line => line.replace(/\r$/, ''))
+        .filter(line => line.trim())
+        .map(line => ({
+            text: line.trim(),
+            indent: line.search(/\S/)
+        }));
+
     const requirements = [];
-    const stack = [];
 
-    // Détermine si une ligne a des enfants (est un parent)
-    function hasChildren(currentIndex) {
-        if (currentIndex >= lines.length - 1) return false;
-        
-        const currentIndent = lines[currentIndex].search(/\S|$/);
-        const nextIndent = lines[currentIndex + 1].search(/\S|$/);
-        
-        return nextIndent > currentIndent;
-    }
-
-    // Pour chaque ligne
+    // Pour chaque ligne, regarder si c'est une feuille et trouver son vrai parent
     for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        const content = line.trim();
-        const indentation = line.search(/\S|$/);
-        const level = Math.floor(indentation / 2);
+        const current = lines[i];
+        const next = lines[i + 1];
+        
+        // Une ligne est une feuille si :
+        // - Elle a un parent (une ligne au-dessus moins indentée)
+        // - ET soit c'est la dernière ligne, soit la suivante n'est pas plus indentée
+        let hasParent = false;
+        let parentIndex = i - 1;
+        while (parentIndex >= 0) {
+            if (lines[parentIndex].indent < current.indent) {
+                hasParent = true;
+                break;
+            }
+            parentIndex--;
+        }
 
-        // Ajuster le stack au niveau actuel
-        stack.length = level;
-        stack[level] = content;
+        const isLastLine = i === lines.length - 1;
+        const isLeaf = hasParent && (isLastLine || !next || next.indent <= current.indent);
 
-        // Si cette ligne n'a pas d'enfants, c'est une exigence
-        if (!hasChildren(i)) {
-            const requirement = {
-                id: requirements.length + 1,
-                originalText: content,
-                parentChain: [...stack.slice(0, level)], // Copie des parents
-                fullContext: [...stack.slice(0, level), content].join(' → '),
-                level: level
-            };
-            requirements.push(requirement);
+        if (isLeaf) {
+            // Trouver le vrai parent (première ligne au-dessus avec indentation moindre)
+            let parentChain = [];
+            let currentIndent = current.indent;
+            let searchIndex = i - 1;
+            
+            while (searchIndex >= 0) {
+                const potentialParent = lines[searchIndex];
+                if (potentialParent.indent < currentIndent) {
+                    parentChain.unshift(potentialParent.text);
+                    currentIndent = potentialParent.indent;
+                    if (currentIndent === 0) break; // On a atteint la racine
+                }
+                searchIndex--;
+            }
+
+            requirements.push({
+                id: [...parentChain, current.text].join('.'),
+                originalText: current.text,
+                parentChain: parentChain
+            });
         }
     }
 
