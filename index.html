@@ -1483,6 +1483,38 @@ function calculateCompliance(regList) {
 }
 
 
+// Helper function pour isoler le rendu du contenu d'une régulation
+function renderRegulationContent(reg) {
+    return `
+        <div class="regulation-header">
+            <!-- Code HTML existant pour regulation-header -->
+            <label>
+                <input type="radio" 
+                    name="status-${reg.id}" 
+                    class="checkbox" 
+                    value="Compliant" 
+                    ${reg.status === 'Compliant' ? 'checked' : ''} 
+                    onchange="updateStatus('${reg.id}', 'Compliant')"> Compliant
+            </label>
+            <!-- Autres radios... -->
+        </div>
+        <div class="regulation-content">
+            <div class="regulation-text">${reg.text}</div>
+            <div class="regulation-id"><i>${reg.id}</i></div>
+            ${renderLinks(reg)}
+            ${renderRACI(reg)}
+            ${renderActions(reg)}
+            ${renderJustification(reg)}
+            ${renderProofLinks(reg)}
+            
+            <div class="action-buttons">
+                <button class="button secondary" onclick="editRegulation('${reg.id}')">Éditer</button>
+                <button class="button secondary" onclick="deleteRegulation('${reg.id}')">Supprimer</button>
+            </div>
+        </div>
+    `;
+}
+
 
 
 // Ajout des variables pour le lazy loading
@@ -1546,6 +1578,121 @@ function renderRegulations(reset = false) {
         observer.observe(sentinel);
     }
 }
+function renderRegulations(reset = false) {
+    const regulationsList = document.getElementById('wallItems');
+    const complianceRate = document.querySelector('.compliance-rate');
+    
+    // Si reset, réinitialiser la page et le conteneur
+    if (reset) {
+        currentPage = 1;
+        regulationsList.innerHTML = '';
+    }
+
+    // Calculer les index de début et de fin pour ce lot
+    const startIndex = (currentPage - 1) * 10;
+    const endIndex = startIndex + 10;
+    
+    // Prendre seulement les 10 éléments concernés
+    const currentBatch = regulations.slice(startIndex, endIndex);
+
+    // Filtrer uniquement ce petit lot
+    const filteredBatch = currentBatch.filter(filterRegulation);
+    
+    // Gérer le cas où il n'y a pas de données
+    if (regulations.length === 0) {
+        regulationsList.innerHTML = '<div>Aucune exigence trouvée</div>';
+        return;
+    }
+
+    // Rendre uniquement les éléments filtrés de ce lot
+    filteredBatch.forEach(reg => {
+        regulationsList.innerHTML += `
+            <div class="regulation-item" id="regulation-${reg.id}">
+                <div class="regulation-header">
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            class="checkbox" 
+                            value="Compliant" 
+                            ${reg.status === 'Compliant' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Compliant')"> Compliant
+                    </label>
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            class="checkbox" 
+                            value="Non Applicable" 
+                            ${reg.status === 'Non Applicable' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Non Applicable')"> Non Applicable
+                    </label>
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            class="checkbox" 
+                            value="Documentation" 
+                            ${reg.status === 'Documentation' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Documentation')"> Documentation
+                    </label>
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            class="checkbox" 
+                            value="Tous" 
+                            ${reg.status === 'all' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Tous')"> Remettre dans Tous
+                    </label>
+                </div>
+                <div class="regulation-content">
+                    <div class="regulation-text">${reg.text}</div>
+                    <div class="regulation-id"><i>${reg.id}</i></div>
+                    ${renderLinks(reg)}
+                    
+                    <div class="section-container ${reg.raciCollapsed ? 'collapsed' : ''}" data-section="raci">
+                        <div class="section-header" onclick="toggleSection('${reg.id}', 'raci')">
+                            <h4>
+                                <span class="toggle-icon">${reg.raciCollapsed ? '▸' : '▾'}</span>
+                                RACI
+                            </h4>
+                        </div>
+                        <div class="section-content">
+                            ${renderRACI(reg)}
+                        </div>
+                    </div>
+
+                    <div class="section-container ${reg.actionsCollapsed ? 'collapsed' : ''}" data-section="actions">
+                        <div class="section-header" onclick="toggleSection('${reg.id}', 'actions')">
+                            <h4>
+                                <span class="toggle-icon">${reg.actionsCollapsed ? '▸' : '▾'}</span>
+                                Actions associées
+                            </h4>
+                        </div>
+                        <div class="section-content">
+                            <div>${renderActions(reg)}</div>
+                            <div class="action-input-container">
+                                <input type="text" class="input" id="action-input-${reg.id}" placeholder="Nouvelle action...">
+                                <button class="button" onclick="addAction('${reg.id}', document.getElementById('action-input-${reg.id}').value)">
+                                    Ajouter
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    // Ajouter le bouton "Charger plus" si nécessaire
+    if (endIndex < regulations.length) {
+        const loadMoreButton = document.createElement('button');
+        loadMoreButton.className = 'button load-more';
+        loadMoreButton.textContent = 'Charger plus';
+        loadMoreButton.onclick = () => {
+            currentPage++;
+            renderRegulations(false);
+        };
+        regulationsList.appendChild(loadMoreButton);
+    }
+}
 
 // Nouvelle fonction pour charger plus de réglementations
 function loadMoreRegulations() {
@@ -1567,38 +1714,6 @@ function loadMoreRegulations() {
         renderRegulations();
         isLoading = false;
     }, 200);
-}
-
-// Helper function pour isoler le rendu du contenu d'une régulation
-function renderRegulationContent(reg) {
-    return `
-        <div class="regulation-header">
-            <!-- Code HTML existant pour regulation-header -->
-            <label>
-                <input type="radio" 
-                    name="status-${reg.id}" 
-                    class="checkbox" 
-                    value="Compliant" 
-                    ${reg.status === 'Compliant' ? 'checked' : ''} 
-                    onchange="updateStatus('${reg.id}', 'Compliant')"> Compliant
-            </label>
-            <!-- Autres radios... -->
-        </div>
-        <div class="regulation-content">
-            <div class="regulation-text">${reg.text}</div>
-            <div class="regulation-id"><i>${reg.id}</i></div>
-            ${renderLinks(reg)}
-            ${renderRACI(reg)}
-            ${renderActions(reg)}
-            ${renderJustification(reg)}
-            ${renderProofLinks(reg)}
-            
-            <div class="action-buttons">
-                <button class="button secondary" onclick="editRegulation('${reg.id}')">Éditer</button>
-                <button class="button secondary" onclick="deleteRegulation('${reg.id}')">Supprimer</button>
-            </div>
-        </div>
-    `;
 }
 
 // Mise à jour des gestionnaires d'événements pour réinitialiser le lazy loading
