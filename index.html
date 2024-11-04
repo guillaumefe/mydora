@@ -5090,6 +5090,193 @@ async function loadRegulations(reset = false) {
         hideLoading();
     }
 }
+
+// Fonction pour générer un ID valide pour Firestore
+function generateFirestoreId(reference, reqId) {
+    // Remplacer les caractères non valides et les points par des tirets
+    const cleanId = `${reference}-${reqId}`.replace(/[.]/g, '-');
+    // Assurer un ID valide pour Firestore
+    return `reg-${cleanId}`;
+}
+
+// Fonction pour ajouter un nouvel article modifiée
+async function addNewArticle() {
+    try {
+        const category = document.getElementById('articleCategory').value;
+        const reference = document.getElementById('articleReference').value;
+        const text = document.getElementById('articleText').value;
+        
+        if (!category || !reference || !text) {
+            showNotification('Tous les champs sont obligatoires', 'error');
+            return;
+        }
+
+        showLoading();
+        
+        const parsedRequirements = parseRequirementsFromText(text);
+        const batch = db.batch();
+
+        for (const req of parsedRequirements) {
+            // Générer un ID valide pour Firestore
+            const displayId = `${reference}-${req.id}`;
+            const firestoreId = generateFirestoreId(reference, req.id);
+            
+            console.log('Création document avec ID:', firestoreId);
+            const docRef = db.collection('regulations').doc(firestoreId);
+            
+            const articleData = {
+                id: displayId, // ID pour l'affichage
+                firestoreId: firestoreId, // ID Firestore pour référence
+                category: category,
+                text: req.originalText,
+                fullPath: req.id,
+                parentChain: req.parentChain,
+                status: 'all',
+                actions: [],
+                justification: '',
+                proofLinks: [],
+                justifications: [],
+                responsible: '',
+                accountable: '',
+                consulted: '',
+                informed: '',
+                raciCollapsed: false,
+                actionsCollapsed: false,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            if (category === 'Level 1') {
+                articleData.rtsLinks = document.getElementById('rtsLink').value
+                    .split(',').map(s => s.trim()).filter(Boolean);
+                articleData.itsLinks = document.getElementById('itsLink').value
+                    .split(',').map(s => s.trim()).filter(Boolean);
+            } else if (category === 'RTS' || category === 'ITS') {
+                articleData.level1Link = document.getElementById('level1Link').value.trim();
+            }
+
+            batch.set(docRef, articleData);
+        }
+
+        await batch.commit();
+        showNotification('Articles ajoutés avec succès', 'success');
+        resetArticleForm();
+        await loadRegulations(true);
+        
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout:', error);
+        showNotification('Erreur lors de l\'ajout des articles', 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// Fonction de suppression modifiée
+async function deleteRegulation(regulationId) {
+    try {
+        if (!regulationId) {
+            console.error('ID de régulation manquant');
+            showNotification('Erreur: ID manquant', 'error');
+            return;
+        }
+
+        console.log('Tentative de suppression:', regulationId);
+
+        if (!confirm('⚠️ Êtes-vous sûr de vouloir supprimer cette exigence ? Cette action est irréversible.')) {
+            return;
+        }
+
+        showLoading();
+
+        // Rechercher le document par son ID d'affichage
+        const querySnapshot = await db.collection('regulations')
+            .where('id', '==', regulationId)
+            .get();
+
+        if (querySnapshot.empty) {
+            throw new Error('Document non trouvé dans Firestore');
+        }
+
+        // Supprimer le document
+        const docToDelete = querySnapshot.docs[0];
+        await docToDelete.ref.delete();
+        console.log('Document supprimé:', docToDelete.id);
+
+        // Supprimer l'élément du DOM
+        const element = document.getElementById(`regulation-${regulationId}`);
+        if (element) {
+            element.remove();
+        }
+
+        showNotification('Exigence supprimée avec succès', 'success');
+        await loadRegulations(true);
+
+    } catch (error) {
+        console.error('Erreur détaillée:', error);
+        showNotification(`Erreur lors de la suppression: ${error.message}`, 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// Fonction de rendu modifiée pour utiliser le bon ID
+function renderRegulations(regulations, reset = false) {
+    const container = document.getElementById('wallItems');
+    
+    if (reset) {
+        container.innerHTML = '';
+    }
+
+    regulations.forEach(reg => {
+        const regulationElement = document.createElement('div');
+        regulationElement.className = 'regulation-item fade-in';
+        regulationElement.id = `regulation-${reg.id}`; // Utiliser l'ID d'affichage
+        
+        regulationElement.innerHTML = `
+            <div class="regulation-header">
+                <div class="status-controls">
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            class="checkbox" 
+                            value="Compliant" 
+                            ${reg.status === 'Compliant' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Compliant')"> Compliant
+                    </label>
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            value="Non Applicable" 
+                            ${reg.status === 'Non Applicable' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Non Applicable')"> Non Applicable
+                    </label>
+                    <label>
+                        <input type="radio" 
+                            name="status-${reg.id}" 
+                            value="Documentation" 
+                            ${reg.status === 'Documentation' ? 'checked' : ''} 
+                            onchange="updateStatus('${reg.id}', 'Documentation')"> Documentation
+                    </label>
+                </div>
+            </div>
+            <div class="regulation-content">
+                <div class="regulation-text">${reg.text}</div>
+                <div class="regulation-id"><i>${reg.id}</i></div>
+                ${renderLinks(reg)}
+                ${renderRACI(reg)}
+                ${renderActions(reg)}
+                ${renderJustification(reg)}
+                ${renderProofLinks(reg)}
+                
+                <div class="action-buttons">
+                    <button class="button secondary" onclick="editRegulation('${reg.id}')">Éditer</button>
+                    <button class="button secondary" onclick="deleteRegulation('${reg.id}')">Supprimer</button>
+                </div>
+            </div>
+        `;
+        
+        container.appendChild(regulationElement);
+    });
+}
 </script>
 
 </body>
