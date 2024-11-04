@@ -2309,7 +2309,9 @@ function exportData() {
     const linkElement = document.createElement('a');
     linkElement.setAttribute('href', dataUri);
     linkElement.setAttribute('download', exportFileDefaultName);
+    document.body.appendChild(linkElement); // Required for Firefox
     linkElement.click();
+    linkElement.remove();
 }
 
 function exportProject() {
